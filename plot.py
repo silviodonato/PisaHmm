@@ -160,100 +160,163 @@ def writeYields(ftxt, gr, integral, error, dataEvents) :
         if sy is not 'nom' : line+="\t%s "%(round(integral[gr][sy],5))
     ftxt.write(line+"\n")
 
-def setName (d, sv) :
-    if "decorrelate" not in model.systematicDetail[sv].keys() : return sv
-    else :
-        for g in model.systematicDetail[sv]["decorrelate"].keys() :
-            for x in model.systematicDetail[sv]["decorrelate"][g] :
-                if d.startswith(x) : 
-                    if len(model.systematicDetail[sv]["decorrelate"].keys())<2 : return sv
-                    else : return sv+g
-    return  "notSysToApply" #this means that the systematic sv does not affect the sample d.    e.g. d=DY  sv= VVxsec
+'''
+ setName
+  input: sample (d = "ZZ4l_2018POWPY") and systematic variation (sv = "VVxsec")
+  output: name of systematic variation used in the datacard ( "VVxsecZZ"  )
+  (see systematicGrouping.py)
+-------------------------------------------
+ d = ZZ2l2q_2018POWPY
+ sv = PileUpPtBB
+ model.systematicDetail[sv] = {'type': 'shape', 'value': 1.0}
+ or
+ model.systematicDetail[sv] = {'type': 'shape', 'value': 1.0, 'decorrelate': {'EWK': ['EWKZ', 'EWKZint', 'EWKZ105_2018MGHERWIG', 'EWKZint_2018MGPY'], 'Hmm': ['vbfHmm', 'ggHmm', 'zHmm', 'WplusHmm', 'WminusHmm', 'ttHmm'], 'WJets': ['W2J', 'W1J', 'W0J'], 'WW': ['WWdps', 'WWJJlnln', 'WLLJJln', 'WW2l2n', 'WWlnqq'], 'ZZ': ['ZZ2l2q', 'ZZ2l2n', 'ZZ4l'], 'DY': ['DY105', 'DY105VBF', 'DY0J', 'DY1J', 'DY2J'], 'TT': ['TTlep', 'TTsemi', 'TThad', 'TT'], 'WZ': ['WZ1l3n', 'WZ2l2q', 'WZ3l1n', 'WZ1l1n2q'], 'ST': ['STs', 'STwtbar', 'STwt', 'STtbar', 'STt']}}
+'''
+# def setName (d, sv) :
+#     print("d = ",d)
+#     print("sv = ",sv)
+#     print("model.systematicDetail[sv] = ",model.systematicDetail[sv])
+#     if "decorrelate" not in model.systematicDetail[sv].keys() : return sv
+#     else :
+#         for g in model.systematicDetail[sv]["decorrelate"].keys() :
+#             for x in model.systematicDetail[sv]["decorrelate"][g] :
+#                 if d.startswith(x) : 
+#                     print("sv+g = ",sv+g)
+#                     if len(model.systematicDetail[sv]["decorrelate"].keys())<2 : return sv
+#                     else : return sv+g
+#     return  "notSysToApply" #this means that the systematic sv does not affect the sample d.    e.g. d=DY  sv= VVxsec
     
     
     
-def computeSingleSystVariation(d, hn, sv, shapeType, syVar="nom") :
-    svName = setName(d, sv)
-    x = postFit.postfitValue(svName, syVar)
-    if shapeType  == "shape" :
-        histoSingleSyst[hn][d][svName]["variation"] = histoSingleSyst[hn][d][svName]["sum"].Clone()
-        histoSingleSyst[hn][d][svName]["variation"].Scale(postFit.smoothStepFunc(x))
-        histoSingleSyst[hn][d][svName]["variation"].Add(histoSingleSyst[hn][d][svName]["diff"])
-        histoSingleSyst[hn][d][svName]["variation"].Scale(0.5 * x)
-    else :# shapeType  == "lnN" :
-        histoSingleSyst[hn][d][svName]["variation"] = histoSingleSyst[hn][d][svName]["Up"].Clone()
-        histoSingleSyst[hn][d][svName]["variation"].Scale(model.systematicDetail[sv]["value"]**x)
-        histoSingleSyst[hn][d][svName]["variation"].Add(histoSingleSyst[hn][d][svName]["Up"], -1.)
-    #if d.startswith("DY") : print d, svName, histoSingleSyst[hn][d][svName]["variation"].Integral()
-    return histoSingleSyst[hn][d][svName]["variation"]
+# def computeSingleSystVariation(d, hn, sv, shapeType, syVar="nom") :
+#     svName = setName(d, sv)
+#     x = postFit.postfitValue(svName, syVar)
+#     if shapeType  == "shape" :
+#         histoSingleSyst[hn][d][svName]["variation"] = histoSingleSyst[hn][d][svName]["sum"].Clone()
+# #        histoSingleSyst[hn][d][svName]["variation"].Scale(postFit.smoothStepFunc(x))
+#         histoSingleSyst[hn][d][svName]["variation"].Scale(x)
+#         histoSingleSyst[hn][d][svName]["variation"].Add(histoSingleSyst[hn][d][svName]["diff"])
+#         histoSingleSyst[hn][d][svName]["variation"].Scale(0.5 * x)
+#     elif shapeType  == "lnN" :
+#         histoSingleSyst[hn][d][svName]["variation"] = histoSingleSyst[hn][d][svName]["Up"].Clone()
+#         histoSingleSyst[hn][d][svName]["variation"].Scale(model.systematicDetail[sv]["value"]**x)
+#         histoSingleSyst[hn][d][svName]["variation"].Add(histoSingleSyst[hn][d][svName]["Up"], -1.)
+#     else:
+#         print("shapeType = ",shapeType)
+#         1/0
+#     #if d.startswith("DY") : print d, svName, histoSingleSyst[hn][d][svName]["variation"].Integral()
+#     return histoSingleSyst[hn][d][svName]["variation"]
 
-def computeSingleSyst(model, f, d, hn, h, histoSingleSyst) :
-    for sv in model.systematicDetail.keys() :
-        svName = setName(d, sv)
-        if svName == "notSysToApply" : continue
-        hsUp=h.Clone()
-        hsDown=h.Clone()
-        #if model.systematicDetail[sv]["type"]=="lnN" :
-            #hsUp.Scale(model.systematicDetail[sv]["value"]-1.)
-            #hsDown.Scale(1./model.systematicDetail[sv]["value"]-1.)
-        if model.systematicDetail[sv]["type"]=="shape" :
-            if all(x in model.systematicsToPlot for x in [sv+"Up", sv+"Down"]): 
-                hsUp=f[d].Get(findSyst(hn,sv+"Up",f[d]))
-                hsDown=f[d].Get(findSyst(hn,sv+"Down",f[d]))
-                if hsUp and hsDown :
-                    if hn.split("___")[0] in model.rebin.keys() : 
-                        hsUp = (hsUp.Rebin(len(model.rebin[hn.split("___")[0]])-1,"hnew"+sv,array('d',model.rebin[hn.split("___")[0]]))).Clone(hsUp.GetName())
-                        hsDown = (hsDown.Rebin(len(model.rebin[hn.split("___")[0]])-1,"hnew"+sv,array('d',model.rebin[hn.split("___")[0]]))).Clone(hsDown.GetName())
+# def computeSingleSyst(model, f, d, hn, h, histoSingleSyst) :
+#     for sv in model.systematicDetail.keys() :
+#         svName = setName(d, sv)
+#         if svName == "notSysToApply" : continue
+#         hsUp=copy.deepcopy(h.Clone("hsUp"))
+#         hsDown=copy.deepcopy(h.Clone("hsDown"))
+#         #if model.systematicDetail[sv]["type"]=="lnN" :
+#             #hsUp.Scale(model.systematicDetail[sv]["value"]-1.)
+#             #hsDown.Scale(1./model.systematicDetail[sv]["value"]-1.)
+#         if model.systematicDetail[sv]["type"]=="shape" :
+#             if all(x in model.systematicsToPlot for x in [sv+"Up", sv+"Down"]): 
+#                 hsUp=f[d].Get(findSyst(hn,sv+"Up",f[d]))
+#                 hsDown=f[d].Get(findSyst(hn,sv+"Down",f[d]))
+#                 if hsUp and hsDown :
+#                     if hn.split("___")[0] in model.rebin.keys() : 
+#                         hsUp = (hsUp.Rebin(len(model.rebin[hn.split("___")[0]])-1,"hnew"+sv,array('d',model.rebin[hn.split("___")[0]]))).Clone(hsUp.GetName())
+#                         hsDown = (hsDown.Rebin(len(model.rebin[hn.split("___")[0]])-1,"hnew"+sv,array('d',model.rebin[hn.split("___")[0]]))).Clone(hsDown.GetName())
             
-        histoSingleSyst[hn][d][svName] = {}
-        histoSingleSyst[hn][d][svName]["Up"] = hsUp.Clone()
-        histoSingleSyst[hn][d][svName]["Down"] = hsDown.Clone()
-        #histoSingleSyst[hn][d][svName]["Down"] = hsUp.Clone()
-        #histoSingleSyst[hn][d][svName]["Up"] = hsDown.Clone()
+#         histoSingleSyst[hn][d][svName] = {}
+#         histoSingleSyst[hn][d][svName]["Up"] = hsUp.Clone()
+#         histoSingleSyst[hn][d][svName]["Down"] = hsDown.Clone()
+#         #histoSingleSyst[hn][d][svName]["Down"] = hsUp.Clone()
+#         #histoSingleSyst[hn][d][svName]["Up"] = hsDown.Clone()
         
-    #for sv in histoSingleSyst[hn][d].keys() :
-    for sv in model.systematicDetail.keys() :
-        svName = setName(d, sv)
-        if svName == "notSysToApply" : continue
-        hDiff = histoSingleSyst[hn][d][svName]["Up"].Clone()
-        hSum  = histoSingleSyst[hn][d][svName]["Up"].Clone()
-        hDiff.Add(histoSingleSyst[hn][d][svName]["Down"], -1)
-        hSum.Add(histoSingleSyst[hn][d][svName]["Down"])
-        hSum.Add(h, -2)
+#     #for sv in histoSingleSyst[hn][d].keys() :
+#     for sv in model.systematicDetail.keys() :
+#         svName = setName(d, sv)
+#         if svName == "notSysToApply" : continue
+#         hDiff = histoSingleSyst[hn][d][svName]["Up"].Clone()
+#         hSum  = histoSingleSyst[hn][d][svName]["Up"].Clone()
+#         hDiff.Add(histoSingleSyst[hn][d][svName]["Down"], -1)
+#         hSum.Add(histoSingleSyst[hn][d][svName]["Down"])
+#         hSum.Add(h, -2)
         
-        if "diff" not in histoSingleSyst[hn][d].keys() :  
-            histoSingleSyst[hn][d][svName]["diff"] =  hDiff.Clone()
-            histoSingleSyst[hn][d][svName]["sum"]  =  hSum.Clone()
-        else :
-            histoSingleSyst[hn][d][svName]["diff"].Add(hDiff)
-            histoSingleSyst[hn][d][svName]["sum"].Add(hSum)
+#         if "diff" not in histoSingleSyst[hn][d].keys() :  
+#             histoSingleSyst[hn][d][svName]["diff"] =  hDiff.Clone()
+#             histoSingleSyst[hn][d][svName]["sum"]  =  hSum.Clone()
+#         else :
+#             histoSingleSyst[hn][d][svName]["diff"].Add(hDiff)
+#             histoSingleSyst[hn][d][svName]["sum"].Add(hSum)
         
-        if "nominalVariation" not in histoSingleSyst[hn][d].keys() : histoSingleSyst[hn][d]["nominalVariation"] = computeSingleSystVariation(d, hn, sv, model.systematicDetail[sv]["type"]).Clone()
-        else : histoSingleSyst[hn][d]["nominalVariation"].Add(computeSingleSystVariation(d, hn, sv, model.systematicDetail[sv]["type"]))
-
-def fitVariation (model, f, d, hn, h, histoSingleSyst, sy = "noSystematic") :
-        
-    if len(histoSingleSyst[hn][d].keys()) == 0 : computeSingleSyst(model, f, d, hn, h, histoSingleSyst)
-
-    sv = sy.replace("Up", "").replace("Down", "")
-
-    if sv in model.systematicDetail and (sy.endswith("Up") or sy.endswith("Down") ):
-        svName = setName(d, sv)
-        if svName == "notSysToApply" : return  histoSingleSyst[hn][d]["nominalVariation"]
-        else :
-            hv = histoSingleSyst[hn][d]["nominalVariation"].Clone()
-            hv.Add(histoSingleSyst[hn][d][svName]["variation"], -1.)
-            hv.Add(computeSingleSystVariation(d, hn, sv, model.systematicDetail[sv]["type"], "Up" if sy.endswith("Up") else "Down"))
-            return hv
-    else : return  histoSingleSyst[hn][d]["nominalVariation"]
+#         if "nominalVariation" not in histoSingleSyst[hn][d].keys() : histoSingleSyst[hn][d]["nominalVariation"] = computeSingleSystVariation(d, hn, sv, model.systematicDetail[sv]["type"]).Clone()
+#         else : histoSingleSyst[hn][d]["nominalVariation"].Add(computeSingleSystVariation(d, hn, sv, model.systematicDetail[sv]["type"]))
 
 
-def addFitVariation(h, variationToAdd) :
-    for n in range(h.GetNbinsX()+2) :
-        relE = 0 if h.GetBinContent(n)<=0. else h.GetBinError(n)/h.GetBinContent(n)
-        h.SetBinContent(n, h.GetBinContent(n)+variationToAdd.GetBinContent(n))
-        if h.GetBinContent(n)>0 : h.SetBinError(n, h.GetBinContent(n)*relE)
-    
+# '''
+# model = ', <module 'models2018H' from '/scratch/sdonato/Hmm/nail/PisaHmm/models2018H.pyc'>)
+# f = {'TTlep_2018POWPY': <ROOT.TFile object ("out//TTlep_2018POWPYHistos.root") at 0x3776590>, 'STtbar_2018POWPY': <ROOT.TFile object ("out//STtbar_2018POWPYHistos.root") at 0x3596e70>, ...)
+# d = 'WZ2l2q_2018AMC_MADSPIN_PY')
+# hn = LeadMuon_pt___SignalRegion')
+# h = <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x4d95650>)
+# histoSingleSyst = {'LeadMuon_pt___SignalRegion': {'data2018': {}, 
+#     'WZ2l2q_2018AMC_MADSPIN_PY': {
+#         'nominalVariation': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion__syst__JERUp") at 0x6b2c690>, 
+#         'SinglePionECAL': {'Down': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x4d667a0>, 'diff': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x4db1030>, 'sum': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x4dbcae0>, 'Up': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x4d65f80>, 'variation': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x4dc2980>}, 
+#         'FlavorQCD': {'Down': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x6b278c0>, 'diff': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x6b2e2d0>, 'sum': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x4da4f80>, 'Up': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x6b25f30>, 'variation': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x4da5560>}, 
+#         'RelativeFSR': {'Down': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x4d7b8e0>, 'diff': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x4d98340>, 'sum': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x4daddc0>, 'Up': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x4d7b130>, 'variation': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x6b31370>}, 
+#         ...
+     
+#     'WWJJlnln_2018MGPY': {
+#         'nominalVariation': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion__syst__JERUp") at 0x5172c90>, 
+#         'FlavorQCD': {'Down': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x52d3670>, 'diff': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x52e7770>, 'sum': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x51a6aa0>, 'Up': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x52cf440>, 'variation': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x5172390>}, 
+#         'RelativeFSR': {'Down': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x4df5b20>, 'diff': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x52ed3d0>, 'sum': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x5167dc0>, 'Up': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x4df5370>, 'variation': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x51a5840>}, 
+#         'LHEPdfWWJJlnln': {'Down': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x4c67700>, 'diff': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x51f78d0>, 'sum': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x51f6cb0>, 'Up': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x24bf410>, 'variation': <ROOT.TH1D object ("LeadMuon_pt___SignalRegion") at 0x52306b0>}, 
+#  )
+# sy = JERUp
+# '''
+
+
+# def fitVariation (model, f, d, hn, h, histoSingleSyst, sy = "noSystematic") :
+#     # print("######## fitVariation #########")
+#     # print("model = ",model)
+#     # print("f = ",f)
+#     # print("d = ",d)
+#     # print("hn = ",hn)
+#     # print("h = ",h)
+#     # print("histoSingleSyst = ",histoSingleSyst)
+#     # print("sy = ",sy)
+#     # print("################################")
+#     if len(histoSingleSyst[hn][d].keys()) == 0 : computeSingleSyst(model, f, d, hn, h, histoSingleSyst)
+
+#     sv = sy.replace("Up", "").replace("Down", "")
+
+#     if sv in model.systematicDetail and (sy.endswith("Up") or sy.endswith("Down") ):
+#         svName = setName(d, sv)
+#         if svName == "notSysToApply" : return  histoSingleSyst[hn][d]["nominalVariation"]
+#         else :
+#             hv = histoSingleSyst[hn][d]["nominalVariation"].Clone()
+#             hv.Add(histoSingleSyst[hn][d][svName]["variation"], -1.)
+#             hv.Add(computeSingleSystVariation(d, hn, sv, model.systematicDetail[sv]["type"], "Up" if sy.endswith("Up") else "Down"))
+#             return hv
+#     else : return  histoSingleSyst[hn][d]["nominalVariation"]
+
+
+# '''
+# def addFitVariation(h, variationToAdd) :
+#     for n in range(h.GetNbinsX()+2) :
+#         relE = 0 if h.GetBinContent(n)<=0. else h.GetBinError(n)/h.GetBinContent(n)
+#         h.SetBinContent(n, h.GetBinContent(n)+variationToAdd.GetBinContent(n))
+#         if h.GetBinContent(n)>0 : h.SetBinError(n, h.GetBinContent(n)*relE)
+#     return h
+# '''
+
+# def addFitVariation(h, variationToAdd) :
+#     for n in range(h.GetNbinsX()+2) :
+#         relE = 0 if h.GetBinContent(n)<=0. else h.GetBinError(n)/h.GetBinContent(n)
+#         h.SetBinContent(n, h.GetBinContent(n)+variationToAdd.GetBinContent(n))
+#         if h.GetBinContent(n)>0 : h.SetBinError(n, h.GetBinContent(n)*relE)
+#     return h
+
 
 
 f={}
@@ -345,7 +408,7 @@ def fill_datasum(f, gr, samplesToPlot, SumTH1, stack, stackSys, hn, myLegend, ft
                 h = (h.Rebin(len(model.rebin[hn.split("___")[0]])-1,"hnew",array('d',model.rebin[hn.split("___")[0]]))).Clone(hn)
             if data : h.SetMarkerStyle(10)
             else : 
-                if postfit : addFitVariation( h, fitVariation(model, f, d, hn, h, histoSingleSyst))
+#                if postfit : h = addFitVariation( h, fitVariation(model, f, d, hn, h, histoSingleSyst))
                 h.Scale(samples[d]["xsec"]*lumi_over_nevents)
                 error_b = ROOT.Double(0)
                 integral[gr]["nom"]+=h.IntegralAndError(0,h.GetNbinsX()+1,error_b)
@@ -357,12 +420,12 @@ def fill_datasum(f, gr, samplesToPlot, SumTH1, stack, stackSys, hn, myLegend, ft
                 for sy in model.systematicsToPlot :
                     if not data :
                         hs=f[d].Get(findSyst(hn,sy,f[d]))
-                        if postfit : 
-                            hs=f[d].Get(hn).Clone()
+#                        if postfit : 
+#                            hs=f[d].Get(hn).Clone()
                         if hs:
                             if hn.split("___")[0] in model.rebin.keys() : 
                                hs = (hs.Rebin(len(model.rebin[hn.split("___")[0]])-1,"hnew"+sy,array('d',model.rebin[hn.split("___")[0]]))).Clone(hs.GetName())
-                            if postfit : addFitVariation( hs, fitVariation(model, f, d, hn, h, histoSingleSyst, sy))
+#                            if postfit : hs = addFitVariation( hs, fitVariation(model, f, d, hn, h, histoSingleSyst, sy))
                             if  sy.replace("Up", "").replace("Down", "") in model.systematicDetail.keys() and "normalizationType" in model.systematicDetail[sy.replace("Up", "").replace("Down", "")].keys() and model.systematicDetail[sy.replace("Up", "").replace("Down", "")]["normalizationType"] == "shapeOnly" and hs.Integral(0,hs.GetNbinsX()+1)>0: hs.Scale(h.Integral(0,h.GetNbinsX()+1)/hs.Integral(0,hs.GetNbinsX()+1))
                             else :hs.Scale(samples[d]["xsec"]*lumi_over_nevents)
                             addHistoInTStack (hs, stackSys, all_histo_all_syst, gr, hn, sy, d, makeWorkspace) 
@@ -375,12 +438,12 @@ def fill_datasum(f, gr, samplesToPlot, SumTH1, stack, stackSys, hn, myLegend, ft
                 SumTH1[hn].Add(h)	
                 for sy in model.systematicsToPlot :
                     hs=f[d].Get(findSyst(hn,sy,f[d]))
-                    if postfit : 
-                        hs=f[d].Get(hn).Clone()
+#                    if postfit : 
+#                        hs=f[d].Get(hn).Clone()
                     if hs:
                         if hn.split("___")[0] in model.rebin.keys() : 
                             hs = (hs.Rebin(len(model.rebin[hn.split("___")[0]])-1,"hnew"+sy,array('d',model.rebin[hn.split("___")[0]]))).Clone(hs.GetName())
-                        if postfit : addFitVariation( hs, fitVariation(model, f, d, hn, h, histoSingleSyst, sy))
+#                        if postfit : hs = addFitVariation( hs, fitVariation(model, f, d, hn, h, histoSingleSyst, sy))
                         if not data : 
                             if  sy.replace("Up", "").replace("Down", "") in model.systematicDetail.keys() and "normalizationType" in model.systematicDetail[sy.replace("Up", "").replace("Down", "")].keys() and model.systematicDetail[sy.replace("Up", "").replace("Down", "")]["normalizationType"] == "shapeOnly" and hs.Integral(0,hs.GetNbinsX()+1)>0: hs.Scale(h.Integral(0,h.GetNbinsX()+1)/hs.Integral(0,hs.GetNbinsX()+1))
                             else : hs.Scale(samples[d]["xsec"]*lumi_over_nevents)
@@ -596,6 +659,14 @@ print "variablesToFit", variablesToFit
 
 
 his=[x for x in histoNames if "__syst__" not in x]
+print(his)
+
+his = ["LeadMuon_pt___SignalRegion", "LeadMuon_pt___ZRegion", "DNN18AtanNoMass___SideBand"]
+
+print("Restrict histos to:")
+print(his)
+
+
 print his[0]
 makeplot(variablesToFit[0] if makeWorkspace else his[0],True) #do once for caching normalizations and to dump integrals
 

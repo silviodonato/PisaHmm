@@ -346,6 +346,9 @@ if(log_y): outname+="_logy"
 if(log_x): outname+="_logx"
 c2.SaveAs("%(outname)s.png"%vars())
 c2.SaveAs("%(outname)s.pdf"%vars())
+c2.SaveAs("%(outname)s.C"%vars())
+c2.SaveAs("%(outname)s.root"%vars())
+
 
 
 

@@ -53,11 +53,18 @@ addPreFiringVariation(flow)
 
 snaplist+=["genWeight","puWeight","btagWeight","muEffWeight"]
 systematics=flow.variations #take all systematic variations
+
+
+## SD ##################
+#snaplist=[]
+#systematics=[]
+########################
+
 print "Systematics for all plots", systematics
 histosWithSystematics=flow.createSystematicBranches(systematics,histosPerSelection)
 #addPtEtaJecs(flow)
 
-addCompleteJecs(flow)
+#addCompleteJecs(flow)
 histosWithFullJecs=flow.createSystematicBranches(systematics,histosPerSelectionFullJecs)
 
 for region in histosWithFullJecs:

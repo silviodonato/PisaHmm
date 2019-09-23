@@ -113,10 +113,26 @@ def systematicGrouping (background, signal) :
 #    jesnames=[ "JESPt0To30Eta0To2","JESPt30To50Eta0To2","JESPt50To100Eta0To2","JESPt100To2000Eta0To2","JESPt0To30Eta2To2p5","JESPt30To50Eta2To2p5","JESPt50To100Eta2To2p5","JESPt100To2000Eta2To2p5","JESPt0To30Eta2p5To3p1","JESPt30To50Eta2p5To3p1","JESPt50To100Eta2p5To3p1","JESPt100To2000Eta2p5To3p1","JESPt0To30Eta3p1To5","JESPt30To50Eta3p1To5","JESPt50To100Eta3p1To5","JESPt100To2000Eta3p1To5" ]
 #    jes={x:{"type": "shape", "value":1.0} for x in jesnames}
 
-    systematicDetail.update(jes)
-#    systematicDetail.update(jesfew)
+#    systematicDetail.update(jes)
+    systematicDetail.update(jesfew)
     return systematicDetail
 
+def getAllPossibleNuisanceParameters():
+    systematicDetail = systematicGrouping ([], [])
+    nuisanceParameters = {}
+    for syst in systematicDetail:
+        if 'decorrelate' in systematicDetail[syst]:
+            for sample in systematicDetail[syst]['decorrelate']:
+                if 'normalizationType' in systematicDetail[syst] and systematicDetail[syst]["normalizationType"] is "normalizationOnly":
+                    #~ allSysts[systematicDetail[syst]['type']].add("RegionX_"+syst+sample)
+                    for region in ['ZControl','ZRegion','SignalRegion','SideBand']:
+                        nuisanceParameters[region+"_"+syst+sample] = systematicDetail[syst]['type']
+                else:
+                    nuisanceParameters[syst+sample] = systematicDetail[syst]['type']
+        else:
+                nuisanceParameters[syst] = systematicDetail[syst]['type']
+    #for i in sorted(nuisanceParameters.keys()): print i,nuisanceParameters[i]
+    return nuisanceParameters
 
 
 

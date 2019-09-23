@@ -2,8 +2,10 @@ from samples2018 import *
 from rebinning import *
 name="H"
 background={
-"DY":["DY105_2018AMCPY"],
-"DYVBF":[ "DY105VBF_2018AMCPY"],
+#"DY":["DY105_2018AMCPY"],
+#"DYVBF":[ "DY105VBF_2018AMCPY"],
+"DY":["DY105_2018MGPY"],
+"DYVBF":[ "DY105VBF_2018MGPY"],
 #"DY":["DY105_2018AMCPY", "DY105VBF_2018AMCPY"],
 "EWKZ":["EWKZ105_2018MGHERWIG","EWKZint_2018MGPY"],  # --------------- EWKZ_2018MGPY -> HERWIG ----------------     
 #"EWKZ":["EWKZint_2018MGPY","EWKZ105_2016MGHERWIG"],  # --------------- EWKZ_2018MGPY -> HERWIG ----------------     
