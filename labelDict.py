@@ -19,7 +19,8 @@ labelVariable={
 "QJet1_eta"         : "#eta(subleading jet)",
 "QJet0_pt_nom"      : "p_{T}(#mu lead)",
 "QJet1_pt_nom"      : "p_{T}(#mu sublead)",
-"PV_npvs"           : "#PV",
+"PV_npvs"           : "number of primary vertices",
+"fixedGridRhoFastjetAll"           : "energy density #rho",
 "LeadingSAJet_pt"   : "p_{T}(soft leading jet)",
 "NSoft10New2"       : "# soft jet p_{T}>10",
 "NSoft5New2"        : "# soft jet p_{T}>5",
@@ -29,6 +30,7 @@ labelVariable={
 "nFootprintSAJet"   : "nFootprintSAJet",
 "FootHT"            : "FootHT",
 "Mqq_log"           : "log( M(jj) )",
+"Mqq_over400_log"   : "log( M(jj)/400 )",
 "mmjj_pt"           : "p_{T}(#mu#mujj)",
 "qqDeltaEta"        : "#Delta#eta(j,j)",
 "NSoft5"            : "# soft jet p_{T}>5 old version",
@@ -51,5 +53,8 @@ labelVariable={
 "DNN18AtanNoMass"   : "atanh(DNN) (m=125)",
 "DNNAtan"           : "atanh(DNN)",
 "DNNAtanNoMass"     : "atanh(DNN) (m=125)",
+"DNNZAtan"          : "atanh(DNN Z vs DY)",
+"DNNwithZAtan"           : "atanh(DNN with Z peak)",
+"DNNwithZAtanNoMass"     : "atanh(DNN with Z peak) (m=125)",
 
 }

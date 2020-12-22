@@ -5,26 +5,6 @@ from samples2017 import samples as samples2017
 from samples2018 import samples as samples2018
 import sys
 
-def totevents(fn):
-    totev=1e-9
-    totevCount=1e-9
-    totevSkim=1e-9
-    
-    print "fn ", fn
-    f=ROOT.TFile.Open(fn)
-    run=f.Get("Runs")
-    totevSkim+=f.Get("Events").GetEntries()
-    if run :
-        hw=ROOT.TH1F("hw","", 5,0,5)
-        run.Project("hw","1","genEventSumw")
-        totev+=hw.GetSumOfWeights()
-        run.Project("hw","1","genEventCount")
-        totevCount+=hw.GetSumOfWeights()
-        print "totev   ", totev
-
-    return totev
-
-
 def FindBinDown(hBackground, hSignal, binLimitUp, minNumberOfEventPerBin, MinNumberOfBin_inBinning) :
         
     binLimitDown = 0.
@@ -47,8 +27,8 @@ def FindBinDown(hBackground, hSignal, binLimitUp, minNumberOfEventPerBin, MinNum
 
 
 
-variable = "DNNAtan"
 year = sys.argv[1]
+variable = sys.argv[2]
 
 if year == "2016" :
    samples=samples2016
@@ -58,40 +38,50 @@ if year == "2018" :
    samples=samples2018
    
    
-signalSample = "vbfHmm_"+year+"POWPY"
+signalSample = "vbfHmm_"+year+"POWPYDIPOLE"
+#signalSample = "vbfHmm_"+year+"AMCPY"
 
 
-fSignal     =ROOT.TFile.Open("out/"+signalSample+"Histos.root")
-fBackground =ROOT.TFile.Open("out/"+signalSample+"Histos.root")
+fSignal     =ROOT.TFile.Open("outROCCNoRetrain/"+signalSample+"Histos.root")
+fBackground =ROOT.TFile.Open("outROCCNoRetrain/"+signalSample+"Histos.root")
 
 
 hSignal     = fSignal.Get(variable+"___SignalRegion").Clone()
 hBackground = fBackground.Get(variable+"___SignalRegion").Clone()
 
 
-
-minNumberOfEventPerBin = 0.3
 xMax=5.
-binning_BDT=[xMax]
-
 binMinWidth = 0.01
 Nbins_binning = hSignal.GetNbinsX()
 MinNumberOfBin_inBinning = int(binMinWidth/xMax*Nbins_binning)
 binLimitDown = Nbins_binning
 
+minNumberOfEventPerBin = 0.6
+hSignal.Scale(samples[signalSample]["xsec"]*samples["data"+year]["lumi"])
+tot=hSignal.Integral(0, Nbins_binning+1)
+N=13 #tot*2
+print "Total number of events:  ", tot
+delta=2.*(tot-minNumberOfEventPerBin*N)/N**2
+print "min size",minNumberOfEventPerBin, "step",delta, "N",N,"tot",tot
 
-hSignal.Scale(samples[signalSample]["xsec"]*samples["data"+year]["lumi"]/totevents("/scratch/mandorli/Hmumu/fileSkimFromNanoAOD/fileSkim"+year+"_Z/VBF_HToMuMu_nano"+year+".root"))
-print "Total number of events:  ", hSignal.Integral(0, Nbins_binning+1)
+
+#delta=0
+#minNumberOfEventPerBin=0.6
+
+binning_BDT=[xMax]
+
+
         
 while binLimitDown>0 :
             binning_BDT.append((1.*binLimitDown*xMax)/Nbins_binning)
             binLimitUp = binLimitDown
             binLimitDown        = FindBinDown(hBackground, hSignal, binLimitUp, minNumberOfEventPerBin, MinNumberOfBin_inBinning)
-
+	    minNumberOfEventPerBin+=delta
 
 print "    \'"+variable+"\' : [0",
 for n in range(len(binning_BDT)-1, 0, -1) : 
     print  ",", binning_BDT[n],
         
-print "]"      
+print "]"     
+print len(binning_BDT) 
 

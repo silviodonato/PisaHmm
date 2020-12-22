@@ -1,65 +1,54 @@
+import models2017H
 from samples2017 import *
 name="Z"
 background={
-"DY0J":["DY0J_2017AMCPY"],
-"DY1J":["DY1J_2017AMCPY"],
-"DY2J":["DY2J_2017AMCPY"],
-#"EWKZ":["EWKZ_2017MGPY","EWKZint_2017MGPY"],  # --------------- EWKZ_2017MGPY -> HERWIG ----------------     
-"EWKZ":["EWKZ_2017MGHERWIG","EWKZint_2017MGPY"],  # --------------- EWKZ_2017MGPY -> HERWIG ----------------     
-"Top":["STs_2017AMCPY","STwtbar_2017POWPY","STwt_2017POWPY","STtbar_2017POWPY","STt_2017POWPY","TTlep_2017POWPY","TTsemi_2017POWPY"],
-"Other":["W2J_2017AMCPY",#"W0J_2017AMCPY",     # ,"W1J_2017AMCPY"   to be added when ready
-#         "WWdps_2017MGPY",
-"WWJJlnln_2017MGPY","WLLJJln_2017MG_MADSPIN_PY",
-         "WW2l2n_2017POWPY","WWlnqq_2017POWPY",
-         "WZ1l1n2q_2017AMCPY","WZ1l3n_2017AMCPY","WZ2l2q_2017AMC_MADSPIN_PY","WZ3l1n_2017POWPY",
-         "ZZ2l2q_2017POWPY","ZZ2l2n_2017POWPY","ZZ4l_2017POWPY"
+#"DY0J":["DY0J_2017AMCPY"],
+#"DY1J":["DY1J_2017AMCPY"],
+#"DY2J":["DY2J_2017AMCPY"],
+"DY":["DY0J_2017AMCPY", "DY1J_2017AMCPY", "DY2J_2017AMCPY"],
+"VBF Z":[
+   "EWKZ_2017MGHERWIG",  ## Alternative: "EWKZ_2017MGPY"
+   "EWKZint_2017MGPY", # interference with DY
 ],
 }
 
-
-
-
+background["Top"]   = models2017H.background["Top"]
+background["Other"] = models2017H.background["Other"]
+signal = models2017H.signal
+data = models2017H.data
 
 #sorting
-backgroundSorted=["Other","Top","DY0J","DY1J","DY2J","EWKZ"]
+backgroundSorted=["Other","Top","DY","VBF Z"]
 backgroundSorted+=[x for x in background if x not in backgroundSorted]
 
+#legend sorting
+backgroundSortedForLegend=["DY","VBF Z","Top", "Other"]
+backgroundSortedForLegend+=[x for x in background if x not in backgroundSortedForLegend]
+signalSortedForLegend=["VBF H","gg H"]
+signalSortedForLegend+=[x for x in signal if x not in signalSortedForLegend]
 
-signal={
-"VBF H":["vbfHmm_2017POWPY"],
-"gg H":["ggHmm_2017POWPY"],
-}
-
-data={
-"2017":["data2017"]
-}
 
 import ROOT
 fillcolor={
 "DY0J": ROOT.kOrange+2,
 "DY1J": ROOT.kOrange+1,
 "DY2J": ROOT.kOrange,
-"EWKZ": ROOT.kViolet,
-"Top": ROOT.kGreen,
-"Other" : ROOT.kGreen+1,
-"VBF H":ROOT.kRed,
-"gg H":ROOT.kRed+4,
 }
+fillcolor.update(models2017H.fillcolor)
 
-#systematicsToPlot=["PSWeightISRUp","PSWeightISRDown","PSWeightFSRUp","PSWeightFSRDown","JERUp","JERDown","JESUp","JESDown","WithJER","puWeightUp","puWeightDown"]
-#systematicsToPlot=["JERUp","JERDown","puWeightUp","puWeightDown","LHERenUp","LHERenDown","LHEFacUp","LHEFacDown"]
+#systematicsToPlot=["JERUp","JERDown","JESUp","JESDown","puWeightUp","puWeightDown"]
 #systematicsToPlot=["JERUp","JERDown","puWeightUp","puWeightDown","LHERenUp","LHERenDown","LHEFacUp","LHEFacDown","MuScaleUp","MuScaleDown"]
-#systematicsToPlot=["LHEPdfUp","LHEPdfDown","NoPrefiringWeight","JERUp","JERDown","puWeightUp","puWeightDown","LHERenUp","LHERenDown","LHEFacUp","LHEFacDown","MuScaleUp","MuScaleDown"]
-#systematicsToPlot=["PrefiringWeight","JERUp","JERDown"]
-#systematicsToPlot=["JERUp","JERDown"]
-#systematicsToPlot=["JERUp","JERDown","JESUp","JESDown","puWeightUp","puWeightDown"]#,"LHERenUp","LHERenDown","LHEFacUp","LHEFacDown"]
-systematicsToPlot=["PrefiringWeightDown","LHEPdfUp","LHEPdfDown","QGLweightUp","QGLweightDown","JERUp","JERDown","puWeightUp","puWeightDown","LHERenUp","LHERenDown","LHEFacUp","LHEFacDown","MuScaleUp","MuScaleDown"]
-if True:
-  from jesnames import jes2016
-  from jernames import jernames
-  systematicsToPlot+=[x[10:] for x in jes2016 ]+jernames
-else:
-  systematicsToPlot+=["JESUp","JESDown"]
+systematicsToPlot=["PrefiringWeightUp","PrefiringWeightDown","LHEPdfUp","LHEPdfDown","QGLweightUp","QGLweightDown","JERUp","JERDown","puWeightUp","puWeightDown","LHERenUp","LHERenDown","LHEFacUp","LHEFacDown","MuScaleUp","MuScaleDown","AlternativeUp","AlternativeDown","PDFX1Up","PDFX1Down","PDFX0Up","PDFX0Down"]
+
+systematicsToPlot+=["JESUp","JESDown"]
+from btagvariations import btagsys
+systematicsToPlot+=btagsys
+
+
+from jesnames import jesnames2017
+from jernames import jernames
+jesList=jesnames2017
+systematicsForDC=systematicsToPlot+[x[7:] for x in jesList ]+jernames
 
 
 
@@ -67,10 +56,7 @@ linecolor=fillcolor
 markercolor=fillcolor
 
 
-
 from rebinning import *
-
-
 from systematicGrouping import *
-systematicDetail = systematicGrouping(background, signal)
+systematicDetail = systematicGrouping(background, signal,jesList,"2017")
 
