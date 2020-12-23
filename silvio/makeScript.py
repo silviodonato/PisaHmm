@@ -39,7 +39,7 @@ def makeMask(fitPlots, bins):
             mask += "mask_"+bin_+"=1"+","
     if len(mask)>0: mask = mask[:-1]
 #    if len(mask.split("=0"))-1 != len(fitPlots.split(",")):
-#        raise Exception("No 1:1 matching between %s and %s"%(str(bins),str(fitPlots))) 
+#        raise Exception("No 1:1 matching between %s and %s"%(str(bins),str(fitPlots)))
     return mask
 
 parser = argparse.ArgumentParser(description='Make script to run fit for VBF H->mumu')
@@ -116,21 +116,21 @@ for year in years.split(","):
             if (year == "Comb") or (year == "All"):
                 launch("./decorrelate.sh >> datacard%s.txt"%year)
             launch("text2workspace.py -P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel --channel-masks datacard%s.txt %s >> %s 2>&1"%(year, definePOI, logFile))
-        
+
         elif "significance" in step:
             launch("############ Significance: %s #################"%step)
             options = fitOptions
-            if "asimov" in step:    
+            if "asimov" in step:
                 options = options + " datacard%s.root -t -1 "%year
-            elif "prefit" in step:  
+            elif "prefit" in step:
                 launch("combine -M MultiDimFit -n%s --saveWorkspace --setParameters %s datacard%s.root --verbose 9 %s >> %s 2>&1"%(name, maskPrefit, year, options, logFile))
                 snapshot =" higgsCombine%s.MultiDimFit.mH120.root "%name
                 options = options + " --snapshotName MultiDimFit %s -t -1 --toysFrequentist "%snapshot
-            elif "fit" in step:     
+            elif "fit" in step:
                 options = options + " datacard%s.root "%year
             else: raise Exception('Either "prefit" or "fit" or "asimov" must be used with postFitPlot')
             launch("combine -M Significance -n%s --setParameters %s,r=1 %s >> %s 2>&1"%(name, mask, options, logFile))
-        
+
         elif "postFitPlot" in step:
             launch("############ Post-fit plot: %s #################"%step)
             options = fitOptions
@@ -145,7 +145,7 @@ for year in years.split(","):
                 for fit in ["prefit", "postfit"]:
                     launch('python ./postFitPlot.py --year=%s --file=shapes%s.root --ratio --extra_pad=0.43   --ratio_range 0.4,1.6 --empty_bin_error --channel=%s --outname %s  --mode %s --log_y --custom_y_range --y_axis_min "1E+1"  --channel_label "VBF Hmm" --file_dir ch1_%s_%s >> %s 2>&1'%(year, name, ch, fit, plot, plot, fit, logFile))
                     launch('cp %s_shapes%s_%s_logy.png  ../figure/%s/ >> %s 2>&1'%(plot, name, fit, year, logFile))
-        
+
         elif "impacts" in step:
             launch("############ Impacts: %s #################"%step)
             options = fitOptions
@@ -159,7 +159,7 @@ for year in years.split(","):
             launch("combineTool.py -M Impacts -d %s -m 125 -n%s --setParameters %s,r=1 --robustFit 1 --doFits   --parallel %s %s >> %s 2>&1"%(snapshot, name, mask, nprocesses, options, logFile))
             launch("combineTool.py -M Impacts -d %s -m 125 -n%s -o impacts%s.json >> %s 2>&1"%(snapshot, name, name,logFile))
             launch("plotImpacts.py -i impacts%s.json -o impacts%s >> %s 2>&1"%(name,name,logFile))
-        
+
         else:
             raise Exception("Unknown step: %s"%step)
 
@@ -187,5 +187,3 @@ os.system("cd %s && chmod +x %s && ./%s "%(directory,fName,fName))
 #aaa = os.popen("cd %s && source %s > log"%(directory,fName))
 #aaa.read()
 print
-
-

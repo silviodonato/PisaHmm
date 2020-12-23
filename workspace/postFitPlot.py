@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 import importlib
 
 import CombineHarvester.CombineTools.plotting as plot
@@ -15,54 +15,54 @@ ROOT.gROOT.SetBatch(ROOT.kTRUE)
 ROOT.TH1.AddDirectory(False)
 
 def getHistogram(fname, histname, dirname='', postfitmode='prefit', allowEmpty=False, logx=False):
-  outname = fname.GetName()
-  for key in fname.GetListOfKeys():
-    histo = fname.Get(key.GetName())
-    dircheck = False
-    if dirname == '' : dircheck=True
-    elif dirname in key.GetName(): dircheck=True
-    if isinstance(histo,ROOT.TH1F) and key.GetName()==histname:
-      if logx:
-        bin_width = histo.GetBinWidth(1)
-        xbins = []
-        xbins.append(bin_width - 1)
-        axis = histo.GetXaxis()
-        for i in range(1,histo.GetNbinsX()+1):
-         xbins.append(axis.GetBinUpEdge(i))
-        rethist = ROOT.TH1F(histname,histname,histo.GetNbinsX(),array('d',xbins))
-        rethist.SetBinContent(1,histo.GetBinContent(1)*(histo.GetBinWidth(1)-(bin_width - 1))/(histo.GetBinWidth(1)))
-        rethist.SetBinError(1,histo.GetBinError(1)*(histo.GetBinWidth(1)-(bin_width - 1))/(histo.GetBinWidth(1)))
-        for i in range(2,histo.GetNbinsX()+1):
-          rethist.SetBinContent(i,histo.GetBinContent(i))
-          rethist.SetBinError(i,histo.GetBinError(i))
-        histo = rethist
-      return [histo,outname]
-    elif isinstance(histo,ROOT.TDirectory) and postfitmode in key.GetName() and dircheck:
-      return getHistogram(histo,histname, allowEmpty=allowEmpty, logx=logx)
-  print 'Failed to find %(postfitmode)s histogram with name %(histname)s in file %(fname)s '%vars()
-  if allowEmpty:
-    return [ROOT.TH1F('empty', '', 1, 0, 1), outname]
-  else:
-    return None
+    outname = fname.GetName()
+    for key in fname.GetListOfKeys():
+        histo = fname.Get(key.GetName())
+        dircheck = False
+        if dirname == '' : dircheck=True
+        elif dirname in key.GetName(): dircheck=True
+        if isinstance(histo,ROOT.TH1F) and key.GetName()==histname:
+            if logx:
+                bin_width = histo.GetBinWidth(1)
+                xbins = []
+                xbins.append(bin_width - 1)
+                axis = histo.GetXaxis()
+                for i in range(1,histo.GetNbinsX()+1):
+                    xbins.append(axis.GetBinUpEdge(i))
+                rethist = ROOT.TH1F(histname,histname,histo.GetNbinsX(),array('d',xbins))
+                rethist.SetBinContent(1,histo.GetBinContent(1)*(histo.GetBinWidth(1)-(bin_width - 1))/(histo.GetBinWidth(1)))
+                rethist.SetBinError(1,histo.GetBinError(1)*(histo.GetBinWidth(1)-(bin_width - 1))/(histo.GetBinWidth(1)))
+                for i in range(2,histo.GetNbinsX()+1):
+                    rethist.SetBinContent(i,histo.GetBinContent(i))
+                    rethist.SetBinError(i,histo.GetBinError(i))
+                histo = rethist
+            return [histo,outname]
+        elif isinstance(histo,ROOT.TDirectory) and postfitmode in key.GetName() and dircheck:
+            return getHistogram(histo,histname, allowEmpty=allowEmpty, logx=logx)
+    print 'Failed to find %(postfitmode)s histogram with name %(histname)s in file %(fname)s '%vars()
+    if allowEmpty:
+        return [ROOT.TH1F('empty', '', 1, 0, 1), outname]
+    else:
+        return None
 
 def signalComp(leg,plots,colour,stacked):
-  return dict([('leg_text',leg),('plot_list',plots),('colour',colour),('in_stack',stacked)])
+    return dict([('leg_text',leg),('plot_list',plots),('colour',colour),('in_stack',stacked)])
 
 def backgroundComp(leg,plots,colour):
-  return dict([('leg_text',leg),('plot_list',plots),('colour',colour)])
+    return dict([('leg_text',leg),('plot_list',plots),('colour',colour)])
 
 def createAxisHists(n,src,xmin=0,xmax=499):
-  result = []
-  for i in range(0,n):
-    res = src.Clone()
-    res.Reset()
-    res.SetTitle("")
-    res.SetName("axis%(i)d"%vars())
-    res.SetAxisRange(xmin,xmax)
-    res.SetStats(0)
-    result.append(res)
-  return result
-  
+    result = []
+    for i in range(0,n):
+        res = src.Clone()
+        res.Reset()
+        res.SetTitle("")
+        res.SetName("axis%(i)d"%vars())
+        res.SetAxisRange(xmin,xmax)
+        res.SetStats(0)
+        result.append(res)
+    return result
+
 
 plot.ModTDRStyle(r=0.04, l=0.14)
 
@@ -118,13 +118,13 @@ log_y=args.log_y
 log_x=args.log_x
 
 if(args.outname != ''):
-  outname=args.outname + '_'
+    outname=args.outname + '_'
 else:
-  outname=''
+    outname=''
 
 if not args.file:
-  print 'Provide a filename'
-  sys.exit(1)
+    print 'Provide a filename'
+    sys.exit(1)
 
 print "Using shape file ", args.file, ", with specified subdir name: ", file_dir
 shape_file=args.file
@@ -132,17 +132,17 @@ shape_file_name=args.file
 
 histo_file = ROOT.TFile(shape_file)
 
-#Store plotting information for different backgrounds 
+#Store plotting information for different backgrounds
 background_schemes={}
 #import models2018Z,models2018H
 #import  models2016Z as models2018Z
 #import  models2016H as models2018H
 if args.year == "cmb" :
-   models2018Z=importlib.import_module("modelA")
-   models2018H=importlib.import_module("modelA")
+    models2018Z=importlib.import_module("modelA")
+    models2018H=importlib.import_module("modelA")
 else:
-   models2018Z=importlib.import_module("models"+args.year+"Z")
-   models2018H=importlib.import_module("models"+args.year+"H")
+    models2018Z=importlib.import_module("models"+args.year+"Z")
+    models2018H=importlib.import_module("models"+args.year+"H")
 
 background_schemes['ch1']=[backgroundComp(x,models2018Z.background[x],models2018Z.fillcolor[x]) for x in models2018Z.backgroundSorted]+[backgroundComp(x,models2018Z.signal[x],models2018Z.fillcolor[x]) for x in models2018Z.signal]
 #background_schemes['ch2_SignalRegion']=[backgroundComp(x,models2018H.background[x],models2018H.fillcolor[x]) for x in models2018H.backgroundSorted]+[backgroundComp(x,models2018H.signal[x],models2018H.fillcolor[x]) for x in models2018H.signal]
@@ -157,7 +157,7 @@ plot_background_schemes = {'ch1':[],'ch2':[]} #'ch2_SignalRegion':[]}
 #Extract relevant histograms from shape file
 [sighist,binname] = getHistogram(histo_file,'TotalSig', file_dir, mode, args.no_signal, log_x)
 for i in range(0,sighist.GetNbinsX()):
-  if sighist.GetBinContent(i) < y_axis_min: sighist.SetBinContent(i,y_axis_min)
+    if sighist.GetBinContent(i) < y_axis_min: sighist.SetBinContent(i,y_axis_min)
 bkghist = getHistogram(histo_file,'TotalBkg',file_dir, mode, logx=log_x)[0]
 splusbhist = getHistogram(histo_file,'TotalProcs',file_dir, mode, logx=log_x)[0]
 
@@ -173,91 +173,91 @@ sighist_forratio.SetName("sighist_forratio")
 
 #Blinding by hand using requested range, set to 200-4000 by default
 if blind:
-  for i in range(0,total_datahist.GetNbinsX()):
-    low_edge = total_datahist.GetBinLowEdge(i+1)
-    high_edge = low_edge+total_datahist.GetBinWidth(i+1)
-    if ((low_edge > float(x_blind_min) and low_edge < float(x_blind_max)) or (high_edge > float(x_blind_min) and high_edge<float(x_blind_max))):
-      blind_datahist.SetBinContent(i+1,0)
-      blind_datahist.SetBinError(i+1,0)
+    for i in range(0,total_datahist.GetNbinsX()):
+        low_edge = total_datahist.GetBinLowEdge(i+1)
+        high_edge = low_edge+total_datahist.GetBinWidth(i+1)
+        if ((low_edge > float(x_blind_min) and low_edge < float(x_blind_max)) or (high_edge > float(x_blind_min) and high_edge<float(x_blind_max))):
+            blind_datahist.SetBinContent(i+1,0)
+            blind_datahist.SetBinError(i+1,0)
 
 #Set bin errors for empty bins if required:
 if empty_bin_error:
-  for i in range (1,blind_datahist.GetNbinsX()+1):
-    if blind_datahist.GetBinContent(i) == 0:
-      blind_datahist.SetBinError(i,1.8)
+    for i in range (1,blind_datahist.GetNbinsX()+1):
+        if blind_datahist.GetBinContent(i) == 0:
+            blind_datahist.SetBinError(i,1.8)
 
 channel = args.channel
 
 #Create stacked plot for the backgrounds
 bkg_histos = []
 for i,t in enumerate(background_schemes[channel]):
-  plots = t['plot_list']
-  h = ROOT.TH1F()
-  for j,k in enumerate(plots):
-    if h.GetEntries()==0 and getHistogram(histo_file,k, file_dir,mode,logx=log_x) is not None:
-      h = getHistogram(histo_file,k, file_dir,mode,logx=log_x)[0]
-      h.SetName(k)
-    else:
-      if getHistogram(histo_file,k, file_dir,mode,logx=log_x) is not None:
-        h.Add(getHistogram(histo_file,k, file_dir,mode,logx=log_x)[0])
-  if h.GetEntries()!=0:
-    h.SetFillColor(t['colour'])
-    h.SetLineColor(ROOT.kBlack)
-    h.SetMarkerSize(0)
-    bkg_histos.append(h)
-    plot_background_schemes[channel].append(t)
+    plots = t['plot_list']
+    h = ROOT.TH1F()
+    for j,k in enumerate(plots):
+        if h.GetEntries()==0 and getHistogram(histo_file,k, file_dir,mode,logx=log_x) is not None:
+            h = getHistogram(histo_file,k, file_dir,mode,logx=log_x)[0]
+            h.SetName(k)
+        else:
+            if getHistogram(histo_file,k, file_dir,mode,logx=log_x) is not None:
+                h.Add(getHistogram(histo_file,k, file_dir,mode,logx=log_x)[0])
+    if h.GetEntries()!=0:
+        h.SetFillColor(t['colour'])
+        h.SetLineColor(ROOT.kBlack)
+        h.SetMarkerSize(0)
+        bkg_histos.append(h)
+        plot_background_schemes[channel].append(t)
 
 stack = ROOT.THStack("hs","")
 for hists in bkg_histos:
-  stack.Add(hists)
+    stack.Add(hists)
 
 
 #Setup style related things
 c2 = ROOT.TCanvas()
 c2.cd()
 if args.ratio:
-  pads=plot.TwoPadSplit(0.29,0.01,0.01)
+    pads=plot.TwoPadSplit(0.29,0.01,0.01)
 else:
-  pads=plot.OnePad()
+    pads=plot.OnePad()
 pads[0].cd()
 if(log_y): pads[0].SetLogy(1)
 if(log_x): pads[0].SetLogx(1)
 if custom_x_range:
     if x_axis_max > bkghist.GetXaxis().GetXmax(): x_axis_max = bkghist.GetXaxis().GetXmax()
 if args.ratio:
-  if(log_x): pads[1].SetLogx(1)
-  axish = createAxisHists(2,bkghist,bkghist.GetXaxis().GetXmin(),bkghist.GetXaxis().GetXmax()-0.01)
-  axish[1].GetXaxis().SetTitle(args.x_title)
-  axish[1].GetYaxis().SetNdivisions(4)
-  axish[1].GetYaxis().SetTitle("Obs/Exp")
-  #axish[1].GetYaxis().SetTitleSize(0.04)
-  #axish[1].GetYaxis().SetLabelSize(0.04)
-  #axish[1].GetYaxis().SetTitleOffset(1.3)
-  #axish[0].GetYaxis().SetTitleSize(0.04)
-  #axish[0].GetYaxis().SetLabelSize(0.04)
-  #axish[0].GetYaxis().SetTitleOffset(1.3)
-  axish[0].GetXaxis().SetTitleSize(0)
-  axish[0].GetXaxis().SetLabelSize(0)
-  if custom_x_range:
-    axish[0].GetXaxis().SetRangeUser(x_axis_min,x_axis_max-0.01)
-    axish[1].GetXaxis().SetRangeUser(x_axis_min,x_axis_max-0.01)
-  if custom_y_range:
-    axish[0].GetYaxis().SetRangeUser(y_axis_min,y_axis_max)
-    axish[1].GetYaxis().SetRangeUser(y_axis_min,y_axis_max)
+    if(log_x): pads[1].SetLogx(1)
+    axish = createAxisHists(2,bkghist,bkghist.GetXaxis().GetXmin(),bkghist.GetXaxis().GetXmax()-0.01)
+    axish[1].GetXaxis().SetTitle(args.x_title)
+    axish[1].GetYaxis().SetNdivisions(4)
+    axish[1].GetYaxis().SetTitle("Obs/Exp")
+    #axish[1].GetYaxis().SetTitleSize(0.04)
+    #axish[1].GetYaxis().SetLabelSize(0.04)
+    #axish[1].GetYaxis().SetTitleOffset(1.3)
+    #axish[0].GetYaxis().SetTitleSize(0.04)
+    #axish[0].GetYaxis().SetLabelSize(0.04)
+    #axish[0].GetYaxis().SetTitleOffset(1.3)
+    axish[0].GetXaxis().SetTitleSize(0)
+    axish[0].GetXaxis().SetLabelSize(0)
+    if custom_x_range:
+        axish[0].GetXaxis().SetRangeUser(x_axis_min,x_axis_max-0.01)
+        axish[1].GetXaxis().SetRangeUser(x_axis_min,x_axis_max-0.01)
+    if custom_y_range:
+        axish[0].GetYaxis().SetRangeUser(y_axis_min,y_axis_max)
+        axish[1].GetYaxis().SetRangeUser(y_axis_min,y_axis_max)
 else:
-  axish = createAxisHists(1,bkghist,bkghist.GetXaxis().GetXmin(),bkghist.GetXaxis().GetXmax()-0.01)
+    axish = createAxisHists(1,bkghist,bkghist.GetXaxis().GetXmin(),bkghist.GetXaxis().GetXmax()-0.01)
 #  axish[0].GetYaxis().SetTitleOffset(1.4)
-  if custom_x_range:
-    axish[0].GetXaxis().SetRangeUser(x_axis_min,x_axis_max-0.01)
-  if custom_y_range:
-    axish[0].GetYaxis().SetRangeUser(y_axis_min,y_axis_max)
+    if custom_x_range:
+        axish[0].GetXaxis().SetRangeUser(x_axis_min,x_axis_max-0.01)
+    if custom_y_range:
+        axish[0].GetYaxis().SetRangeUser(y_axis_min,y_axis_max)
 
 axish[0].GetYaxis().SetTitle(args.y_title)
 axish[0].GetXaxis().SetTitle(args.x_title)
 if not custom_y_range: axish[0].SetMaximum(extra_pad*bkghist.GetMaximum())
-if not custom_y_range: 
-  if(log_y): axish[0].SetMinimum(0.0009)
-  else: axish[0].SetMinimum(0)
+if not custom_y_range:
+    if(log_y): axish[0].SetMinimum(0.0009)
+    else: axish[0].SetMinimum(0)
 axish[0].Draw()
 
 #Draw uncertainty band
@@ -277,9 +277,9 @@ stack.Draw("histsame")
 splusbhist.Draw("e2same")
 #Add signal
 if not args.no_signal:
-  sighist.SetLineColor(ROOT.kRed)
-  sighist.SetLineWidth(3)
-  sighist.Draw("histsame")
+    sighist.SetLineColor(ROOT.kRed)
+    sighist.SetLineWidth(3)
+    sighist.Draw("histsame")
 blind_datahist.DrawCopy("e0psame")
 axish[0].Draw("axissame")
 
@@ -294,10 +294,10 @@ legend.AddEntry(total_datahist,"Observation","PE")
 bkg_histos.reverse()
 plot_background_schemes[channel].reverse()
 for legi,hists in enumerate(bkg_histos):
-  legend.AddEntry(hists,plot_background_schemes[channel][legi]['leg_text'],"f")
+    legend.AddEntry(hists,plot_background_schemes[channel][legi]['leg_text'],"f")
 legend.AddEntry(splusbhist,"S+B uncertainty","f")
 if not args.no_signal:
-  legend.AddEntry(sighist,"H(#mu#mu)","l")
+    legend.AddEntry(sighist,"H(#mu#mu)","l")
 latex = ROOT.TLatex()
 latex.SetNDC()
 latex.SetTextAngle(0)
@@ -325,17 +325,17 @@ plot.DrawTitle(pads[0], lumiperYear[args.year], 3)
 
 #Add ratio plot if required
 if args.ratio:
-  ratio_bkghist = plot.MakeRatioHist(splusbhist,splusbhist,True,False)
-  blind_datahist = plot.MakeRatioHist(blind_datahist,splusbhist,True,False)
-  pads[1].cd()
-  pads[1].SetGrid(0,1)
-  axish[1].Draw("axis")
-  axish[1].SetMinimum(float(args.ratio_range.split(',')[0]))
-  axish[1].SetMaximum(float(args.ratio_range.split(',')[1]))
-  ratio_bkghist.SetMarkerSize(0)
-  ratio_bkghist.Draw("e2same")
-  blind_datahist.DrawCopy("e0same")
-  pads[1].RedrawAxis("G")
+    ratio_bkghist = plot.MakeRatioHist(splusbhist,splusbhist,True,False)
+    blind_datahist = plot.MakeRatioHist(blind_datahist,splusbhist,True,False)
+    pads[1].cd()
+    pads[1].SetGrid(0,1)
+    axish[1].Draw("axis")
+    axish[1].SetMinimum(float(args.ratio_range.split(',')[0]))
+    axish[1].SetMaximum(float(args.ratio_range.split(',')[1]))
+    ratio_bkghist.SetMarkerSize(0)
+    ratio_bkghist.Draw("e2same")
+    blind_datahist.DrawCopy("e0same")
+    pads[1].RedrawAxis("G")
 
 
 pads[0].cd()
@@ -351,7 +351,3 @@ if(log_y): outname+="_logy"
 if(log_x): outname+="_logx"
 c2.SaveAs("%(outname)s.png"%vars())
 c2.SaveAs("%(outname)s.pdf"%vars())
-
-
-
-

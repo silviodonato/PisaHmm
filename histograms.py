@@ -63,13 +63,9 @@ histosPerSelectionFullJecs={
 
 #quick override for missing plots
 if False:
-  histosPerSelectionFullJecs={
-}
-  histosPerSelection={
-    "SignalRegion":      ["Higgs_m_noGF","Mqq_over400_log","DNN18Atan"],#ericHistos+bdtInputHistos,
-    "SideBand":      ["Higgs_m_noGF","Mqq_over400_log","DNN18Atan"],#ericHistos+bdtInputHistos,
-}
-
-
-
-
+    histosPerSelectionFullJecs={
+  }
+    histosPerSelection={
+      "SignalRegion":      ["Higgs_m_noGF","Mqq_over400_log","DNN18Atan"],#ericHistos+bdtInputHistos,
+      "SideBand":      ["Higgs_m_noGF","Mqq_over400_log","DNN18Atan"],#ericHistos+bdtInputHistos,
+  }

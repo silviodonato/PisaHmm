@@ -2,23 +2,23 @@
 
 #TODO: separate systematics as
 #shape only (remove normalization effects)
-#per group 
+#per group
 #per sample
 
-#default is correlated among all samples 
+#default is correlated among all samples
 #and correlated nuisance for norm+shape
 
 
 
 
 def systematicGrouping (background, signal,jesList,year) :
-    
+
     legendGrouping = {}
     legendGrouping.update(background)
     legendGrouping.update(signal)
 
     DY = ["DY105","DY105VBF", "DY0J", "DY1J", "DY2J", "DY105J01", "DY105VBFJ01","DY105J2", "DY105VBFJ2",]
-    EWK= ["EWKZ", "EWKZint", "EWKZ105FIX","EWKZ105","EWKZ105FIX2","EWKZ105CORR"] 
+    EWK= ["EWKZ", "EWKZint", "EWKZ105FIX","EWKZ105","EWKZ105FIX2","EWKZ105CORR"]
     TT = ["TTlep","TTsemi","TThad", "TT"]
     ST = ["STs","STwtbar","STwt","STtbar","STt"]
     WW = ["WWdps","WWJJlnln","WLLJJln", "WW2l2n","WWlnqq"]
@@ -32,7 +32,7 @@ def systematicGrouping (background, signal,jesList,year) :
 
     allSamples = {}
     for x in DY+EWK+TT+ST+WW+WZ+ZZ+WJets+Hmm : allSamples[x] = [x]
-    
+
     systematicDetail={
         "puWeight" : {
                 "type": "shape" #NormOnly, ShapeNorm
@@ -41,22 +41,22 @@ def systematicGrouping (background, signal,jesList,year) :
                 "type": "lnN",
                 "value":1.025
             },
-	"BR_mm":{
+        "BR_mm":{
                 "type": "lnN",
-                "decorrelate": { "Hmm": Hmm},   
+                "decorrelate": { "Hmm": Hmm},
                 "additionalNormalizations": [], #"PDFX0"],
                 "groupValues":  {"Hmm":1.0123},
-	},
-   	"XSecAndNorm"+year :{
+        },
+        "XSecAndNorm"+year :{
                 "type": "lnN",
-#               "decorrelate": { "Hmm": HmmNoVBF, "EWK":EWK,"DY":DY, "TT":TT ,"ST":ST, "WJets":WJets, "ZZ":ZZ, "WZ":WZ, "WW":WW},   
-                "decorrelate": { "Hmm": HmmNoVBF, "EWK":EWK,"DY01J":DY01J,"DY2J":DY2J , "TT":TT ,"ST":ST, "WJets":WJets, "ZZ":ZZ, "WZ":WZ, "WW":WW},   
+#               "decorrelate": { "Hmm": HmmNoVBF, "EWK":EWK,"DY":DY, "TT":TT ,"ST":ST, "WJets":WJets, "ZZ":ZZ, "WZ":WZ, "WW":WW},
+                "decorrelate": { "Hmm": HmmNoVBF, "EWK":EWK,"DY01J":DY01J,"DY2J":DY2J , "TT":TT ,"ST":ST, "WJets":WJets, "ZZ":ZZ, "WZ":WZ, "WW":WW},
                 "additionalNormalizations": ["LHERen","LHEFac"], #"PDFX0"],
 #                "groupValues":  {"Hmm":1.01, "EWK":1.01, "DY":1.010 ,"ZZ":1.01,"WZ":1.01,"WW":1.01,"WJets":1.01,"TT":1.005,"ST":1.005},
                 "groupValues":  {"Hmm":1.00, "EWK":1.00, "DY01J":1.000,"DY2J":1.000 ,"ZZ":1.00,"WZ":1.00,"WW":1.00,"WJets":1.00,"TT":1.000,"ST":1.000},
         },
         "QGLweight":{
-                "decorrelate": { "Hmm": Hmm, "EWK":EWK,"DY":DY, "TT":TT ,"ST":ST, "WJets":WJets, "ZZ":ZZ, "WZ":WZ, "WW":WW},   
+                "decorrelate": { "Hmm": Hmm, "EWK":EWK,"DY":DY, "TT":TT ,"ST":ST, "WJets":WJets, "ZZ":ZZ, "WZ":WZ, "WW":WW},
                 "type": "shapeOnly",
                 "value":1.0,
         },
@@ -66,7 +66,7 @@ def systematicGrouping (background, signal,jesList,year) :
         },
         "PrefiringWeight":{
                 "type": "shape",
-		"decorrelate": {"":DY+EWK+TT+Hmm},
+                "decorrelate": {"":DY+EWK+TT+Hmm},
                 "value":1.0,
         },
         "LHERen":{
@@ -92,8 +92,8 @@ def systematicGrouping (background, signal,jesList,year) :
                     "vbfHmm_2016POWPYDIPOLE":         ("vbfHmm_2018POWHERWIG7", "vbfHmm_2018POWPYDIPOLE"),##AR
                     "vbfHmm_2017POWPYDIPOLE":         ("vbfHmm_2017POWHERWIG7", "vbfHmm_2017POWPYDIPOLE"),
                     "vbfHmm_2018POWPYDIPOLE":         ("vbfHmm_2018POWHERWIG7", "vbfHmm_2018POWPYDIPOLE"),
-	},
-	},
+        },
+        },
         "DYModel":{
                 "type": "shapeOnly",
                 "value": 1.0,
@@ -111,7 +111,7 @@ def systematicGrouping (background, signal,jesList,year) :
                     "DY105VBFJ2_2017AMCPY":  ("DY105VBFJ2_2016AMCPY", "DY105VBFJ2_2017AMCPY"),
                     "DY105J2_2018AMCPY":  ("DY105J2_2016AMCPY", "DY105J2_2018AMCPY"),
                     "DY105J2_2017AMCPY":  ("DY105J2_2016AMCPY", "DY105J2_2017AMCPY"),
-		}
+                }
 
         },
 
@@ -133,7 +133,7 @@ def systematicGrouping (background, signal,jesList,year) :
         ##"Alternative":{
                 ##"type": "shape",
                 ##"value":1.0,
-                ##"powerDown": -1., ## down = nom * (up/nom)^powerDown 
+                ##"powerDown": -1., ## down = nom * (up/nom)^powerDown
                 ##"decorrelate":{
                    ##"DY" :["DY105","DY105VBF"],
                 ##},
@@ -227,7 +227,7 @@ def systematicGrouping (background, signal,jesList,year) :
 
     jesfew={    "JES":{
                 "type": "shape",
-	        "decorrelate": {"":DY+EWK+TT+Hmm},
+                "decorrelate": {"":DY+EWK+TT+Hmm},
 
                 "value":1.0,
        }}
@@ -236,7 +236,7 @@ def systematicGrouping (background, signal,jesList,year) :
     jer={x[0:-4]:{"type": "shape",   "decorrelate": {"":DY+EWK+TT+Hmm}, "value":1.0} for x in jernames if "Down" in x}
     jerfew={    "JER":{
                 "type": "shape",
-		  "decorrelate": {"":DY+EWK+TT+Hmm},
+                  "decorrelate": {"":DY+EWK+TT+Hmm},
                 "value":1.0,
        }}
 #    jesnames=[ "JESPt0To30Eta0To2","JESPt30To50Eta0To2","JESPt50To100Eta0To2","JESPt100To2000Eta0To2","JESPt0To30Eta2To2p5","JESPt30To50Eta2To2p5","JESPt50To100Eta2To2p5","JESPt100To2000Eta2To2p5","JESPt0To30Eta2p5To3p1","JESPt30To50Eta2p5To3p1","JESPt50To100Eta2p5To3p1","JESPt100To2000Eta2p5To3p1","JESPt0To30Eta3p1To5","JESPt30To50Eta3p1To5","JESPt50To100Eta3p1To5","JESPt100To2000Eta3p1To5" ]
@@ -253,15 +253,8 @@ def systematicGrouping (background, signal,jesList,year) :
 
     sthsNames=["Yield","PTH200","Mjj60","Mjj120","Mjj350","Mjj700","Mjj1000","Mjj1500","PTH25","JET01"]
     THUs={"THU_VBF_"+x:{"type": "shape", "decorrelate": {  "vbfHmm" :["vbfHmm"] }, "value":1.0} for x in sthsNames }
-    print THUs
+    print(THUs)
     systematicDetail.update(THUs)
 
 
     return systematicDetail
-
-
-
-
-
-
-

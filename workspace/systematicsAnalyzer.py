@@ -6,9 +6,9 @@ from HiggsAnalysis.CombinedLimit.DatacardParser import parseCard, addDatacardPar
 from collections import defaultdict
 from optparse import OptionParser
 try:
-  from vv import v 
+    from vv import v
 except :
-  v={}
+    v={}
 
 parser = OptionParser()
 addDatacardParserOptions(parser)
@@ -26,7 +26,7 @@ parser.add_option("--atol", "--asym-tolerance", dest="atol", default=0.5, type="
 parser.add_option("--sstol", "--samesign-tolerance", dest="sstol", default=0.05, type="float", help="Report nuisances which go both on the same direction, if both are at least x (default 0.05)")
 parser.add_option("--plot", dest="plotShapes", default=[], action="append",  type="string",  help="Make plots of shapes for the nuisances for this nuisance (regexp, can specify multilple times)")
 parser.add_option("--plot-flagged", dest="plotFlagged", default=False, action='store_true', help="Make plots of shapes for the nuisances, bins and processes that are flagged")
-parser.add_option("--icon-plot-url", dest="plotIconUrl", default="https://twiki.cern.ch//twiki/pub/TWiki/TWikiDocGraphics/chart-bar.gif", type="string",  help="URL of icon used to link to plots") 
+parser.add_option("--icon-plot-url", dest="plotIconUrl", default="https://twiki.cern.ch//twiki/pub/TWiki/TWikiDocGraphics/chart-bar.gif", type="string",  help="URL of icon used to link to plots")
 
 (options, args) = parser.parse_args()
 real_out = options.out if options.out else "-"
@@ -41,14 +41,14 @@ options.verbose = 0
 options.poisson = 0
 options.noJMax = True
 options.allowNoSignal = True
-options.modelparams = [] 
+options.modelparams = []
 
 import ROOT
 ROOT.gROOT.SetBatch(True)
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 if options.plotShapes or options.plotFlagged:
-    if real_out == "-" or options.format != "html": 
+    if real_out == "-" or options.format != "html":
         sys.stderr.write("ERROR, --plot requires to save the output to a file with -o / --out, and to use -f html\n")
         exit(1)
     else:
@@ -57,13 +57,13 @@ if options.plotShapes or options.plotFlagged:
         if not os.path.isdir(plotdir): os.system("mkdir -p "+plotdir)
         if os.path.exists("/afs/cern.ch"): os.system("cp /afs/pi.infn.it/user/arizzi/public_html/template/index.php "+plotdir) # better way of getting this?
         c1 = ROOT.TCanvas("c1","c1")
-	c1.Divide(1,2)
-	p1=ROOT.TPad("p1","",0,0.2,1,1)#c1.cd(1)
-	p2=ROOT.TPad("p2","",0,0.0,1,0.2)#c1.cd(2)
-	p1.Draw()
-	p2.Draw()
+        c1.Divide(1,2)
+        p1=ROOT.TPad("p1","",0,0.2,1,1)#c1.cd(1)
+        p2=ROOT.TPad("p2","",0,0.0,1,0.2)#c1.cd(2)
+        p1.Draw()
+        p2.Draw()
         ROOT.gErrorIgnoreLevel = ROOT.kWarning
-if real_out != "-" and os.path.dirname(real_out) and not os.path.isdir(os.path.dirname(real_out)): 
+if real_out != "-" and os.path.dirname(real_out) and not os.path.isdir(os.path.dirname(real_out)):
     os.system("mkdir -p "+os.path.dirname(real_out))
 
 ROOT.gSystem.Load("libHiggsAnalysisCombinedLimit")
@@ -95,16 +95,16 @@ def commonStems(list, sep="_"):
         pieces = k.split(sep)
         for i in xrange(1, len(pieces)):
             k2 = "_".join(pieces[:-i])
-            if hits[k2] == v: 
+            if hits[k2] == v:
                 veto[k2] = True
             else:
                 veto[k] = True
     ret = []
     for k,v in hits.iteritems():
-       if k not in veto: ret.append((k,v))
+        if k not in veto: ret.append((k,v))
     ret.sort()
-    return ret 
-    
+    return ret
+
 report = {}; errlines = {}; outParams = {}
 warn = set()
 warn_chann = set()
@@ -123,8 +123,8 @@ shapes_to_plot = {}
 nuis_has_plots = set()
 nuis_bin_has_plots = set()
 for (lsyst,nofloat,pdf,pdfargs,errline) in DC.systs:
-    if ("param" in pdf) or ("Param" in pdf) or ("discrete" in pdf): 
-    	 if options.all: outParams[lsyst]=[pdf,pdfargs]
+    if ("param" in pdf) or ("Param" in pdf) or ("discrete" in pdf):
+        if options.all: outParams[lsyst]=[pdf,pdfargs]
     if not options.all and pdf != "lnN": continue
     if not len(errline) : continue
     if options.grep and not any(re.match(pat,lsyst) for pat in options.grep): continue
@@ -135,24 +135,24 @@ for (lsyst,nofloat,pdf,pdfargs,errline) in DC.systs:
     errlines[lsyst] = errline
     for b in DC.bins:
         numKeysFound = 0
-    	types.append(pdf)
+        types.append(pdf)
         channels.append(b)
         for p in DC.exp[b].iterkeys():
             if errline[b][p] == 0: continue
-	    numKeysFound+=1
+            numKeysFound+=1
             processes[p] = True
             isShape = False
-	    if "shape" in pdf and MB.isShapeSystematic(b,p,lsyst):
-		vals = []
+            if "shape" in pdf and MB.isShapeSystematic(b,p,lsyst):
+                vals = []
                 isShape = True
 
-		systShapeName = lsyst
-		if (lsyst,b,p) in DC.systematicsShapeMap.keys(): systShapeName = DC.systematicsShapeMap[(lsyst,b,p)]
+                systShapeName = lsyst
+                if (lsyst,b,p) in DC.systematicsShapeMap.keys(): systShapeName = DC.systematicsShapeMap[(lsyst,b,p)]
 
-	    	objU,objD,objC = MB.getShape(b,p,systShapeName+"Up"), MB.getShape(b,p,systShapeName+"Down"), MB.getShape(b,p)
-	 
-		if objC.InheritsFrom("TH1"): valU,valD,valC =  objU.Integral(), objD.Integral(), objC.Integral()
-		elif objC.InheritsFrom("RooDataHist"): valU,valD,valC =  objU.sumEntries(), objD.sumEntries(), objC.sumEntries()
+                objU,objD,objC = MB.getShape(b,p,systShapeName+"Up"), MB.getShape(b,p,systShapeName+"Down"), MB.getShape(b,p)
+
+                if objC.InheritsFrom("TH1"): valU,valD,valC =  objU.Integral(), objD.Integral(), objC.Integral()
+                elif objC.InheritsFrom("RooDataHist"): valU,valD,valC =  objU.sumEntries(), objD.sumEntries(), objC.sumEntries()
 
                 if any(re.match(pat, lsyst) for pat in options.plotShapes):
                     shapes_to_plot[(lsyst,b,p)] = (objU,objD,objC)
@@ -162,33 +162,33 @@ for (lsyst,nofloat,pdf,pdfargs,errline) in DC.systs:
                     valU, valD, valC = 1,1,1
                     if "TH1" not in objC.ClassName(): raise RuntimeError("Not supported on "+objC.ClassName())
                     for ib in xrange(1,objC.GetNbinsX()):
-                       binU, binD, binC =  objU.GetBinContent(ib), objD.GetBinContent(ib), objC.GetBinContent(ib)
-                       if binC == 0:
-                           if binU != 0 or binD != 0: dowarn(lsyst,b,p,"bad bin %s (zero central value +- %.4f, non-zero up or down variation)" % (ib,objC.GetBinError(ib)))
-                           continue
-                       if binU == 0 or binD == 0: 
-                           dowarn(lsyst,b,p,"bad bin %s (zero up or down variation, central value was %.4f +- %.4f)" % (ib,binC,objC.GetBinError(ib)))
-                           continue
-                       binvals, binwarn = (binU/binC, binD/binC), None
-		       binvals= [(x if x >0 else 0.0001) for x in binvals]
-                       if max(max(binvals),1/min(binvals)) > options.vtol: 
+                        binU, binD, binC =  objU.GetBinContent(ib), objD.GetBinContent(ib), objC.GetBinContent(ib)
+                        if binC == 0:
+                            if binU != 0 or binD != 0: dowarn(lsyst,b,p,"bad bin %s (zero central value +- %.4f, non-zero up or down variation)" % (ib,objC.GetBinError(ib)))
+                            continue
+                        if binU == 0 or binD == 0:
+                            dowarn(lsyst,b,p,"bad bin %s (zero up or down variation, central value was %.4f +- %.4f)" % (ib,binC,objC.GetBinError(ib)))
+                            continue
+                        binvals, binwarn = (binU/binC, binD/binC), None
+                        binvals= [(x if x >0 else 0.0001) for x in binvals]
+                        if max(max(binvals),1/min(binvals)) > options.vtol:
                             binwarn = "very large or small variation"
-                       elif log(max(binvals))*log(min(binvals)) > 0 and min(max(v,1/v) for v  in binvals) > 1+options.sstol: 
+                        elif log(max(binvals))*log(min(binvals)) > 0 and min(max(v,1/v) for v  in binvals) > 1+options.sstol:
                             binwarn = "same-signed variation"
-                       elif log(max(binvals)*min(binvals)) > options.atol:
+                        elif log(max(binvals)*min(binvals)) > options.atol:
                             binwarn = "very asymmetric variation"
-                       if binwarn: dowarn(lsyst,b,p,"%s for bin %s: central %.4f +- %.4f, up : %.4f +- %.4f (ratio %.3f), down %.4f +- %.4f (ratio %.3f)" % (
-                                                    binwarn, ib, binC, objC.GetBinError(ib), binU, objU.GetBinError(ib), binU/binC,  binD, objD.GetBinError(ib), binD/binC))
-                       valU = max(valU, max(binvals))
-                       valD = min(valU, min(binvals))
-		if valC!=0: 
-			errlines[lsyst][b][p] = "%.3f/%.3f"%(valU/valC,valD/valC)
-			vals.append(valU/valC)
-			vals.append(valD/valC if valD > 0 else 0.001)
-		else: 
-			errlines[lsyst][b][p] = "NAN/NAN"
-			vals.append(1.)
-			vals.append(1.)
+                        if binwarn: dowarn(lsyst,b,p,"%s for bin %s: central %.4f +- %.4f, up : %.4f +- %.4f (ratio %.3f), down %.4f +- %.4f (ratio %.3f)" % (
+                                                     binwarn, ib, binC, objC.GetBinError(ib), binU, objU.GetBinError(ib), binU/binC,  binD, objD.GetBinError(ib), binD/binC))
+                        valU = max(valU, max(binvals))
+                        valD = min(valU, min(binvals))
+                if valC!=0:
+                    errlines[lsyst][b][p] = "%.3f/%.3f"%(valU/valC,valD/valC)
+                    vals.append(valU/valC)
+                    vals.append(valD/valC if valD > 0 else 0.001)
+                else:
+                    errlines[lsyst][b][p] = "NAN/NAN"
+                    vals.append(1.)
+                    vals.append(1.)
             else: vals = errline[b][p] if type(errline[b][p]) == list else [ errline[b][p] ]
             for val in vals:
                 if val < 1 and val >0: val = 1.0/val
@@ -215,14 +215,14 @@ yields_s, yields_b, yields_t = defaultdict(float), defaultdict(float), {}
 for b in DC.bins:
     for p,y in DC.exp[b].iteritems():
         (yields_s if p in DC.signals else yields_b)[b] += y
-    yields_t[b] = yields_s[b] + yields_b[b] 
+    yields_t[b] = yields_s[b] + yields_b[b]
 
 print "############## Drop lines ##############"
 for d in droplines:
-	print d
+    print d
 print "########################################"
 # Get list
-names = report.keys() 
+names = report.keys()
 if "brief" in options.format:
     names = [ k for (k,v) in report.iteritems()  ]
 if options.process:
@@ -271,16 +271,16 @@ function toggleChann(id) {
 <tr><th>Nuisance (types)</th><th colspan="2">Range</th><th>Processes</th><th>Channels</th></tr>
 """)
     def maywarn(x,nuis,chann=None,proc=None):
-        if proc != None and chann != None: 
-             iswarn = ((nuis,chann,proc) in warn_chann_proc) 
+        if proc != None and chann != None:
+            iswarn = ((nuis,chann,proc) in warn_chann_proc)
         elif proc != None:
-             iswarn = ((nuis,proc) in warn_proc) 
-        elif chann != None: 
-             iswarn = ((nuis,chann) in warn_chann)
-        else: 
-             iswarn = (nuis in warn)
+            iswarn = ((nuis,proc) in warn_proc)
+        elif chann != None:
+            iswarn = ((nuis,chann) in warn_chann)
+        else:
+            iswarn = (nuis in warn)
         return ("<span class=\"WARN\">%s</span>" % x) if iswarn else x
-    plot_bin_skip = set() # bins for which we can't make plots 
+    plot_bin_skip = set() # bins for which we can't make plots
     for nuis in names:
         val = report[nuis]
         link = "<a href=\"%s/index.php?match=%s-\"><img src=\"%s\"></a>" %(os.path.basename(plotdir),nuis,options.plotIconUrl) if nuis in nuis_has_plots else ""
@@ -293,7 +293,7 @@ function toggleChann(id) {
         ostream.write( "</tr>\n" )
         ostream.write( "<tr id=\"%s_chann\" style=\"display: none\">" % nuis )
         ostream.write( "\t<td colspan=\"5\"><table class=\"channDetails\">"  )
-        for x in sorted(val["bins"]): 
+        for x in sorted(val["bins"]):
             binspan="total yields: sig %.2f, bkg %.2f, tot %.2f" % (yields_s[x],yields_b[x],yields_t[x])
             binprocs = []
             for (k,v) in sorted(errlines[nuis][x].iteritems()):
@@ -305,11 +305,11 @@ function toggleChann(id) {
             ostream.write( "\t\t<tr><td><span title=\"%s\">%s</span>%s</td><td>%s</td></tr>" % (binspan,maywarn(x,nuis,x),link, ", ".join(binprocs)) )
         ostream.write( "\t</table></td>" )
         ostream.write( "</tr>\n" )
-                    
+
     for x in outParams.keys():
         ostream.write( "\t\t<tr><td><b>%s(%s)</b></td><td>%s</td>" % (x,  outParams[x][0] , ", ".join([a for a in outParams[x][1]])) )
         ostream.write( "</tr>\n" )
-    ostream.write( """ 
+    ostream.write( """
 </table>
 </body>
 </html>""" )
@@ -319,55 +319,54 @@ function toggleChann(id) {
         for b in DC.bins:
             if b in plot_bin_skip: continue
             for p in DC.exp[b].iterkeys():
-                 if (nuis,b,p) not in shapes_to_plot: continue
-                 objU,objD,objC = shapes_to_plot[(nuis,b,p)]
-                 if "TH1" in objC.ClassName():
-                     objC.SetLineColor(ROOT.kBlack)
-                     objU.SetLineColor(ROOT.kBlue)
-                     objD.SetLineColor(ROOT.kRed)
-                     stack = ROOT.THStack("stk","%s for bin %s, proc. %s"%(nuis,b,p))
-                     for o in objU,objD,objC:
-                         o.SetFillStyle(0)
-                         o.SetLineWidth(2)
-                         stack.Add(o)	
-		     p1.cd()	
-                     stack.Draw("HIST NOSTACK")
-                     objC.Draw("E1 SAME")
-	             p2.cd()
-		     rU=objU.Clone()
-		     rD=objD.Clone()
-		     rU.Divide(objC)
-		     rD.Divide(objC)
-		     rU.SetStats(0);
-		     rU.Draw("hist")
-		     rU.SetTitle("")
-		     rU.GetYaxis().SetRangeUser(0.9,1.10)
-                     rU.GetYaxis().SetNdivisions(505);
-                     rU.GetYaxis().SetTitleSize(20);
-                     rU.GetYaxis().SetTitleFont(43);
-                     rU.GetYaxis().SetTitleOffset(1.55);
-                     rU.GetYaxis().SetLabelFont(43); 
-                     rU.GetYaxis().SetLabelSize(15);
-                     rU.GetXaxis().SetLabelFont(43); 
-                     rU.GetXaxis().SetLabelSize(10);
-		     rD.Draw("same hist")
-		     p2.SetGridy()
-                     stack.GetXaxis().SetTitle("(black = nominal, blue = %s up, red = %s down)" % (nuis,nuis))
-                     c1.Print("%s/%s-%s-%s.png" % (plotdir,nuis,b,p))
-		     p1.SetLogy(True)
-                     c1.Print("%s/%s-%s-%s-log.png" % (plotdir,nuis,b,p))
-		     p1.SetLogy(False)
-                 else:
-                     syst.sterr.write("Notice: can't plot for bin %s, class type %s\n" % (b, nuis, objC.ClassName()))
-                     plot_bin_skip.add(b); break
- 
+                if (nuis,b,p) not in shapes_to_plot: continue
+                objU,objD,objC = shapes_to_plot[(nuis,b,p)]
+                if "TH1" in objC.ClassName():
+                    objC.SetLineColor(ROOT.kBlack)
+                    objU.SetLineColor(ROOT.kBlue)
+                    objD.SetLineColor(ROOT.kRed)
+                    stack = ROOT.THStack("stk","%s for bin %s, proc. %s"%(nuis,b,p))
+                    for o in objU,objD,objC:
+                        o.SetFillStyle(0)
+                        o.SetLineWidth(2)
+                        stack.Add(o)
+                    p1.cd()
+                    stack.Draw("HIST NOSTACK")
+                    objC.Draw("E1 SAME")
+                    p2.cd()
+                    rU=objU.Clone()
+                    rD=objD.Clone()
+                    rU.Divide(objC)
+                    rD.Divide(objC)
+                    rU.SetStats(0);
+                    rU.Draw("hist")
+                    rU.SetTitle("")
+                    rU.GetYaxis().SetRangeUser(0.9,1.10)
+                    rU.GetYaxis().SetNdivisions(505);
+                    rU.GetYaxis().SetTitleSize(20);
+                    rU.GetYaxis().SetTitleFont(43);
+                    rU.GetYaxis().SetTitleOffset(1.55);
+                    rU.GetYaxis().SetLabelFont(43);
+                    rU.GetYaxis().SetLabelSize(15);
+                    rU.GetXaxis().SetLabelFont(43);
+                    rU.GetXaxis().SetLabelSize(10);
+                    rD.Draw("same hist")
+                    p2.SetGridy()
+                    stack.GetXaxis().SetTitle("(black = nominal, blue = %s up, red = %s down)" % (nuis,nuis))
+                    c1.Print("%s/%s-%s-%s.png" % (plotdir,nuis,b,p))
+                    p1.SetLogy(True)
+                    c1.Print("%s/%s-%s-%s-log.png" % (plotdir,nuis,b,p))
+                    p1.SetLogy(False)
+                else:
+                    syst.sterr.write("Notice: can't plot for bin %s, class type %s\n" % (b, nuis, objC.ClassName()))
+                    plot_bin_skip.add(b); break
+
 else:
     if "brief" in options.format:
         ostream.write( "%-50s  [%5s, %5s]   %-40s  %-30s\n" % ("   NUISANCE (TYPE)", " MIN", " MAX", "PROCESSES", "CHANNELS(#SUBCHANNELS)" ) )
         ostream.write( "%-50s  %14s   %-40s  %-30s\n" % ("-"*50, "-"*14, "-"*30, "-"*30) )
         for nuis in names:
             val = report[nuis]
-            ostream.write( "%-50s (%s)  [%s, %s]   %-40s  %-30s\n" % ( nuis,val['types'], val['effect'][0],val['effect'][1],  
+            ostream.write( "%-50s (%s)  [%s, %s]   %-40s  %-30s\n" % ( nuis,val['types'], val['effect'][0],val['effect'][1],
                                                                 ",".join(val['processes']),
                                                                 ",".join(["%s(%d)" % (k,v) for (k,v) in sorted(val['channels'])])) )
-

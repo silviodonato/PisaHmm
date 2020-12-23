@@ -9,7 +9,7 @@
 
 class LwtnnWrapper{
     public:
-        LwtnnWrapper(std::vector<std::string> NNjsons =  {"/scratch/lgiannini/HmmPisa/model_for_lwtnn/output_fix_finalepoch.json"})
+        LwtnnWrapper(std::vector<std::string> NNjsons =  {"/home/sdonato/Hmm/fromlgiannini/output_fix_finalepoch.json"})
         {
 	    std::cout << "Constructor " << NNjsons.size() << " " << NNjsons[0] <<" "  << this <<  std::endl;
 //             std::ifstream input("/scratch/lgiannini/HmmPisa/model_for_lwtnn/output_fix_finalepoch.json");

@@ -5,7 +5,7 @@
 #path2016data = "/scratchssd/arizzi/Hmumu/fileSkimFromNanoAOD/fileSkim2016_nanoV5/"
 #path2016data = "/scratchssd/mandorli/Hmumu/fileSkim2016_FSR/"
 
-#path2016     = "/scratchssd/mandorli/Hmumu/fileSkimFromNanoAOD/PROD_6_2/" 
+#path2016     = "/scratchssd/mandorli/Hmumu/fileSkimFromNanoAOD/PROD_6_2/"
 path2016 = "/scratchssd/sdonato/fileSkimFromNanoAOD/PROD_13_4/" #reduced JES
 #path2016     = "/scratchssd/sdonato/fileSkimFromNanoAOD/PROD_10_0/"
 path2016data = path2016
@@ -94,12 +94,12 @@ samples={
 
 
 #"ZZ_2017AMCPY": {"xsec":16.523},
-#"WZ_2017AMCPY": {"xsec":47.13}, 
-#"WW_2017AMCPY": {"xsec":118.7}, 
-"ggH120mm_2016AMCPY"       : {"xsec":5.222E+1*2.423E-04}, 
-"vbfH120mm_2016AMCPY"      : {"xsec":3.935*2.423E-04}, 
+#"WZ_2017AMCPY": {"xsec":47.13},
+#"WW_2017AMCPY": {"xsec":118.7},
+"ggH120mm_2016AMCPY"       : {"xsec":5.222E+1*2.423E-04},
+"vbfH120mm_2016AMCPY"      : {"xsec":3.935*2.423E-04},
 "ggH130mm_2016AMCPY"       : {"xsec":45.31*1.877E-04},
-"vbfH130mm_2016AMCPY"      : {"xsec":3.637*1.877E-04}, 
+"vbfH130mm_2016AMCPY"      : {"xsec":3.637*1.877E-04},
 
 "ggHmm_2016AMCPY"       : {"xsec":0.01057}, #xsec["VBF_HToMuMu"] = 0.0008210722; xsec["GluGlu_HToMuMu"] = 0.009582794;
 "ggHmm_2016POWPY"       : {"xsec":0.01057},
@@ -120,10 +120,8 @@ samples={
 
 ## Add "files" automatically if not defined
 for sample in samples:
-    if not "files" in samples[sample].keys():
-        if "nameforfile" in samples[sample].keys() :
+    if not "files" in list(samples[sample].keys()):
+        if "nameforfile" in list(samples[sample].keys()) :
             samples[sample]["files"] = [path2016+samples[sample]["nameforfile"]+".root"]
         else:
             samples[sample]["files"] = [path2016+sample+".root"]
-
- 

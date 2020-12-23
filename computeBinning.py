@@ -6,17 +6,17 @@ from samples2018 import samples as samples2018
 import sys
 
 def FindBinDown(hBackground, hSignal, binLimitUp, minNumberOfEventPerBin, MinNumberOfBin_inBinning) :
-        
+
     binLimitDown = 0.
     for n in range(binLimitUp-MinNumberOfBin_inBinning-1, 0, -1) :
         error_B = ROOT.Double(0)
         error_S = ROOT.Double(0)
         integral_B = hBackground.IntegralAndError(n+1, binLimitUp, error_B)
         integral_S = hSignal.IntegralAndError(n+1, binLimitUp, error_S)
-        
+
         integral = integral_S + integral_B
         error2 = error_B*error_B + error_S*error_S
-        
+
 
         if integral_S >=  minNumberOfEventPerBin :
             binLimitDown = n
@@ -31,13 +31,13 @@ year = sys.argv[1]
 variable = sys.argv[2]
 
 if year == "2016" :
-   samples=samples2016
+    samples=samples2016
 if year == "2017" :
-   samples=samples2017
+    samples=samples2017
 if year == "2018" :
-   samples=samples2018
-   
-   
+    samples=samples2018
+
+
 signalSample = "vbfHmm_"+year+"POWPYDIPOLE"
 #signalSample = "vbfHmm_"+year+"AMCPY"
 
@@ -60,9 +60,9 @@ minNumberOfEventPerBin = 0.6
 hSignal.Scale(samples[signalSample]["xsec"]*samples["data"+year]["lumi"])
 tot=hSignal.Integral(0, Nbins_binning+1)
 N=13 #tot*2
-print "Total number of events:  ", tot
+print("Total number of events:  ", tot)
 delta=2.*(tot-minNumberOfEventPerBin*N)/N**2
-print "min size",minNumberOfEventPerBin, "step",delta, "N",N,"tot",tot
+print("min size",minNumberOfEventPerBin, "step",delta, "N",N,"tot",tot)
 
 
 #delta=0
@@ -71,17 +71,16 @@ print "min size",minNumberOfEventPerBin, "step",delta, "N",N,"tot",tot
 binning_BDT=[xMax]
 
 
-        
+
 while binLimitDown>0 :
-            binning_BDT.append((1.*binLimitDown*xMax)/Nbins_binning)
-            binLimitUp = binLimitDown
-            binLimitDown        = FindBinDown(hBackground, hSignal, binLimitUp, minNumberOfEventPerBin, MinNumberOfBin_inBinning)
-	    minNumberOfEventPerBin+=delta
+    binning_BDT.append((1.*binLimitDown*xMax)/Nbins_binning)
+    binLimitUp = binLimitDown
+    binLimitDown        = FindBinDown(hBackground, hSignal, binLimitUp, minNumberOfEventPerBin, MinNumberOfBin_inBinning)
+    minNumberOfEventPerBin+=delta
 
-print "    \'"+variable+"\' : [0",
-for n in range(len(binning_BDT)-1, 0, -1) : 
-    print  ",", binning_BDT[n],
-        
-print "]"     
-print len(binning_BDT) 
+print("    \'"+variable+"\' : [0", end=' ')
+for n in range(len(binning_BDT)-1, 0, -1) :
+    print(",", binning_BDT[n], end=' ')
 
+print("]")
+print(len(binning_BDT))

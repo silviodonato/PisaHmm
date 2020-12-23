@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 
 import argparse
 import os, sys
@@ -50,7 +50,7 @@ def makeMask(fitPlots, bins):
             mask += "mask_"+bin_+"=1"+","
     if len(mask)>0: mask = mask[:-1]
 #    if len(mask.split("=0"))-1 != len(fitPlots.split(",")):
-#        raise Exception("No 1:1 matching between %s and %s"%(str(bins),str(fitPlots))) 
+#        raise Exception("No 1:1 matching between %s and %s"%(str(bins),str(fitPlots)))
     return mask
 
 # Read command line options, set default values, check consistency
@@ -85,22 +85,22 @@ nprocesses = vars(args) ["nprocesses"]
 if len(inputDirectory)>0 and inputDirectory[0]!="/": inputDirectory = os.getcwd() + "/" + inputDirectory
 
 if not (directory and years and steps):
-    print "Please set --directory, --years, and --steps"
-    print "Example:"
-    print ""
+    print("Please set --directory, --years, and --steps")
+    print("Example:")
+    print("")
 
 definePOI   = "--PO  'map=.*Hmm.*:r[1.,-20,20]'"
 if (fitZ and fitH) or (not fitZ and not fitH): raise Exception("Please use either --fitZ or --fitH (not both!).")
 if fitZ: definePOI   = "--PO  'map=.*EWKZ.*:r[1.,-20,20]'"
 
-print  vars(args)
+print(vars(args))
 
 for stepfit in steps.split(","):
     if "_" in stepfit:
         step, fitMode = stepfit.split("_")
     else:
         step, fitMode = stepfit, ""
-    
+
     if not (step == "makeDC" or step == "significance" or step == "postFitPlot" or step == "impacts"):
         raise Exception ("step is %s. It must be among: makeDC, significance, postFitPlot, impacts."%step)
     if not (fitMode == "" or fitMode == "partialfit" or fitMode == "fullfit" or fitMode == "asimov"):
@@ -119,11 +119,11 @@ for year in years.split(","):
 #    else:
 #        bins = getBinsFromScratch(inputDirectory, year)
     bins = getBinsFromScratch(inputDirectory, year)
-    print "Bins = ", bins
+    print("Bins = ", bins)
     maskFullFit        = makeMask(   fullfitPlots, bins)
     maskPartialFit     = makeMask(partialfitPlots, bins)
-    print "maskFullFit : %s"%maskFullFit
-    print "maskPartialFit : %s"%maskPartialFit
+    print("maskFullFit : %s"%maskFullFit)
+    print("maskPartialFit : %s"%maskPartialFit)
     for step in steps.split(","):
         name = step+year
         logFile = name+".log"
@@ -149,23 +149,23 @@ for year in years.split(","):
             if (year == "Comb") or (year == "All"):
                 launch("./decorrelate.sh >> datacard%s.txt"%year)
             launch("text2workspace.py -P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel --channel-masks datacard%s.txt %s >> %s 2>&1"%(year, definePOI, logFile))
-        
-        # Calculate the significance on the parameter of interest (--fitZ or --fitH) with combine by fitting the plots defined in "--fullfitPlots".  
+
+        # Calculate the significance on the parameter of interest (--fitZ or --fitH) with combine by fitting the plots defined in "--fullfitPlots".
         # The possible datasets are: "asimov" (expected), "fullfit" (unblinded data), "partialfit" (ie. Asimov dataset generated with the post-fit nuisance parameters obtained by fitting the regions defined in "--partialfitPlots")
         elif "significance" in step:
             launch("############ Significance: %s #################"%step)
             options = fitOptions
-            if "asimov" in step:    
+            if "asimov" in step:
                 options = options + " datacard%s.root -t -1 "%year
-            elif "partialfit" in step:  
+            elif "partialfit" in step:
                 launch("combine -M MultiDimFit -n%s --saveWorkspace --setParameters %s datacard%s.root --verbose %s %s >> %s 2>&1"%(name, maskPartialFit, year, verbose, options, logFile))
                 snapshot =" higgsCombine%s.MultiDimFit.mH120.root "%name
                 options = options + " --snapshotName MultiDimFit %s -t -1 --toysFrequentist "%snapshot
-            elif "fullfit" in step:     
+            elif "fullfit" in step:
                 options = options + " datacard%s.root "%year
             else: raise Exception('Either "partialfit" or "fullfit" or "asimov" must be used with postFitPlot')
             launch("combine -M Significance -n%s --setParameters %s,r=1 %s >> %s 2>&1"%(name, maskFullFit, options, logFile))
-        
+
         # Make the pre/post-fit plots obtained by fitting the regions defined in "--partialfitPlots" or in "--fullfitPlots"
         elif "postFitPlot" in step:
             launch("############ Post-fit plot: %s #################"%step)
@@ -186,9 +186,9 @@ for year in years.split(","):
                 for fit in ["prefit", "postfit"]:
                     launch('python ./postFitPlot.py --year=%s --file=shapes%s.root --ratio --extra_pad=0.43   --ratio_range 0.4,1.6 --empty_bin_error --channel=%s --outname %s  --mode %s --log_y --custom_y_range --y_axis_min %s %s --channel_label "VBF Hmm" --file_dir %s_%s_%s >> %s 2>&1'%(year, name, ch, fit, plot, y_axis_min, blindOpt, ch, plot, fit, logFile))
                     launch('cp %s_shapes%s_%s_logy.png  ../figure/%s/ >> %s 2>&1'%(plot, name, fit, year, logFile))
-        
-        # Calculate the impact of the systematic uncertainties with combine by fitting the parameter of interest (--fitZ or --fitH) using the regions defined in "--fullfitPlots".  
-        # The possible datasets are: "asimov" (expected), "fullfit" (unblinded data), "partialfit" (ie. Asimov dataset with the post-fit nuisance parameters obtained by fitting the regions defined in "--partialfitPlots")        
+
+        # Calculate the impact of the systematic uncertainties with combine by fitting the parameter of interest (--fitZ or --fitH) using the regions defined in "--fullfitPlots".
+        # The possible datasets are: "asimov" (expected), "fullfit" (unblinded data), "partialfit" (ie. Asimov dataset with the post-fit nuisance parameters obtained by fitting the regions defined in "--partialfitPlots")
         elif "impacts" in step:
             launch("############ Impacts: %s #################"%step)
             options = fitOptions
@@ -202,7 +202,7 @@ for year in years.split(","):
             launch("combineTool.py -M Impacts -d %s -m 125 -n%s --setParameters %s,r=1 --robustFit 1 --doFits   --parallel %s %s >> %s 2>&1"%(snapshot, name, maskFullFit, nprocesses, options, logFile))
             launch("combineTool.py -M Impacts -d %s -m 125 -n%s -o impacts%s.json >> %s 2>&1"%(snapshot, name, name,logFile))
             launch("plotImpacts.py -i impacts%s.json -o impacts%s >> %s 2>&1"%(name,name,logFile))
-        
+
         else:
             raise Exception("Unknown step: %s"%step)
 
@@ -211,24 +211,22 @@ from datetime import datetime
 fName = datetime.now().isoformat().split(".")[0].replace("-","").replace(":","")
 fName = "fitScript_"+fName+".sh"
 
-print directory
-print fName
+print(directory)
+print(fName)
 
 f = open(directory+"/"+fName, 'w')
 f.write(script)
 f.close()
 
-print
-print script
-print
-print "cd %s && chmod +x %s && ./%s "%(directory,fName,fName)
-print
+print()
+print(script)
+print()
+print("cd %s && chmod +x %s && ./%s "%(directory,fName,fName))
+print()
 
 # Run the script file
 
 os.system("cd %s && chmod +x %s && ./%s "%(directory,fName,fName))
 #aaa = os.popen("cd %s && source %s > log"%(directory,fName))
 #aaa.read()
-print
-
-
+print()

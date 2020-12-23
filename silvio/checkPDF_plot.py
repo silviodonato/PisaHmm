@@ -60,7 +60,7 @@ histoNomReb.SetLineColor(ROOT.kBlack)
 histoNomReb.SetLineWidth(2)
 #histoNomReb.Draw()
 j=0
-ratioN = {} 
+ratioN = {}
 while hs and hs.GetMaximum()>0:
     print "hs,",hs.GetNbinsX()
     hs = hs.Rebin(len(bins)-1, "aa", array.array('d',bins))
@@ -73,7 +73,7 @@ while hs and hs.GetMaximum()>0:
     ratioN[j].Draw("same")
     print hs.GetName(), hs.GetMaximum()
     for bin_ in range(len(ratio)):
-        rat =  hs.GetBinContent(bin_)/hs0.GetBinContent(bin_) if hs0.GetBinContent(bin_)>0 else 0. 
+        rat =  hs.GetBinContent(bin_)/hs0.GetBinContent(bin_) if hs0.GetBinContent(bin_)>0 else 0.
         sums[bin_] += rat
         sumSquares[bin_] += rat**2
         binVal = 0
@@ -89,9 +89,9 @@ meanrms=0.
 ngood=0
 for bin_ in range(len(ratio)):
     if sumSquares[bin_]>0:
-        rms = (sumSquares[bin_]/i - (sums[bin_]/i)**2)**0.5 
+        rms = (sumSquares[bin_]/i - (sums[bin_]/i)**2)**0.5
 #        rms = rms*(i**0.5)
-        meanrms+=rms	
+        meanrms+=rms
         ngood+=1
     else:
         rms = 10. ## large error if no MC stat
@@ -105,9 +105,9 @@ ratio.SetMinimum(-0.01)
 ratio.Draw()
 c1.SaveAs("sumSquares_DY105_rebinned.png")
 
-print "StdDev",(sumSquared/i - (sum/i)**2)**0.5 
+print "StdDev",(sumSquared/i - (sum/i)**2)**0.5
 
-print "StdDev",(sumSquared/i - (sum/i)**2)**0.5 
+print "StdDev",(sumSquared/i - (sum/i)**2)**0.5
 
 print "StdDev * SQRT(N)",(sumSquared/i - (sum/i)**2)**0.5 * i**0.5
 

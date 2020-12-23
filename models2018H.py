@@ -13,21 +13,21 @@ background={
 "VBF Z":[
    "EWKZ105CORR_2018MGHERWIG", ## Alternative "EWKZ_2018MGPY"
    # interference with DY
-#AR# "EWKZint_2018MGPY" 
+#AR# "EWKZint_2018MGPY"
 ],
 "Top":[
    ### Single Top (s, t, tW channels) ###
 #AR#   "STs_2018AMCPY",
   #"STt_2018POW_MADSPIN_PY",
 #AR#   "STt_2018POWPY",
-   "STwt_2018POWPY", 
-   
+   "STwt_2018POWPY",
+
    ### Single Anti-Top (s, t, tW channels) ###
 ### MISSING ### "STsbar_2018AMCPY",
    ###"STtbar_2018POW_MADSPIN_PY",
 #AR#    "STtbar_2018POWPY",
    "STwtbar_2018POWPY",
-   
+
    ### TTbar (leptonic, semileptonic, hadronic)
    "TTlep_2018POWPY",   # 2 lept
 #AR#   "TTsemi_2018POWPY",  # 1 lept
@@ -39,8 +39,8 @@ background={
          #--- inclusive ---
 ### MISSING ### "W2J_2018AMCPY",
 ### MISSING ### "W1J_2018AMCPY",
-### MISSING ### "W0J_2018AMCPY", 
-         
+### MISSING ### "W0J_2018AMCPY",
+
          ### WW ###
          #--- 2 lept ---
          "WW2l2n_2018POWPY",
@@ -48,7 +48,7 @@ background={
 ### MISSING ### "WWlnqq_2018AMC_MADSPIN_PY", ## Alternative: "WWlnqq_2018POWPY",
 #AR#    "WWlnqq_2018POWPY", ## as alternative
          #--- incl ---
-         
+
          ### WZ ###
          #--- 3 lept ---
 ### MISSING ### "WZ3l1n_2018AMCPY", ## Alternative: #"WZ3l1n_2018POWPY"
@@ -57,8 +57,8 @@ background={
          "WZ2l2q_2018AMC_MADSPIN_PY",
          #--- 1 lept ---
 ### MISSING ### "WZ1l1n2q_2018AMCPY",
-#AR#         "WZ1l3n_2018AMCPY", 
-         
+#AR#         "WZ1l3n_2018AMCPY",
+
          ### ZZ ###
          #--- 4 lept ---
 ### MISSING ### "ZZ4l_2018POWPY",
@@ -69,8 +69,8 @@ background={
 ### MISSING ### "ZZ2q2n_2018POWPY",
 
          ### Vector boson scattering ###
-### MISSING ### "WWJJlnln_2018MGPY",           ## VBS W(lv)W(ln) + 2jets 
-### MISSING ### "WLLJJln_2018MG_MADSPIN_PY",   ## VBS W(lv)Z(ll) + 2jets 
+### MISSING ### "WWJJlnln_2018MGPY",           ## VBS W(lv)W(ln) + 2jets
+### MISSING ### "WLLJJln_2018MG_MADSPIN_PY",   ## VBS W(lv)Z(ll) + 2jets
 
          ### Double scattering ###
 ### MISSING ### "WWdps_2018MGPY",              ## WW double scattering
@@ -85,8 +85,8 @@ backgroundSorted+=[x for x in background if x not in backgroundSorted]
 
 
 signal={
-"VBF H":["vbfHmm_2018POWPYDIPOLE"], 
-"gg H":["ggHmm_2018AMCPY"],  #AR# fix use AMC!! 
+"VBF H":["vbfHmm_2018POWPYDIPOLE"],
+"gg H":["ggHmm_2018AMCPY"],  #AR# fix use AMC!!
 #AR# "VH":["WplusHmm_2018POWPY","WminusHmm_2018POWPY", "zHmm_2018POWPY"],
 #AR# "ttH":["ttHmm_2018POWPY"]
 }
@@ -162,9 +162,7 @@ rebin["DNN18Atan2"]= [0 , 0.311666666667 , 0.635 , 0.845 , 1.04166666667 , 1.185
 from histograms import signalHistosMassScanAll
 
 for i in  signalHistosMassScanAll :
- rebin[i]=rebin["DNN18Atan"]
+    rebin[i]=rebin["DNN18Atan"]
 
 from systematicGrouping import *
 systematicDetail = systematicGrouping(background, signal,jesList,"2018")
-
-

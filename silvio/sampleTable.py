@@ -12,17 +12,17 @@ import models2018Z
 import pprint
 
 def removeYear( string ):
-     string = string.replace("2016","")
-     string = string.replace("2017","")
-     string = string.replace("2018","")
-     return string
+    string = string.replace("2016","")
+    string = string.replace("2017","")
+    string = string.replace("2018","")
+    return string
 
 groups = {}
 for sampleGroups in [
     models2018Z.background,models2017Z.background,models2016Z.background,
     models2018Z.signal,models2017Z.signal,models2016Z.signal,
     models2018H.background,models2017H.background,models2016H.background,
-    models2018H.signal,models2017H.signal,models2016H.signal]: 
+    models2018H.signal,models2017H.signal,models2016H.signal]:
     for g in sampleGroups:
         if not g in groups:
             groups [g] = []
@@ -49,7 +49,7 @@ for group in groupsOrder:
     if group in groups:
         for sample in groups[group]:
             table += group+'\t'+sample+'\t'
-            for label in labels: 
+            for label in labels:
                 models = globals()["models"+label]
                 sampleWithYear = sample.replace("_","_"+label[:4])
                 print sample,sampleWithYear, models.background , models.signal
@@ -68,6 +68,3 @@ if len(allGroups)==0:
     fil.close()
 else:
     raise Exception(allGroups)
-
-
-    

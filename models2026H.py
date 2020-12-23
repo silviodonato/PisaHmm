@@ -4,9 +4,9 @@ samples.update(samples2016.samples)
 
 name="H"
 background={
-"DYVBF":[ 
+"DYVBF":[
     "DY105VBF_2026MGPY"
-], 
+],
 "VBF Z":[
    "EWKZ105_2026MGPYDIPOLE",
 ],
@@ -24,7 +24,7 @@ backgroundSorted+=[x for x in background if x not in backgroundSorted]
 
 
 signal={
-"VBF H":["vbfHmm_2026POWPYDIPOLE"], 
+"VBF H":["vbfHmm_2026POWPYDIPOLE"],
 }
 
 #legend sorting
@@ -78,9 +78,7 @@ rebin["DNN18Atan2"]= [0 , 0.311666666667 , 0.635 , 0.845 , 1.04166666667 , 1.185
 from histograms import signalHistosMassScanAll
 
 for i in  signalHistosMassScanAll :
- rebin[i]=rebin["DNN18Atan"]
+    rebin[i]=rebin["DNN18Atan"]
 
 from systematicGrouping import *
 systematicDetail = systematicGrouping(background, signal,jesList,"2018")
-
-

@@ -48,4 +48,3 @@ binningrules=[
 ("fixedGridRhoFastjetAll*","40 , 0 , 40"),
 ("CS*","%s , -3.2 , 3.2"%nbins),
 ]
-

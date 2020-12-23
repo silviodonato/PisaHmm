@@ -23,10 +23,9 @@ def addMuEffWeight(flow):
 
 def addReweightEWK(flow):
     flow.CentralWeight("EWKreweight")
-    
+
 def addQGLweight(flow):
     flow.CentralWeight("QGLweight",["twoJets"])
 
 def addPreFiring(flow):
     flow.CentralWeight("PrefiringWeight")
-

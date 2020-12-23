@@ -27,12 +27,12 @@ samples={
 "DY105VBF_2018MGPY"   : {"xsec": 2.03, "filter": "VBFFilterFlag"},
 
 "DY0J_2018AMCPY"  : {"xsec": 4620.52},
-"DY1J_2018AMCPY"  : {"xsec":859.59},   
+"DY1J_2018AMCPY"  : {"xsec":859.59},
 "DY2J_2018AMCPY"  : {"xsec":338.26},
 ##AA"DYM50_2018AMCPY" : {"xsec":5765.40},
 
-"EWKZ_2018MGHERWIG" : {"xsec":1.664},   # DY1J 2018 NANOAOD does not exist yet 
-#"EWKZ_20187MGHERWIG" : {"xsec":1.664},   # DY1J 2018 NANOAOD does not exist yet 
+"EWKZ_2018MGHERWIG" : {"xsec":1.664},   # DY1J 2018 NANOAOD does not exist yet
+#"EWKZ_20187MGHERWIG" : {"xsec":1.664},   # DY1J 2018 NANOAOD does not exist yet
 "EWKZ_2018MGPY"     : {"xsec":1.664},
 "EWKZ_2018MGPYDIPOLE"     : {"xsec":1.664},
 "EWKZ105_2018MGPYDIPOLE"   : {"xsec": 0.0789, "files":["/scratchssd/sdonato/fileSkimFromNanoAOD/PROD_13_5/EWKZ105_2018MGPYDIPOLE.root"]},
@@ -98,18 +98,18 @@ samples={
 
 
 
-#AA"ZZ2l2n_2018POWPY": {"xsec":16.523 * 20.000 * 10.099 / 10000.},    
+#AA"ZZ2l2n_2018POWPY": {"xsec":16.523 * 20.000 * 10.099 / 10000.},
 "ZZ2l2q_2018POWPY": {"xsec":16.523 * 2. * 6.729 * 69.91 / 10000.},
-"ZZ4l_2018POWPY": {"xsec":16.523 * 10.099 * 10.099 / 10000.},    
+"ZZ4l_2018POWPY": {"xsec":16.523 * 10.099 * 10.099 / 10000.},
 
 
 #"ZZ_2018AMCPY": {"xsec":16.523},
-#"WZ_2018AMCPY": {"xsec":47.13}, 
-#"WW_2018AMCPY": {"xsec":118.7}, 
+#"WZ_2018AMCPY": {"xsec":47.13},
+#"WW_2018AMCPY": {"xsec":118.7},
 
-"ggH120mm_2018AMCPY"       : {"xsec":5.222E+1*2.423E-04}, 
-"vbfH120mm_2018AMCPY"      : {"xsec":3.935*2.423E-04}, 
-"ggH130mm_2018AMCPY"       : {"xsec":45.31*1.877E-04}, 
+"ggH120mm_2018AMCPY"       : {"xsec":5.222E+1*2.423E-04},
+"vbfH120mm_2018AMCPY"      : {"xsec":3.935*2.423E-04},
+"ggH130mm_2018AMCPY"       : {"xsec":45.31*1.877E-04},
 "vbfH130mm_2018AMCPY"      : {"xsec":3.637*1.877E-04},
 
 
@@ -131,8 +131,8 @@ samples={
 
 ## Add "files" automatically if not defined
 for sample in samples:
-    if not "files" in samples[sample].keys():
-        if "nameforfile" in samples[sample].keys() :
+    if not "files" in list(samples[sample].keys()):
+        if "nameforfile" in list(samples[sample].keys()) :
             samples[sample]["files"] = [path2018+samples[sample]["nameforfile"]+".root"]
         else:
             samples[sample]["files"] = [path2018+sample+".root"]
@@ -146,6 +146,3 @@ for sample in samples:
 #ZH : 0.8824 * 2.176 / 10000. = 0.00019201024
 #ttH: 0.5071 * 2.176 / 10000. = 0.00011034496
 #VBFHtautau: 3.782 * 6.272 / 100.  = 0.23720704
-
-
-

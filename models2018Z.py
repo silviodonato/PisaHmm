@@ -59,4 +59,3 @@ markercolor=fillcolor
 from rebinning import *
 from systematicGrouping import *
 systematicDetail = systematicGrouping(background, signal,jesList,"2018")
-

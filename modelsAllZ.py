@@ -19,24 +19,24 @@ data = {'All': ['data2016','data2017','data2018']}
 
 
 for models in [models2016,models2017,models2018]:
-   for mapToFillName in ["background","signal"]:
-      mapToRead = getattr(models,mapToFillName)
-      mapToFill = globals()[mapToFillName]
-      for sampleSet in mapToRead:
-         if sampleSet in mapToFill:
-            for sample in mapToRead[sampleSet]:
-               if not sample in mapToFill[sampleSet]: mapToFill[sampleSet].append(sample)
-         else: mapToFill[sampleSet] = mapToRead[sampleSet]
+    for mapToFillName in ["background","signal"]:
+        mapToRead = getattr(models,mapToFillName)
+        mapToFill = globals()[mapToFillName]
+        for sampleSet in mapToRead:
+            if sampleSet in mapToFill:
+                for sample in mapToRead[sampleSet]:
+                    if not sample in mapToFill[sampleSet]: mapToFill[sampleSet].append(sample)
+            else: mapToFill[sampleSet] = mapToRead[sampleSet]
 
 import pprint
 
-print "\nbackground = ",
+print("\nbackground = ", end=' ')
 pprint.pprint(background)
-print "\nsignal = ",
+print("\nsignal = ", end=' ')
 pprint.pprint(signal)
-print "\ndata = ",
+print("\ndata = ", end=' ')
 pprint.pprint(data)
-print
+print()
 
 
 
@@ -67,4 +67,3 @@ systematicDetail = systematicGrouping(background, signal)
 
 linecolor=fillcolor
 markercolor=fillcolor
-

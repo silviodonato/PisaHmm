@@ -6,19 +6,19 @@ background={
 "EWKZ":[
    "EWKZ105FIX2_2017MGHERWIG",
    # interference with DY
-   "EWKZint_2017MGPY" 
+   "EWKZint_2017MGPY"
 ],
 "Top":[
    ### Single Top (s, t, tW channels) ###
    "STs_2017AMCPY",
 ### MISSING ### "STt_2017POW_MADSPIN_PY",
-   "STwt_2017POWPY", 
-   
+   "STwt_2017POWPY",
+
    ### Single Anti-Top (s, t, tW channels) ###
 ### MISSING ### "STsbar_2017AMCPY",
 ### MISSING ### "STtbar_2017POW_MADSPIN_PY",
    "STwtbar_2017POWPY",
-   
+
    ### TTbar (leptonic, semileptonic, hadronic)
    "TTlep_2017POWPY",   # 2 lept
    "TTsemi_2017POWPY",  # 1 lept
@@ -30,15 +30,15 @@ background={
          #--- inclusive ---
          "W2J_2017AMCPY",
 ### MISSING ### "W1J_2017AMCPY",
-         "W0J_2017AMCPY", 
-         
+         "W0J_2017AMCPY",
+
          ### WW ###
          #--- 2 lept ---
          "WW2l2n_2017POWPY",
          #--- 1 lept ---
 ### MISSING ### "WWlnqq_2017AMC_MADSPIN_PY", ## Alternative: "WWlnqq_2017POWPY",
          #--- incl ---
-         
+
          ### WZ ###
          #--- 3 lept ---
          "WZ3l1n_2017AMCPY", ## Alternative #"WZ3l1n_2017POWPY"
@@ -46,8 +46,8 @@ background={
          "WZ2l2q_2017AMC_MADSPIN_PY",
          #--- 1 lept ---
          "WZ1l1n2q_2017AMCPY",
-         "WZ1l3n_2017AMCPY", 
-         
+         "WZ1l3n_2017AMCPY",
+
          ### ZZ ###
          #--- 4 lept ---
          "ZZ4l_2017POWPY",
@@ -58,8 +58,8 @@ background={
 ### MISSING ### "ZZ2q2n_2017POWPY",
 
          ### Vector boson scattering ###
-### MISSING ### "WWJJlnln_2017MGPY",          ## VBS W(lv)W(ln) + 2jets 
-         "WLLJJln_2017MG_MADSPIN_PY",  ## VBS W(lv)Z(ll) + 2jets 
+### MISSING ### "WWJJlnln_2017MGPY",          ## VBS W(lv)W(ln) + 2jets
+         "WLLJJln_2017MG_MADSPIN_PY",  ## VBS W(lv)Z(ll) + 2jets
 
          ### Double scattering ###
 ### MISSING ### "WWdps_2017MGPY",             ## WW double scattering
@@ -127,9 +127,7 @@ from rebinning import *
 #rebin["DNN18Atan"]=dnn032018
 from histograms import signalHistosMassScan
 for i in  signalHistosMassScan :
- rebin[i]=rebin["DNN18Atan"]
+    rebin[i]=rebin["DNN18Atan"]
 
 from systematicGrouping import *
 systematicDetail = systematicGrouping(background, signal,jesList)
-
-

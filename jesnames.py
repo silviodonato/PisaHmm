@@ -89,7 +89,7 @@ jes2016=[
 ]
 
 names=[
-        'pt_jesAbsoluteUp', 'pt_jesBBEC1Up', 'pt_jesEC2Up', 'pt_jesFlavorQCDUp', 'pt_jesHFUp', 'pt_jesRelativeBalUp', 
+        'pt_jesAbsoluteUp', 'pt_jesBBEC1Up', 'pt_jesEC2Up', 'pt_jesFlavorQCDUp', 'pt_jesHFUp', 'pt_jesRelativeBalUp',
         'pt_jesAbsoluteDown', 'pt_jesBBEC1Down', 'pt_jesEC2Down', 'pt_jesFlavorQCDDown', 'pt_jesHFDown', 'pt_jesRelativeBalDown',  ]
 names2016=names+['pt_jesAbsolute_2016Up', 'pt_jesBBEC1_2016Up', 'pt_jesEC2_2016Up', 'pt_jesHF_2016Up', 'pt_jesRelativeSample_2016Up',
         'pt_jesAbsolute_2016Down', 'pt_jesBBEC1_2016Down', 'pt_jesEC2_2016Down', 'pt_jesHF_2016Down', 'pt_jesRelativeSample_2016Down'

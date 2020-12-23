@@ -6,7 +6,7 @@ name="H"
 background={
 #"DY":["DY105_2016AMCPY"], ## Alternative: "DY105_2016MGPY"
 #"DYVBF":["DY105VBF_2016AMCPY"], ## Alternative: "DY105VBF_2016MGPY"
-#"DY":["DY105_2016AMCPY", "DY105VBF_2016AMCPY"], 
+#"DY":["DY105_2016AMCPY", "DY105VBF_2016AMCPY"],
 "DY01J":["DY105J01_2016AMCPY", "DY105VBFJ01_2016AMCPY"],
 "DY2J":["DY105J2_2016AMCPY", "DY105VBFJ2_2016AMCPY"],
 
@@ -20,13 +20,13 @@ background={
    ### Single Top (s, t, tW channels) ###
 # "STs_2016AMCPY",
 # "STt_2016POW_MADSPIN_PY",
-   "STwt_2016POWPY", 
-   
+   "STwt_2016POWPY",
+
    ### Single Anti-Top (s, t, tW channels) ###
    #"STsbar_2016AMCPY",
 #  "STtbar_2016POW_MADSPIN_PY",
    "STwtbar_2016POWPY",
-   
+
    ### TTbar (leptonic, semileptonic, hadronic)
    "TTlep_2016POWPY",   # 2 lept
 #   "TTsemi_2016POWPY", # 1 lept
@@ -38,15 +38,15 @@ background={
          #--- inclusive ---
  #      "W2J_2016AMCPY",
   #     "W1J_2016AMCPY",
-   #    "W0J_2016AMCPY", 
-         
+   #    "W0J_2016AMCPY",
+
          ### WW ###
          #--- 2 lept ---
          "WW2l2n_2016POWPY",
          #--- 1 lept ---
 ### MISSING ### "WWlnqq_2016AMC_MADSPIN_PY", #Alternative: "WWlnqq_2016POWPY",
          #--- incl ---
-         
+
          ### WZ ###
          #--- 3 lept ---
     #   "WZ3l1n_2016AMCPY", ## Alternative: #"WZ3l1n_2016POWPY"
@@ -54,8 +54,8 @@ background={
          "WZ2l2q_2016AMC_MADSPIN_PY",
          #--- 1 lept ---
 ### MISSING ### "WZ1l1n2q_2016AMCPY",
-     #  "WZ1l3n_2016AMCPY", 
-         
+     #  "WZ1l3n_2016AMCPY",
+
          ### ZZ ###
          #--- 4 lept ---
 ### MISSING ### "ZZ4l_2016POWPY",
@@ -66,8 +66,8 @@ background={
 ## MISSING ### "ZZ2q2n_2016POWPY",
 
          ### Vector boson scattering ###
-### LHE Weights broken "WWJJlnln_2016MGPY",          ## VBS W(lv)W(ln) + 2jets 
-   #      "WLLJJln_2016MG_MADSPIN_PY",  ## VBS W(lv)Z(ll) + 2jets 
+### LHE Weights broken "WWJJlnln_2016MGPY",          ## VBS W(lv)W(ln) + 2jets
+   #      "WLLJJln_2016MG_MADSPIN_PY",  ## VBS W(lv)Z(ll) + 2jets
 
          ### Double scattering ###
 ### MISSING ### "WWdps_2016MGPY",            ## WW double scattering
@@ -143,7 +143,7 @@ jesList=jesnames2016
 systematicsForDC=systematicsToPlot+[x[7:] for x in jesList ]+jernames
 systematicsForDC+=["EWKZjjPartonShowerUp","EWKZjjPartonShowerDown","SignalPartonShowerUp","SignalPartonShowerDown"]
 systematicsForDC+=THUs
-systematicsForDC+=btagsys 
+systematicsForDC+=btagsys
 
 linecolor=fillcolor
 markercolor=fillcolor
@@ -152,11 +152,9 @@ from rebinning import *
 from histograms import signalHistosMassScanAll
 
 for i in  signalHistosMassScanAll :
- rebin[i]=rebin["DNN18Atan"]
+    rebin[i]=rebin["DNN18Atan"]
 #ebin["DNN18Atan2"]=rebin["DNN18Atan"]
 
 
 from systematicGrouping import *
 systematicDetail = systematicGrouping(background, signal,jesList,"2016")
-
-
