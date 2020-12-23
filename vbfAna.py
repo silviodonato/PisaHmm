@@ -206,10 +206,10 @@ def f(ar):
         try:
             rdf=rdf.Define("year",year)
             rdf=rdf.Define("TriggerSel",trigger)
-            if  year!="2017" and ("Jet_puId17" not in list(rdf.GetColumnNames())):
+            if  year!="2017" and ("Jet_puId17" not in rdf.GetColumnNames()):
                 rdf=rdf.Define("Jet_puId17","ROOT::VecOps::RVec<int>(nJet, 0)")
             if "lumi" in list(samples[s].keys())  :
-#           if "Muon_dxybs" not  in  list(rdf.GetColumnNames()) :
+#           if "Muon_dxybs" not  in  rdf.GetColumnNames() :
 #               rdf=rdf.Define("Muon_dxybs","Muon_pt*10000.f")
 #               print "WWWWWWWWWWAAAAAAAAAAAAAARRRRRRRNINGGGGGGGGGG"
                 rdf=rdf.Filter("passJson(run,luminosityBlock)","jsonFilter")
@@ -233,7 +233,7 @@ def f(ar):
                     rdf=rdf.Define("PrefiringWeightDown","L1PreFiringWeight_Dn")
                 print("Is herwig?",("true" if "HERWIG" in s else "false"), s)
                 rdf=rdf.Define("isHerwig",("true" if "HERWIG" in s else "false"))
-                if  "HTXS_stage1_1_fine_cat_pTjet30GeV" not in list(rdf.GetColumnNames()) :
+                if  "HTXS_stage1_1_fine_cat_pTjet30GeV" not in rdf.GetColumnNames() :
                     print("Add fake STXS category")
                     rdf=rdf.Define("HTXS_stage1_1_fine_cat_pTjet30GeV","-1l")
                     print("Added")
@@ -247,7 +247,7 @@ def f(ar):
                     rdf=rdf.Define("lhefactor","2.f")
                 else:
                     rdf=rdf.Define("lhefactor","1.f")
-                if "LHEPdfWeight" not in list(rdf.GetColumnNames()):
+                if "LHEPdfWeight" not in rdf.GetColumnNames():
                     print("ADDING FAKE PDF",f)
                     rdf=rdf.Define("LHEPdfWeight","ROOT::VecOps::RVec<float>(1,1)")
                     rdf=rdf.Define("nLHEPdfWeight","uint32_t(1)")
@@ -261,26 +261,26 @@ def f(ar):
                     rdf=rdf.Define("Muon_sf","(20.1f/36.4f*Muon_ISO_SF + 16.3f/36.4f*Muon_ISO_eraGH_SF)*(20.1f/36.4f*Muon_ID_SF + 16.3f/36.4f*Muon_ID_eraGH_SF)")
                 else :
                     rdf=rdf.Define("Muon_sf","Muon_ISO_SF*Muon_ID_SF")
-                if "btagWeight_DeepCSVB" in  list(rdf.GetColumnNames()) :
+                if "btagWeight_DeepCSVB" in  rdf.GetColumnNames() :
                     rdf=rdf.Define("btagWeight","btagWeight_DeepCSVB")
                 else :
                     rdf=rdf.Define("btagWeight","btagWeight_CMVA")
 
-                if "Muon_dxybs" not  in  list(rdf.GetColumnNames()) :
+                if "Muon_dxybs" not  in  rdf.GetColumnNames() :
                     rdf=rdf.Define("Muon_dxybs","Muon_pt*10000.f")
 
                 rdf=rdf.Define("isMC","true")
-                if "LHEWeight_originalXWGTUP" not in list(rdf.GetColumnNames()):
+                if "LHEWeight_originalXWGTUP" not in rdf.GetColumnNames():
                     rdf=rdf.Define("LHEWeight_originalXWGTUP","genWeight")
-                if "LHEScaleWeight" not in list(rdf.GetColumnNames()):
+                if "LHEScaleWeight" not in rdf.GetColumnNames():
                     print("ADDING FAKE LHE",f)
                     rdf=rdf.Define("LHEScaleWeight","ROOT::VecOps::RVec<float>(9,1)")
                     rdf=rdf.Define("nLHEScaleWeight","uint32_t(0)")
-                if "PSWeight" not in list(rdf.GetColumnNames()):
+                if "PSWeight" not in rdf.GetColumnNames():
                     print("ADDING FAKE PS WEIGHT",f)
                     rdf=rdf.Define("PSWeight","ROOT::VecOps::RVec<float>(9,1)")
                     rdf=rdf.Define("nPSWeight","uint32_t(1)")
-                if "LHE_NpNLO" not in list(rdf.GetColumnNames()):
+                if "LHE_NpNLO" not in rdf.GetColumnNames():
                     rdf=rdf.Define("LHE_NpNLO","-1")
 
             if s.startswith("EWKZ_") and s.endswith("MGPY") :
