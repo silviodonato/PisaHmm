@@ -18,15 +18,15 @@ def addLhePdf(flow):
 
     flow.Define("LHEPdfSquaredSum","sqrt(Sum((LHEPdfWeight*lhefactor-1.f)*(LHEPdfWeight*lhefactor-1.f)))")
     flow.Define("LHEPdfRMS","nLHEPdfWeight>0?LHEPdfSquaredSum/sqrt(nLHEPdfWeight):0.f")
-    flow.Define("LHEPdfUp","LHEPdfHasHessian?(1.+LHEPdfSquaredSum):(1.+LHEPdfRMS)")	
-    flow.Define("LHEPdfDown","LHEPdfHasHessian?(1.-LHEPdfSquaredSum):(1.-LHEPdfRMS)")	
+    flow.Define("LHEPdfUp","LHEPdfHasHessian?(1.+LHEPdfSquaredSum):(1.+LHEPdfRMS)")        
+    flow.Define("LHEPdfDown","LHEPdfHasHessian?(1.-LHEPdfSquaredSum):(1.-LHEPdfRMS)")        
     flow.VariationWeight("LHEPdfUp")
     flow.VariationWeight("LHEPdfDown")
     for i in range(0,110):
         flow.Define("LHEPdf%s"%i,"nLHEPdfWeight>%s?LHEPdfWeight[%s]:0."%(i,i))
         flow.VariationWeight("LHEPdf%s"%i)
-	
-	
+        
+        
 
 def addPSWeights(flow):
      flow.Define("PSWeightToFix","PSWeight[0]!=1.0f && genWeight!=LHEWeight_originalXWGTUP ")
@@ -44,8 +44,8 @@ def addSTXS(flow):
 #    flow.AddExternalCode(header="qq2Hqq_uncert_scheme.h",cppfiles=["qq2Hqq_uncert_scheme.cpp"],ipaths=["."])
     #double vbf_uncert_stage_1_1(int source, int event_STXS, double Nsigma=1.0);
     for i in range(10):
-	flow.Define("THU_VBF_"+sthsNames[i]+"Up","vbf_uncert_stage_1_1(%d,HTXS_stage1_1_fine_cat_pTjet30GeV,1.)"%i)
-	flow.Define("THU_VBF_"+sthsNames[i]+"Down","vbf_uncert_stage_1_1(%d,HTXS_stage1_1_fine_cat_pTjet30GeV,-1.)"%i)
+        flow.Define("THU_VBF_"+sthsNames[i]+"Up","vbf_uncert_stage_1_1(%d,HTXS_stage1_1_fine_cat_pTjet30GeV,1.)"%i)
+        flow.Define("THU_VBF_"+sthsNames[i]+"Down","vbf_uncert_stage_1_1(%d,HTXS_stage1_1_fine_cat_pTjet30GeV,-1.)"%i)
         flow.VariationWeight("THU_VBF_"+sthsNames[i]+"Up")
         flow.VariationWeight("THU_VBF_"+sthsNames[i]+"Down")
 
@@ -58,9 +58,9 @@ def addBtag(flow):
        flow.Define("SelectedJet_weight_%s"%i,"Where(abs(SelectedJet_eta) < 2.4 && isMC,SelectedJet_btagSF_shape_%s,SelectedJet_btagSF_shape*0.f+1.f)"%i)
        name=i
        if "up_" in i : 
-	  name=i.replace("up_","")+"Up"
+          name=i.replace("up_","")+"Up"
        if "down_" in i : 
-	  name=i.replace("down_","")+"Down"
+          name=i.replace("down_","")+"Down"
        
        flow.Define("btagEventWeight_%s"%name,"isMC?(std::accumulate(SelectedJet_weight_%s.begin(),SelectedJet_weight_%s.end(),1.f, std::multiplies<double>())):1.f"%(i,i))
        flow.VariationWeight("btagEventWeight_%s"%name,"btagEventWeight")
@@ -96,8 +96,8 @@ def addBasicJecs(flow):
        flow.Define("Jet_pt_jerUp_touse","Jet_genPt+(Jet_pt_touse-Jet_genPt)*(Jet_jerUpSF/Jet_jerSF)+(Jet_genPt==Jet_pt)*Map(Jet_pt, [](float sigma) {return float(gRandom->Gaus(0,0.15*sigma));} )") 
        flow.Define("Jet_pt_jesTotalDown_touse","Jet_pt_touse*Jet_pt_jesTotalDown/Jet_pt_nom") 
        flow.Define("Jet_pt_jesTotalUp_touse","Jet_pt_touse*Jet_pt_jesTotalUp/Jet_pt_nom") 
-#       flow.Define("Jet_pt_jerDown_touseLimited","((Jet_pt_jerDown_touse/Jet_pt_touse)>0.8&& (Jet_pt_jerDown_touse/Jet_pt_touse)<1.2)?Jet_pt_jerDown_touse:Jet_pt_touse"	
-#       flow.Define("Jet_pt_jerDown_touseLimited","((Jet_pt_jerDown_touse/Jet_pt_touse)>0.8&& (Jet_pt_jerDown_touse/Jet_pt_touse)<1.2)?Jet_pt_jerDown_touse:Jet_pt_touse"	
+#       flow.Define("Jet_pt_jerDown_touseLimited","((Jet_pt_jerDown_touse/Jet_pt_touse)>0.8&& (Jet_pt_jerDown_touse/Jet_pt_touse)<1.2)?Jet_pt_jerDown_touse:Jet_pt_touse"        
+#       flow.Define("Jet_pt_jerDown_touseLimited","((Jet_pt_jerDown_touse/Jet_pt_touse)>0.8&& (Jet_pt_jerDown_touse/Jet_pt_touse)<1.2)?Jet_pt_jerDown_touse:Jet_pt_touse"        
 
        flow.Systematic("JERDown","Jet_pt_touse","Jet_pt_jerDown_touse") #name, target, replacement 
 #      flow.Systematic("JERUp","Jet_pt_touse","Jet_pt_jerUp_touse") #name, target, replacement 
@@ -123,24 +123,24 @@ def addDecorrelatedJER(flow):
        etacutstrings=[]
        ptcutstrings=[]
        for i,e in enumerate(etabins) :
-	  cut="abs(Jet_eta)>%s"%e
-	  if(i+1<len(etabins)): cut+="&&abs(Jet_eta)<=%s"%(etabins[i+1])
-	  etacutstrings.append(cut)
+          cut="abs(Jet_eta)>%s"%e
+          if(i+1<len(etabins)): cut+="&&abs(Jet_eta)<=%s"%(etabins[i+1])
+          etacutstrings.append(cut)
        for i,e in enumerate(ptbins) :
-	  cut="Jet_pt>%s"%e
-	  if(i+1<len(ptbins)): cut+="&&Jet_pt<=%s"%(ptbins[i+1])
-	  ptcutstrings.append(cut)
+          cut="Jet_pt>%s"%e
+          if(i+1<len(ptbins)): cut+="&&Jet_pt<=%s"%(ptbins[i+1])
+          ptcutstrings.append(cut)
 
        for i,eta in enumerate(etacutstrings):
-	  for j,pt in enumerate(ptcutstrings):
-	    if i<2:
-	       if j!=0:
-		   continue  #single pt bin for central eta as JME prescribed
-	       cutstring="(%s)"%(eta)
-	    else :
-	       cutstring="(%s)&&(%s)"%(eta,pt)
-	    print "Jer cutstring",cutstring
-	    name="eta%spt%s"%(i,j)
+          for j,pt in enumerate(ptcutstrings):
+            if i<2:
+               if j!=0:
+                   continue  #single pt bin for central eta as JME prescribed
+               cutstring="(%s)"%(eta)
+            else :
+               cutstring="(%s)&&(%s)"%(eta,pt)
+            print "Jer cutstring",cutstring
+            name="eta%spt%s"%(i,j)
             #flow.Systematic("JER%sUp"%name,"Jet_pt_touse","Where(%s,Jet_pt_jerUp_touse,Jet_pt_touse)"%cutstring) #name, target, replacement
             flow.Systematic("JER%sDown"%name,"Jet_pt_touse","Where(%s,Jet_pt_jerDown_touse,Jet_pt_touse)"%cutstring) #name, target, replacement 
             flow.Systematic("JER%sUp"%name,"Jet_pt_touse","Where(%s,Jet_pt_nom,Jet_pt_touse)"%cutstring) #name, target, replacement
@@ -148,7 +148,7 @@ def addDecorrelatedJER(flow):
             flow.Systematic("JER%sMatchUp"%name,"Jet_pt_touse","Where(%s,Jet_pt_nom,Jet_pt_touse)"%(cutstring+"&&Jet_genJetIdx>=0")) #name, target, replacement
             flow.Systematic("JER%sNotMatchDown"%name,"Jet_pt_touse","Where(%s,Jet_pt_jerDown_touse,Jet_pt_touse)"%(cutstring+"&&Jet_genJetIdx<0")) #name, target, replacement 
             flow.Systematic("JER%sNotMatchUp"%name,"Jet_pt_touse","Where(%s,Jet_pt_nom,Jet_pt_touse)"%(cutstring+"&&Jet_genJetIdx<0")) #name, target, replacement
-	  
+          
 import jesnames
 def addCompleteJecs(flow,year):
     for j in getattr(jesnames,"jesnames"+year):

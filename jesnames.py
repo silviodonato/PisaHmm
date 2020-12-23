@@ -104,3 +104,4 @@ names2018=names+['pt_jesAbsolute_2018Up', 'pt_jesBBEC1_2018Up', 'pt_jesEC2_2018U
 jesnames2016=["Jet_"+x for x in names2016]
 jesnames2017=["Jet_"+x for x in names2017]
 jesnames2018=["Jet_"+x for x in names2018]
+jesnames2026=["Jet_"+x for x in names2018] ##FIXME##
