@@ -9,7 +9,7 @@
 
 class LwtnnWrapper{
     public:
-        LwtnnWrapper(std::vector<std::string> NNjsons =  {"/home/sdonato/Hmm/fromlgiannini/output_fix_finalepoch.json"})
+        LwtnnWrapper(std::vector<std::string> NNjsons =  {"/scratch/lgiannini/HmmPisa/model_for_lwtnn/output_fix_finalepoch.json"})
         {
 	    std::cout << "Constructor " << NNjsons.size() << " " << NNjsons[0] <<" "  << this <<  std::endl;
 //             std::ifstream input("/scratch/lgiannini/HmmPisa/model_for_lwtnn/output_fix_finalepoch.json");
@@ -70,10 +70,10 @@ std::vector<std::string> v = {"/scratch/lgiannini/HmmPisa/model_for_lwtnn/output
 LwtnnWrapper lwtnn = LwtnnWrapper(v);
 
 std::vector<std::string> v18 = {
-"/scratch/lgiannini/CMSSW_10_4_0_pre1/src/retrainVBF3/separatebg3/prova_tutto_ok18_QGL_fold3/nn_evt0.json",
-"/scratch/lgiannini/CMSSW_10_4_0_pre1/src/retrainVBF3/separatebg3/prova_tutto_ok18_QGL_fold3/nn_evt1.json",
-"/scratch/lgiannini/CMSSW_10_4_0_pre1/src/retrainVBF3/separatebg3/prova_tutto_ok18_QGL_fold3/nn_evt2.json",
-"/scratch/lgiannini/CMSSW_10_4_0_pre1/src/retrainVBF3/separatebg3/prova_tutto_ok18_QGL_fold3/nn_evt3.json"};
+"/scratch/lgiannini/CMSSW_10_4_0_pre1/src/retrainVBF3/separatebg3/prova_tutto_ok18_QGL_fold3/model_preparation/nn_evt0.json",
+"/scratch/lgiannini/CMSSW_10_4_0_pre1/src/retrainVBF3/separatebg3/prova_tutto_ok18_QGL_fold3/model_preparation/nn_evt1.json",
+"/scratch/lgiannini/CMSSW_10_4_0_pre1/src/retrainVBF3/separatebg3/prova_tutto_ok18_QGL_fold3/model_preparation/nn_evt2.json",
+"/scratch/lgiannini/CMSSW_10_4_0_pre1/src/retrainVBF3/separatebg3/prova_tutto_ok18_QGL_fold3/model_preparation/nn_evt3.json"};
 LwtnnWrapper lwtnn18 = LwtnnWrapper(v18);
 */
 #endif

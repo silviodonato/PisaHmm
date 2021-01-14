@@ -10,8 +10,8 @@ def getFlow(year):
     if FSR :
     ##FIXME## SD
         if FSRnew :
-#               flow=SampleProcessing("VBF Hmumu Analysis","/scratchssd/sdonato/fileSkimFromNanoAOD/PROD_12_0/vbfHmm_"+year+"AMCPY.root")
-            flow=SampleProcessing("VBF Hmumu Analysis","/home/sdonato/Hmm/fileSkimFromNanoAOD/PROD_12_0/vbfHmm_"+year+"AMCPY.root")
+            flow=SampleProcessing("VBF Hmumu Analysis","/scratchssd/sdonato/fileSkimFromNanoAOD/PROD_12_0/vbfHmm_"+year+"AMCPY.root")
+#            flow=SampleProcessing("VBF Hmumu Analysis","/home/sdonato/Hmm/fileSkimFromNanoAOD/PROD_12_0/vbfHmm_"+year+"AMCPY.root")
         else:
             flow=SampleProcessing("VBF Hmumu Analysis","/scratchssd/mandorli/Hmumu/fileSkim2016_FSR/VBF_HToMuMu_nano2016.root")
     else:
@@ -353,7 +353,8 @@ def getFlow(year):
     flow.Selection("ZRegionSLJeta3pt1","(abs(QJet1_eta)>3.139)&&(QJet1_pt>50) && ZRegion",requires=["ZRegion"])
 
 
-    flow.AddExternalCode(header= "eval_lwtnn.h",cppfiles=["eval_lwtnn.C"],libs=["lwtnn"],ipaths=["/home/sdonato/Hmm/lwtnn/include/lwtnn/"],lpaths=["/home/sdonato/Hmm/lwtnn/build/lib/"]) ##FIXME hard-code library
+    flow.AddExternalCode(header= "eval_lwtnn.h",cppfiles=["eval_lwtnn.C"],libs=["lwtnn"],ipaths=["/scratch/lgiannini/HmmPisa/lwtnn/include/lwtnn/"],lpaths=["/scratch/lgiannini/HmmPisa/lwtnn/build/lib/"])
+    #flow.AddExternalCode(header= "eval_lwtnn.h",cppfiles=["eval_lwtnn.C"],libs=["lwtnn"],ipaths=["/home/sdonato/Hmm/lwtnn/include/lwtnn/"],lpaths=["/home/sdonato/Hmm/lwtnn/build/lib/"]) ##FIXME hard-code library
     #flow.Define("DNNClassifier","lwtnn.eval(__slot, {Mqq_log,Rpt,qqDeltaEta,ll_zstar,float(NSoft5),minEtaHQ,1,1,Higgs_pt,log(Higgs_pt),Higgs.Eta(),Mqq,QJet1_pt,QJet0_pt,QJet1_eta,QJet0_eta,QJet1_phi,QJet0_phi,Higgs_m,Higgs_mRelReso,Higgs_mReso}, {18,3})")
     #flow.Define("DNN18Classifier","lwtnn_all.eval(event, {Mqq_log,Rpt,qqDeltaEta,log(ll_zstar),float(NSoft5New),minEtaHQ,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m,Higgs_mRelReso,Higgs_mReso}, {19,3})")
     flow.Define("DNN18Classifier","lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m,Higgs_mRelReso,Higgs_mReso}, {22,3})")
