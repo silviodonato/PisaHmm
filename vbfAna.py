@@ -1,8 +1,8 @@
 from nail.nail import *
 import ROOT
 import traceback
-nthreads=16
-nprocesses=4
+nthreads=36
+nprocesses=6
 import sys
 import copy
 ROOT.gROOT.ProcessLine(".x softactivity.h")

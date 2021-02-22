@@ -1,19 +1,20 @@
-path2026 = "/home/sdonato/fileSkimFromNanoAOD/PROD_13_4/" #reduced JES
+path2026 = "/home/mthakore/PROD_2_0/" #reduced JES
 
 samples={
 
-"DY105VBF_2026AMCPY"  : {"xsec": 2.03, "filter": "VBFFilterFlag" },# "files":["/scratchssd/mandorli/Hmumu/fileSkimFromNanoAOD/PROD_7_2/DY105VBF_2026AMCPY.root"], "training":False}, #this name has to change
-"DY105VBF_2026MGPY"   : {"xsec": 2.03, "filter": "VBFFilterFlag"},
+"vbfHmm_powheg" : {"xsec": 0.0008210722 , "files": ["/home/mthakore/PROD_2_0/vbfHmm_powheg_merged.root"] }, #xsec need to be set later on with actual values
 
-"EWKZ105_2026MGPYDIPOLE"   : {"xsec": 0.0789, "files":["/home/sdonato/fileSkimFromNanoAOD/PROD_13_4/EWKZ105_2026MGPYDIPOLE.root"]},
+"GluGluHToMuMu_powheg" : {"xsec": 0.0008210722 , "files": ["/home/mthakore/PROD_2_0/GluGluHToMuMu_powheg_merged.root"] }, #xsec need to be set later on with actual values
 
-#data2026V16": {"lumi":59970.,"data":True},
+"DYToLL_madgraphMLM" : {"xsec": 32.95, "files":["/home/mthakore/PROD_2_0/DYToLL_madgraphMLM_merged.root"] },
 
+"EWKZ2Jets_ZToLL_madgraph" : {"xsec": 4.38 , "files": ["/home/mthakore/PROD_2_0/EWKZ2Jets_ZToLL_madgraph_merged.root"] },
 
-"vbfHmm_2026POWPYDIPOLE"  : {"xsec":0.0008210722},
+"DYJets_MLL_50_madgraphMLM" : {"xsec": 5711, "files": ["/home/mthakore/PROD_2_0/DYJets_MLL_50_madgraphMLM_merged.root"] }, 
 
-"data2026": {"lumi":59970.,"data":True,"files":["/home/sdonato/fileSkimFromNanoAOD/PROD_13_4/data2026.root"]},
+"DYJetsToLL_M_100_madgraphMLM" : {"xsec": 246.5 , "files": ["/home/mthakore/PROD_2_0/DYJetsToLL_M_100_madgraphMLM_merged.root"] },
 
+"TT_Tune_powheg" : {"xsec": 864.4, "files": ["/home/mthakore/PROD_2_0//TT_Tune_powheg_merged.root"] }
 }
 
 ## Add "files" automatically if not defined
