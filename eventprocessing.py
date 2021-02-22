@@ -1,7 +1,7 @@
 from nail.nail import *
 import ROOT
 import sys
-
+'''
 def getFlow(year):
     FSR=True
     FSRnew=False
@@ -15,13 +15,15 @@ def getFlow(year):
         else:
             flow=SampleProcessing("VBF Hmumu Analysis","/scratchssd/mandorli/Hmumu/fileSkim2016_FSR/VBF_HToMuMu_nano2016.root")
     else:
-        flow=SampleProcessing("VBF Hmumu Analysis","/scratch/mandorli/Hmumu/fileSkimFromNanoAOD/fileSkim2016_nanoV5/VBF_HToMuMu_nano2016.root")
+'''
+        flow=SampleProcessing("VBF Hmumu Analysis","/scratchssd/thakore/PROD_2_0/vbfHmm_powheg_merged.root")
     ##FIXME## SD
 #        flow=SampleProcessing("VBF Hmumu Analysis","/home/sdonato/Hmm/fileSkimFromNanoAOD/PROD_13_4/vbfHmm_2026POWPYDIPOLE.root") #/scratch/mandorli/Hmumu/fileSkimFromNanoAOD/fileSkim2016_tmp/VBF_HToMuMu_nano2016.root")
     #/scratch/mandorli/Hmumu/samplePerAndrea/GluGlu_HToMuMu_skim_nano2016.root")
     #flow.Define("LHEScaleWeight","ROOT::VecOps::RVec<float>(9,1.)") #this result in NOOP if already defined, otherwise it is a failsafe
 
     #variables that we will add file by file before passing the RNode to the event processor
+'''
     flow.AddExpectedInput("year","int")
     flow.AddExpectedInput("isMC","bool")
     flow.AddExpectedInput("isHerwig","bool")
@@ -107,33 +109,33 @@ def getFlow(year):
     else :
         flow.Define("SelectedMuon_p4","SelectedMuon_p4_orig")
         flow.Define("SelectedMuon_GFp4","SelectedMuon_p4GFcorr")
-
-    flow.Define("SelectedMuon_p4uncalib","@p4v(SelectedMuon)")
-    flow.Selection("twoUnpreselMuons","nMuon>=2")
+'''
+#    flow.Define("SelectedMuon_p4uncalib","@p4v(SelectedMuon)")
+#    flow.Selection("twoUnpreselMuons","nMuon>=2")
     flow.Selection("twoMuons","nSelectedMuon==2")
     flow.Distinct("MuMu","SelectedMuon")
-    flow.Define("OppositeSignMuMu","Nonzero(MuMu0_charge != MuMu1_charge)",requires=["twoMuons"])
-    flow.Selection("twoOppositeSignMuons","OppositeSignMuMu.size() > 0")
-    flow.TakePair("Mu","SelectedMuon","MuMu","At(OppositeSignMuMu,0,-200)",requires=["twoOppositeSignMuons"])
-    flow.Define("Higgs","Mu0_GFp4+Mu1_GFp4")
-    flow.Define("Higgs_noGF","Mu0_p4+Mu1_p4")
-    flow.Define("HiggsUncalib","Mu0_p4uncalib+Mu1_p4uncalib")
+#    flow.Define("OppositeSignMuMu","Nonzero(MuMu0_charge != MuMu1_charge)",requires=["twoMuons"])
+#    flow.Selection("twoOppositeSignMuons","OppositeSignMuMu.size() > 0")
+#    flow.TakePair("Mu","SelectedMuon","MuMu","At(OppositeSignMuMu,0,-200)",requires=["twoOppositeSignMuons"])
+#    flow.Define("Higgs","Mu0_GFp4+Mu1_GFp4")
+#    flow.Define("Higgs_noGF","Mu0_p4+Mu1_p4")
+#    flow.Define("HiggsUncalib","Mu0_p4uncalib+Mu1_p4uncalib")
 
-    flow.Define("Higgs_m_GF","Higgs.M()")
-    flow.Define("Higgs_m_noGF","Higgs_noGF.M()")
-
-
-
-    flow.AddExternalCode(header="muonEfficiency.h",cppfiles=["muonEfficiency.C"])
-    flow.Define("muEffWeight", "isMC?(Mu0_sf*Mu1_sf*mcMuonEffCorrection(year ,run, Mu0_pt, Mu0_eta, Mu1_pt, Mu1_eta)):1",requires=["twoOppositeSignMuons"])
+#    flow.Define("Higgs_m_GF","Higgs.M()")
+#    flow.Define("Higgs_m_noGF","Higgs_noGF.M()")
 
 
-    flow.AddExternalCode(header="prefiring.h",cppfiles=["prefiring.C"])
-    flow.Define("Jet_prefireWeight","Map(Jet_pt,Jet_eta, [ year](float pt,float eta) { return prefiringJetWeight(year,pt,eta); }) ")
 
-    flow.Define("Jet_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Jet_pt_touse , Jet_eta, Jet_phi, Jet_mass)")
+#    flow.AddExternalCode(header="muonEfficiency.h",cppfiles=["muonEfficiency.C"])
+#    flow.Define("muEffWeight", "isMC?(Mu0_sf*Mu1_sf*mcMuonEffCorrection(year ,run, Mu0_pt, Mu0_eta, Mu1_pt, Mu1_eta)):1",requires=["twoOppositeSignMuons"])
+
+
+#    flow.AddExternalCode(header="prefiring.h",cppfiles=["prefiring.C"])
+#    flow.Define("Jet_prefireWeight","Map(Jet_pt,Jet_eta, [ year](float pt,float eta) { return prefiringJetWeight(year,pt,eta); }) ")
+
+#    flow.Define("Jet_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Jet_pt_touse , Jet_eta, Jet_phi, Jet_mass)")
     #VBF Jets kinematics
-    flow.DefaultConfig(jetPtCut=25)
+#    flow.DefaultConfig(jetPtCut=25)
     #Jet_pt_touse > jetPtCut && ( Jet_pt_touse > 50 || Jet_puId >0 ) &&   Jet_jetId > 0  && abs(Jet_eta) < 4.7 && (abs(Jet_eta)<2.5 || Jet_puId > 6  || (Jet_puId>0 && Jet_pt_touse > 50 ) ) &&
     #(year != 2017 ||  Jet_pt_touse > 50 || abs(Jet_eta) < 2.7 || abs(Jet_eta) > 3.0 ||  Jet_neEmEF<0.55 ) &&
     #flow.SubCollection("SelectedJet","Jet",'''
@@ -143,8 +145,8 @@ def getFlow(year):
     #''')
     #flow.Define("Jet_associatedMuonPt","abs(TakeDef(Muon_correctedFSR_pt,Jet_muonIdx1,0))")
 
-    flow.SubCollection("SelectedJet","Jet",'''
-    (year != 2017 ||  Jet_puId17 > 6 || abs(Jet_eta) < 2.6 || abs(Jet_eta) > 3.0) &&
+#    flow.SubCollection("SelectedJet","Jet",'''
+'''    (year != 2017 ||  Jet_puId17 > 6 || abs(Jet_eta) < 2.6 || abs(Jet_eta) > 3.0) &&
     Jet_pt_touse > jetPtCut && ( Jet_pt > 50
     || (  Jet_puId17  > 0  && year==2017)
     || ((Jet_puId ) > 0 && year!=2017 ) )
@@ -158,7 +160,7 @@ def getFlow(year):
     #(Jet_muonIdx1==-1 || TakeDef(Muon_iso,Jet_muonIdx1,100) > 0.25 || abs(TakeDef(Muon_correctedFSR_pt,Jet_muonIdx1,0)) < 20 || abs(TakeDef(Muon_mediumId,Jet_muonIdx1,0) == 0 )) &&
     #(Jet_muonIdx2==-1 || TakeDef(Muon_iso,Jet_muonIdx2,100) > 0.25 || abs(TakeDef(Muon_correctedFSR_pt,Jet_muonIdx2,0)) < 20 || abs(TakeDef(Muon_mediumId,Jet_muonIdx2,0) == 0 ))
     #''')
-
+'''
     flow.Selection("twoJets","nSelectedJet>=2")
 
 
@@ -424,7 +426,7 @@ def getFlow(year):
 #        flow.CentralWeight("weightDNNSB",["SignalRegionDNNWeighted","SRplusSBDNNWeighted"])
 
     flow.AddExternalCode(header="nnlops.h",cppfiles=["nnlops.C"],ipaths=["."])
-
+    
     #unused MC stuff
     flow.Selection("hasHiggs","Sum(GenPart_pdgId == 25) > 0")
     flow.Define("GenHiggs_idx","Nonzero(GenPart_pdgId == 25)", requires=["hasHiggs"])
@@ -436,5 +438,5 @@ def getFlow(year):
     flow.Define("QQ_mass","MemberMap(QQ_p4,M())")
     flow.Define("HighestGenQQMass","At(QQ_mass,Argmax(QQ_mass),-99)")
     flow.AddExternalCode(header="qq2Hqq_uncert_scheme.h",cppfiles=["qq2Hqq_uncert_scheme.cpp"],ipaths=["."])
-
+'''
     return flow

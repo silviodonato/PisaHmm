@@ -3,42 +3,42 @@ import samples2016,samples2017,samples2018
 samples.update(samples2016.samples)
 
 name="H"
-background={
-"DYVBF":[
-    "DY105VBF_2026MGPY"
-],
-"VBF Z":[
-   "EWKZ105_2026MGPYDIPOLE",
-],
-"Top":[
-],
-"Other":[
-],
-}
+background= {"DY": ["DYToLL_madgraphMLM", "DYJetsToLL_M_100_madgraphMLM"], "ttH": ["TT_Tune_powheg"], "VBF Z": ["EWKZ2Jets_ZToLL_madgraph"]}
+
+#"DYVBF":[
+#    "DY105VBF_2026MGPY"
+#],
+#"VBF Z":[
+ #  "EWKZ105_2026MGPYDIPOLE",
+#],
+#"Top":[
+#],
+#"Other":[
+#],
 
 
 #sorting
 ##SD test
-backgroundSorted=["DYVBF","VBF Z"]
+backgroundSorted=["DY", "VBF Z", "ttH"]
 backgroundSorted+=[x for x in background if x not in backgroundSorted]
 
 
 signal={
-"VBF H":["vbfHmm_2026POWPYDIPOLE"],
+"VBF H":["vbfHmm_powheg"], "gg H": ["GluGluHToMuMu_powheg"]
 }
 
 #legend sorting
-backgroundSortedForLegend=["DYVBF","VBF Z"]
+backgroundSortedForLegend=["DY","VBF Z", "ttH"]
 backgroundSortedForLegend+=[x for x in background if x not in backgroundSortedForLegend]
-signalSortedForLegend=["VBF H"]
+signalSortedForLegend=["VBF H", "gg H"]
 signalSortedForLegend+=[x for x in signal if x not in signalSortedForLegend]
 
 
 
 
-data={
+#data={
 #"2018":["data2018"]
-}
+#}
 
 import ROOT
 fillcolor={
