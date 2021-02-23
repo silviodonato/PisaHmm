@@ -8,7 +8,7 @@ def getFlow(year):
     FSRnew=True
     #flow=SampleProcessing("VBF Hmumu Analysis","/scratch/arizzi/Hmm/nail/samples/6B8A2AC8-35E6-1146-B8A8-B1BA90E3F3AA.root"
     flow=SampleProcessing("VBF Hmumu Analysis","/scratchssd/thakore/PROD_2_0/vbfHmm_powheg_merged.root")
-    '''
+'''
     if FSR :
     ##FIXME## SD
         if FSRnew :
@@ -24,6 +24,7 @@ def getFlow(year):
     #flow.Define("LHEScaleWeight","ROOT::VecOps::RVec<float>(9,1.)") #this result in NOOP if already defined, otherwise it is a failsafe
 
     #variables that we will add file by file before passing the RNode to the event processor
+	 
     flow.AddExpectedInput("year","int")
     flow.AddExpectedInput("isMC","bool")
     flow.AddExpectedInput("isHerwig","bool")
@@ -43,13 +44,13 @@ def getFlow(year):
     flow.Define("PSWeightSafe","nPSWeight>=4?PSWeight:std::vector<float>(4,1)")
     #flow.Define("Jet_pt_touse","Jet_pt_newJEC")
     #flow.Define("Jet_pt_touse","Jet_pt")
-    '''
+    
     if int(year)==2018 or int(year)==2026 : ##FIXME###
         print("Use NEW JEC")
         flow.Define("Jet_pt_touse","Jet_pt_newJEC")
     else:
         flow.Define("Jet_pt_touse","Jet_pt")
-
+'''
     flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
 
     #Higgs to mumu reconstruction
@@ -62,7 +63,7 @@ def getFlow(year):
 
 
     #need FSR inputs
-    '''
+'''    
     if FSR:
         flow.Define("FsrPhoton_mass","FsrPhoton_pt*0.f")
         flow.Define("FsrPhoton_p4","@p4v(FsrPhoton)")
@@ -111,7 +112,7 @@ def getFlow(year):
     else :
         flow.Define("SelectedMuon_p4","SelectedMuon_p4_orig")
         flow.Define("SelectedMuon_GFp4","SelectedMuon_p4GFcorr")
-    ''' 
+'''     
     flow.Define("SelectedMuon_p4uncalib","@p4v(SelectedMuon)")
     flow.Selection("twoUnpreselMuons","nMuon>=2")
     flow.Selection("twoMuons","nSelectedMuon==2")
@@ -138,6 +139,8 @@ def getFlow(year):
     flow.Define("Jet_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Jet_pt_touse , Jet_eta, Jet_phi, Jet_mass)")
     #VBF Jets kinematics
     flow.DefaultConfig(jetPtCut=25)
+    
+    
     #Jet_pt_touse > jetPtCut && ( Jet_pt_touse > 50 || Jet_puId >0 ) &&   Jet_jetId > 0  && abs(Jet_eta) < 4.7 && (abs(Jet_eta)<2.5 || Jet_puId > 6  || (Jet_puId>0 && Jet_pt_touse > 50 ) ) &&
     #(year != 2017 ||  Jet_pt_touse > 50 || abs(Jet_eta) < 2.7 || abs(Jet_eta) > 3.0 ||  Jet_neEmEF<0.55 ) &&
     #flow.SubCollection("SelectedJet","Jet",'''

@@ -1,0 +1,297 @@
+## Description of variables: ['DNN18AtanM1250', 'DNN18AtanM1260', 'DNN18Atan', 'DNN18AtanM1255', 'DNN18AtanNoMass', 'SRplusSBDNNWeighted', 'Higgs_m38', 'DNN18AtanM1256', 'SideBand', 'DNN18AtanM1259', 'DNN18AtanM1258', 'Higgs_m', 'DNN18AtanM1253', 'SignalRegion', 'DNN18AtanM1252', 'DNN18AtanM1257', 'DNN18AtanM1254', 'DNN18AtanM1251']
+##########
+Jet_pt_touse := Jet_pt_newJEC # c8f0210bb70e37a3b778262bcdd74542
+##########
+Muon_p4_orig := vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Muon_corrected_pt , Muon_eta, Muon_phi, Muon_mass) # 8bf548426b117d12cf60c298f1ad4107
+##########
+FsrPhoton_mass := FsrPhoton_pt*0.f # 23665a6631ee2a1f14f54832ad5ff527
+##########
+FsrPhoton_p4 := vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >	>(FsrPhoton_pt , FsrPhoton_eta, FsrPhoton_phi, FsrPhoton_mass) # e6584302926045403adc02543133c806
+##########
+Muon_FSR_p4 := TakeDef(FsrPhoton_p4,Muon_fsrPhotonIdx,ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >()) # 961669640492e6b508c399fe39772336
+##########
+Muon_FSR_pt := TakeDef(FsrPhoton_pt,Muon_fsrPhotonIdx,0) # 80b8afdf024937ff053ad435412e13b2
+##########
+Muon_FSR_eta := TakeDef(FsrPhoton_eta,Muon_fsrPhotonIdx,0) # 8870ae424bb3e2f015cd561e5eede0ad
+##########
+Muon_FSR_iso := TakeDef(FsrPhoton_relIso03,Muon_fsrPhotonIdx,99.) # 8a1cb58886037b10460ec1cd3b3ae846
+##########
+Muon_FSR_drEt2 := TakeDef(FsrPhoton_dROverEt2,Muon_fsrPhotonIdx,99.) # 81469e0dd14ba22360e90c2d093218b7
+##########
+Muon_wFSR_p4 := Where((Muon_fsrPhotonIdx != -1 && Muon_FSR_iso < 1.8 && Muon_FSR_drEt2 < 0.012 && Muon_FSR_pt/Muon_pt<0.4 && abs(Muon_FSR_eta)<2.4 ),Muon_FSR_p4+Muon_p4_orig,Muon_p4_orig) # 8a1a66a25e736a9eaede182501e44d39
+##########
+Muon_correctedFSR_pt := MemberMap(Muon_wFSR_p4,Pt()) # 8b160a82019fc0dab624ba57df1e6f76
+##########
+Muon_iso := Where((Muon_fsrPhotonIdx != -1 && Muon_FSR_iso < 1.8 && Muon_FSR_drEt2 < 0.012 && Muon_FSR_pt/Muon_pt<0.4 && abs(Muon_FSR_eta)<2.4 ),(Muon_pfRelIso04_all*Muon_pt-Muon_FSR_pt)/Muon_correctedFSR_pt,(Muon_pfRelIso04_all*Muon_pt)/Muon_correctedFSR_pt) # f28cd10cf3e0871432a90e5817fb8430
+##########
+Muon_pt_GeoFitCorrection := Map(Muon_dxybs*Muon_charge, Muon_corrected_pt,Muon_eta, [ year](float d0, float pt, float eta) { return PtGeoCor::PtGeo_BS_Roch(d0, pt, eta, year); }) # 3cb3b104026a201276f26239611e255f
+##########
+Muon_p4GFcorr := vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > >(Muon_pt_GeoFitCorrection , Muon_eta, Muon_phi , Muon_mass) # 8ce2a4392179dfad2a6af07f5b5520d8
+##########
+SelectedMuon := Muon_iso < 0.25 && Muon_mediumId && Muon_correctedFSR_pt > 20. && abs(Muon_eta) < 2.4 # 6039fda53af1a819af32852c724f40ab
+##########
+SelectedMuon_charge := At(Muon_charge,SelectedMuon) # b4267c83af0447b9a5f48488c305ea8e
+##########
+SelectedMuon_corrected_pt := At(Muon_corrected_pt,SelectedMuon) # 9676c4d9ec038b2b11cdc7a64346e830
+##########
+SelectedMuon_eta := At(Muon_eta,SelectedMuon) # e4941b8edd4c3e8b46ead850f556f763
+##########
+SelectedMuon_fsrPhotonIdx := At(Muon_fsrPhotonIdx,SelectedMuon) # e4a8bd1ef7dff7cc12667863319c3357
+##########
+SelectedMuon_pt := At(Muon_pt,SelectedMuon) # 694c760841d845ba873d22302e43483c
+##########
+SelectedMuon_FSR_pt := At(Muon_FSR_pt,SelectedMuon) # 3761ca303f8cc95e104a346317bf90bc
+##########
+SelectedMuon_FSR_eta := At(Muon_FSR_eta,SelectedMuon) # a2b9f41572c572a7877690152a2f8ade
+##########
+SelectedMuon_FSR_iso := At(Muon_FSR_iso,SelectedMuon) # 3bb5ef0f912b4f6196cc57ab8566feba
+##########
+SelectedMuon_FSR_drEt2 := At(Muon_FSR_drEt2,SelectedMuon) # 7c8ea2d6cd9d897287c39c06c8d27da8
+##########
+SelectedMuon_wFSR_p4 := At(Muon_wFSR_p4,SelectedMuon) # 138ec283d5889a59cff107cf95eb3949
+##########
+SelectedMuon_p4GFcorr := At(Muon_p4GFcorr,SelectedMuon) # ab2d04b2eb35538407c13ab75992fd9b
+##########
+nSelectedMuon := Sum(SelectedMuon) # 76898bc916b39f7978d092ec650a466c
+##########
+SelectedMuon_p4 := SelectedMuon_wFSR_p4 # dde22880e11211356705345da02432a8
+##########
+SelectedMuon_GFp4 := Where((SelectedMuon_fsrPhotonIdx != -1 && SelectedMuon_FSR_iso < 1.8 && SelectedMuon_FSR_drEt2 < 0.012 && SelectedMuon_FSR_pt/SelectedMuon_corrected_pt<0.4 && abs(SelectedMuon_FSR_eta)<2.4 ) && (SelectedMuon_FSR_pt > 0.),SelectedMuon_p4,SelectedMuon_p4GFcorr) # adc03992aa88dee0be5b7ddc2bd45d6a
+##########
+twoMuons := nSelectedMuon==2 # 99f2780e13c51d2462ec62c50d513e36
+##########
+MuMu_allpairs := Combinations(Nonzero(SelectedMuon),Nonzero(SelectedMuon)) # ab16dc0db49aefb558facd9d37390189
+##########
+MuMu := At(MuMu_allpairs,0) < At(MuMu_allpairs,1) # 67049e4eb1c1502bb513abc259e2c8a3
+##########
+MuMu0 := At(At(MuMu_allpairs,0),MuMu) # c8b82350a1385d6d488db555b2b823e2
+##########
+MuMu1 := At(At(MuMu_allpairs,1),MuMu) # fca37ae12775a38de549000313dcb319
+##########
+MuMu0_charge := Take(SelectedMuon_charge,MuMu0) # c42b656f824b8a2443069395ac7376ba
+##########
+MuMu1_charge := Take(SelectedMuon_charge,MuMu1) # 68cc943f893295a2ac861a6ac92a8742
+##########
+OppositeSignMuMu := Nonzero(MuMu0_charge != MuMu1_charge) # c92d496779f98cca543b294049e59b86
+##########
+twoOppositeSignMuons := OppositeSignMuMu.size() > 0 # ebd2adf12dd6d9b075a24665734e0215
+##########
+Mu_index := At(OppositeSignMuMu,0,-200) # 84d60ca0c50663e9ddde9f8f4c768767
+##########
+Mu0 := int(At(MuMu0,Mu_index)) # 3bd764a4b3857186cbea3884b9c6bc49
+##########
+Mu0_GFp4 := At(SelectedMuon_GFp4,Mu0) # 8aaac9743c17a10a1b129ae2e046d626
+##########
+Mu1 := int(At(MuMu1,Mu_index)) # f846308e1d9f7e16c03886cb430a6795
+##########
+Mu1_GFp4 := At(SelectedMuon_GFp4,Mu1) # d2b1cdbec1c38d6225b2de7e5927100b
+##########
+Higgs := Mu0_GFp4+Mu1_GFp4 # e473ae2a64957d7372c243fcf598b032
+##########
+Jet_p4 := vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Jet_pt_touse , Jet_eta, Jet_phi, Jet_mass) # 1f8caab7844317fbf4d3711321b0e686
+##########
+jetPtCut := 25 # 96b3827b31969859f95f654844ee8011
+##########
+SelectedJet := 
+    (year != 2017 ||  Jet_puId17 > 6 || abs(Jet_eta) < 2.6 || abs(Jet_eta) > 3.0) &&
+    Jet_pt_touse > jetPtCut && ( Jet_pt > 50
+    || (  Jet_puId17  > 0  && year==2017)
+    || ((Jet_puId ) > 0 && year!=2017 ) )
+     &&   Jet_jetId  > 0  && abs(Jet_eta) < 4.7  &&
+    (Jet_muonIdx1==-1 || TakeDef(Muon_iso,Jet_muonIdx1,100) > 0.25 || abs(TakeDef(Muon_correctedFSR_pt,Jet_muonIdx1,0)) < 20 || abs(TakeDef(Muon_mediumId,Jet_muonIdx1,0) == 0 )) &&
+    (Jet_muonIdx2==-1 || TakeDef(Muon_iso,Jet_muonIdx2,100) > 0.25 || abs(TakeDef(Muon_correctedFSR_pt,Jet_muonIdx2,0)) < 20 || abs(TakeDef(Muon_mediumId,Jet_muonIdx2,0) == 0 ))
+     # b1a85bcc6ae007713f21364ede84030e
+##########
+SelectedJet_btagDeepB := At(Jet_btagDeepB,SelectedJet) # 1b05c19091cbf0958a16fb2942b9d4db
+##########
+SelectedJet_eta := At(Jet_eta,SelectedJet) # 841435d7ffbc1de0aa849f7d5ec4a789
+##########
+SelectedJet_phi := At(Jet_phi,SelectedJet) # 8970e628e79f0e49f0defde16886ae7c
+##########
+SelectedJet_qgl := At(Jet_qgl,SelectedJet) # 2fc7bd9f16246ee7d4fd12968a587cb4
+##########
+SelectedJet_pt_touse := At(Jet_pt_touse,SelectedJet) # 3af3087bc06de606ba17f411f9cda60c
+##########
+SelectedJet_p4 := At(Jet_p4,SelectedJet) # 70841ae374300d1cad5782fadfb13fca
+##########
+nSelectedJet := Sum(SelectedJet) # 2460c32ffdc37f1b0f4d3adee7ca55ee
+##########
+twoJets := nSelectedJet>=2 # b79ae18aadb079f6674ee5f0822ec0d2
+##########
+SortedSelectedJetIndices := Argsort(-SelectedJet_pt_touse) # 38715990f180b608c377fd1417ec22f0
+##########
+QJet0 := At(SortedSelectedJetIndices,0) # 8e4038c5f673813d60500c238cdd9ee1
+##########
+QJet0_eta := At(SelectedJet_eta,QJet0) # 9db36def4d078b86f4453b5aada64866
+##########
+QJet0_phi := At(SelectedJet_phi,QJet0) # a72041cd62fa144174d8a36944667c18
+##########
+QJet0_qgl := At(SelectedJet_qgl,QJet0) # b1e35fb41caa27c4166cd412a68a3fc6
+##########
+QJet0_pt_touse := At(SelectedJet_pt_touse,QJet0) # 7768c02aa093cf992b50fbbc8295cec3
+##########
+QJet0_p4 := At(SelectedJet_p4,QJet0) # 5793de1dac5dbacd7a16570a257b85ce
+##########
+QJet1 := At(SortedSelectedJetIndices,1) # a743d48d5ea016146a5e7567b188bcbd
+##########
+QJet1_eta := At(SelectedJet_eta,QJet1) # 1d0b6e2f93e0a03f2f41cd0ebc2bce3c
+##########
+QJet1_phi := At(SelectedJet_phi,QJet1) # 97a3b44e8f784840264a32126929ec1e
+##########
+QJet1_qgl := At(SelectedJet_qgl,QJet1) # 23ff6136dd7069764838148dc460cce6
+##########
+QJet1_pt_touse := At(SelectedJet_pt_touse,QJet1) # f05d69f334cae1bdcf868182ce5774af
+##########
+QJet1_p4 := At(SelectedJet_p4,QJet1) # 39e90449b602433b0feb33e4ad8579ff
+##########
+SoftActivityJet_mass := SoftActivityJet_pt*0 # e65ecc3d3b32080e75b9111bc083e24a
+##########
+SoftActivityJet_p4 := vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >	>(SoftActivityJet_pt , SoftActivityJet_eta, SoftActivityJet_phi, SoftActivityJet_mass) # 2992039c809b1629ca8750215b97f5eb
+##########
+SelectedJetSoftActivityJetPair := Combinations(nSelectedJet,nSoftActivityJet) # f1ac5f79d7f45d1bf290d17a3ebe03a3
+##########
+SelectedJetSoftActivityJetPair_Dr := vector_map(P4DELTAR,Take(SelectedJet_p4,At(SelectedJetSoftActivityJetPair,0)),Take(SoftActivityJet_p4,At(SelectedJetSoftActivityJetPair,1))) # 1fd69275edaadfa847bc10433fbb08cd
+##########
+SoftActivityJet_SelectedJetDr := matrix_map(nSelectedJet,nSoftActivityJet,0,[](const ROOT::VecOps::RVec<float> & v) {return v.size()>0?(-Max(-v)):-99;},SelectedJetSoftActivityJetPair_Dr) # 65192b6ccac6d8ce89a2aff47c15d0b8
+##########
+SoftActivityJet_SelectedJetIdx := matrix_map(nSelectedJet,nSoftActivityJet,0,[](const ROOT::VecOps::RVec<float> & v) {return v.size()>0?int(Argmax(-v)):-1;},SelectedJetSoftActivityJetPair_Dr) # c9e5480d129a5400a23292edc5d3ef0b
+##########
+SelectedMuonSoftActivityJetPair := Combinations(nSelectedMuon,nSoftActivityJet) # 4a9c3e5ebd3cb913b5ded94fefee1e9e
+##########
+SelectedMuonSoftActivityJetPair_Dr := vector_map(P4DELTAR,Take(SelectedMuon_p4,At(SelectedMuonSoftActivityJetPair,0)),Take(SoftActivityJet_p4,At(SelectedMuonSoftActivityJetPair,1))) # e42b2828340d980f3e1e56b8ac8f14d3
+##########
+SoftActivityJet_SelectedMuonDr := matrix_map(nSelectedMuon,nSoftActivityJet,0,[](const ROOT::VecOps::RVec<float> & v) {return v.size()>0?(-Max(-v)):-99;},SelectedMuonSoftActivityJetPair_Dr) # 22448f24f1e89be5e42a3451c2d3a879
+##########
+SoftActivityJet_SelectedMuonIdx := matrix_map(nSelectedMuon,nSoftActivityJet,0,[](const ROOT::VecOps::RVec<float> & v) {return v.size()>0?int(Argmax(-v)):-1;},SelectedMuonSoftActivityJetPair_Dr) # 367848cc334a36f0efcd8e393ad61e83
+##########
+FootprintSAJet := 
+     (   (SoftActivityJet_SelectedJetDr<0.4 && ( SoftActivityJet_SelectedJetIdx == QJet0 ||  SoftActivityJet_SelectedJetIdx == QJet1)) ||
+               (SoftActivityJet_SelectedMuonDr<0.4 && ( SoftActivityJet_SelectedMuonIdx == Mu0 || SoftActivityJet_SelectedMuonIdx == Mu1) ) ||
+               (SoftActivityJet_eta > std::max(QJet0_eta, QJet1_eta) || SoftActivityJet_eta < std::min(QJet0_eta, QJet1_eta)))
+     # 008ea1713e2b40fccec82b58e0037ea6
+##########
+FootprintSAJet_pt := At(SoftActivityJet_pt,FootprintSAJet) # e97dbfede8b1f82fd314098982c40bce
+##########
+NSoft5NewNoRapClean := SoftActivityJetNjets5-Sum(
+    (          (SoftActivityJet_SelectedJetDr<0.4 && ( SoftActivityJet_SelectedJetIdx == QJet0 ||  SoftActivityJet_SelectedJetIdx == QJet1)) ||
+               (SoftActivityJet_SelectedMuonDr<0.4 && ( SoftActivityJet_SelectedMuonIdx == Mu0 || SoftActivityJet_SelectedMuonIdx == Mu1) )
+    )&&
+               SoftActivityJet_pt > 5.
+    ) # 29636cf13e5de5543c7d17c67a15937c
+##########
+SAHT2 := SoftActivityJetHT2-Sum(FootprintSAJet_pt*(FootprintSAJet_pt>2.f)) # 402a16f97f1838f36e7e2de042f29fd2
+##########
+qq := QJet0_p4+QJet1_p4 # b1dcda1d94199d60c2d76eff172279e7
+##########
+Mqq := qq.M() # ac76659002a3f09b0e912a08b66b597c
+##########
+qqDeltaEta := abs(QJet0_eta-QJet1_eta) # 590b38bbe36d5fefea3692cb3730463d
+##########
+ll_ystar := Higgs.Rapidity() - (QJet0_p4.Rapidity() + QJet1_p4.Rapidity())/2.f # 965684e4724e9217cf6c1322ebc47d3b
+##########
+ll_zstar :=  abs( ll_ystar/ (QJet0_p4.Rapidity()-QJet1_p4.Rapidity() ))  # f12b0db6ecfa50ae6aea52954e984bed
+##########
+ll_zstar_log :=  log(ll_zstar)  # 249f18945ac99077e073405d7ed623ec
+##########
+EtaHQ1 := abs(Higgs.Eta() - QJet0_eta) # b14d87b2f01ee1973f277ce020fbdfb4
+##########
+EtaHQ2 := abs(Higgs.Eta() - QJet1_eta) # dba4fa4106b516adec6db8fff75920d9
+##########
+Rpt := (QJet0_p4+QJet1_p4+ Higgs).Pt()/( QJet0_p4.Pt()+QJet1_p4.Pt() + Higgs.Pt()) # aaa020a02990513982a1963fcf322b0c
+##########
+LeadMuon := 0 # 4da920fde50547b8f6499b629dcec707
+##########
+LeadMuon_eta := At(SelectedMuon_eta,LeadMuon) # 7e5ebbe672d774be23d3bd2bb361e75b
+##########
+LeadMuon_pt := At(SelectedMuon_pt,LeadMuon) # 93760d5890b34c28fd5d3dc5aeb7eed0
+##########
+LeadMuon_p4 := At(SelectedMuon_p4,LeadMuon) # 5ac5217a73b2b5fda4313f1e86833658
+##########
+SubMuon := 1 # 52fc609c7cdac0114685ba6b66d5ff03
+##########
+SubMuon_charge := At(SelectedMuon_charge,SubMuon) # ab98456cc2e1ce10838d6371ebb28c0f
+##########
+SubMuon_eta := At(SelectedMuon_eta,SubMuon) # ebc8dd2c7ffc896723aa480d9381c312
+##########
+SubMuon_pt := At(SelectedMuon_pt,SubMuon) # fc783a75154b3180e5c5f906da1378ac
+##########
+SubMuon_p4 := At(SelectedMuon_p4,SubMuon) # 0a96a7c53f55d4a753bae66d772dbd69
+##########
+Higgs_pt := Higgs.Pt() # 412c004898aa26eb144c94605a3121ca
+##########
+Higgs_m := Higgs.M() # 80baaf92f8632298b4247529936b3886
+##########
+Higgs_eta := Higgs.Eta() # d232f9775ff0a78b42be44fa87264ac6
+##########
+Mqq_log := log(Mqq) # 0b1b20541840a758c6f5cebe8c2504c5
+##########
+Higgs_mRelReso := hRelResolution(LeadMuon_pt,LeadMuon_eta,SubMuon_pt,SubMuon_eta) # 647e730fd2a0a1b5b88c047760b60373
+##########
+Higgs_mReso := Higgs_mRelReso*Higgs_m # b8dd71bb8cf13edcd4bcd4d5fde6d37b
+##########
+minEtaHQ := std::min(abs(EtaHQ1),(EtaHQ2)) # f0754aa5ebd075b99c18ffd91f5ab8f6
+##########
+CS_theta := boost_to_CS(LeadMuon_p4, SubMuon_p4,  SubMuon_charge).first # 7ad44265d0f1f35b6ec9c62f9a5f4337
+##########
+CS_phi := boost_to_CS(LeadMuon_p4, SubMuon_p4, SubMuon_charge).second # 15fcb050d1d793181f3ded679e9d2845
+##########
+higgsMassWindowWidth := 10 # 230ad24e583f4d296f9ee9fe5bd0b0db
+##########
+mQQcut := 400 # d8089bd1b792b630f88152117b167e5e
+##########
+nominalHMass := 125.03 # 4156e323c70ad766f68cf9db881a74d1
+##########
+btagCut := (year==2018||year==2026)?0.4184f:((year==2017)?0.4941f:0.6321f) # 7aa81e2df5e90cc1e9b36327378a3cf1
+##########
+btagCutL := (year==2018||year==2026)?0.1241f:((year==2017)?0.1522f:0.2217f) # 93bcb8b6a6f95e1d0417e9f6650446f9
+##########
+nbtagged := int(Nonzero(SelectedJet_btagDeepB > btagCut && abs(SelectedJet_eta)< 2.5).size()) # 810c8564ff37079855f8f9f050302095
+##########
+nbtaggedL := int(Nonzero(SelectedJet_btagDeepB > btagCutL && abs(SelectedJet_eta)< 2.5).size()) # 5e6a12934af19b8369e58c5dc328887f
+##########
+nelectrons := int(Nonzero(Electron_pt > 20 && abs(Electron_eta) < 2.5 && Electron_mvaFall17V2Iso_WP90 ).size()) # 8c5fb857897a4f74480abe4b4f6823a9
+##########
+MassWindow := abs(Higgs.M()-nominalHMass)<higgsMassWindowWidth # d42c255a69287ed2c1f1ced73eb4c023
+##########
+VBFRegion := Mqq > mQQcut && QJet0_pt_touse> 35 && QJet1_pt_touse > 25 # abf8994c295dc12a9fe50d1e5bbe61e6
+##########
+PreSel := nelectrons==0 && nbtaggedL < 2 && VBFRegion && twoOppositeSignMuons && nbtagged < 1 && (( year == 2016 && LeadMuon_pt > 26 ) || ( year == 2017 && LeadMuon_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuon_pt > 26 )) && SubMuon_pt > 20 && TriggerSel && abs(SubMuon_eta) <2.4 && abs(LeadMuon_eta) < 2.4 # 85bbd661645676739f42233b6bf77d73
+##########
+SideBand := Higgs_m < 150 && Higgs_m > 110 && ! MassWindow && VBFRegion &&  qqDeltaEta > 2.5 # d81974970b2a053357bb761fcbc9006d
+##########
+SignalRegion := VBFRegion && MassWindow &&  qqDeltaEta > 2.5 # 2c99f2fd98da22b2ae977ead0223a049
+##########
+DNN18Classifier := lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m,Higgs_mRelReso,Higgs_mReso}, {22,3}) # feb0adef62943e87fae5d6f5702a2379
+##########
+DNN18Atan := atanh(DNN18Classifier) # f333892f41cad1499bde43ae5f5b88e2
+##########
+Higgs_m38 := Higgs_m+0.38f # afb56c1b0b673e75b536c7b19e915295
+##########
+DNN18AtanM1250 := atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m+0.000000f,Higgs_mRelReso,Higgs_mReso}, {22,3})) # 6066c13b297b58686e458ef6ece0217b
+##########
+DNN18AtanM1255 := atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m+-0.500000f,Higgs_mRelReso,Higgs_mReso}, {22,3})) # 1aed01b3fcfd1f51469cdbe2df5f1227
+##########
+DNN18AtanM1260 := atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m+-1.000000f,Higgs_mRelReso,Higgs_mReso}, {22,3})) # fe4701fbd3f463e4a88ea8ed9408d828
+##########
+DNN18AtanM1251 := atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m+-0.100000f,Higgs_mRelReso,Higgs_mReso}, {22,3})) # ee18d182ece22a92b28d2b336ade387a
+##########
+DNN18AtanM1252 := atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m+-0.200000f,Higgs_mRelReso,Higgs_mReso}, {22,3})) # 622bad8bade99923be3b743f819721ff
+##########
+DNN18AtanM1253 := atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m+-0.300000f,Higgs_mRelReso,Higgs_mReso}, {22,3})) # c5e6a4a7ab33b8b30bf7e4461bf23f06
+##########
+DNN18AtanM1254 := atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m+-0.400000f,Higgs_mRelReso,Higgs_mReso}, {22,3})) # ea9d3647ceb4998c873eaa6a01cc59ed
+##########
+DNN18AtanM1256 := atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m+-0.600000f,Higgs_mRelReso,Higgs_mReso}, {22,3})) # dbf6b1c1fc71c285c9861fca69c5d09e
+##########
+DNN18AtanM1257 := atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m+-0.700000f,Higgs_mRelReso,Higgs_mReso}, {22,3})) # 14ea9b53ca1c7bf6fb7c69a041778c45
+##########
+DNN18AtanM1258 := atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m+-0.800000f,Higgs_mRelReso,Higgs_mReso}, {22,3})) # 92e427f3210d9ae6a6091a4f7c699195
+##########
+DNN18AtanM1259 := atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m+-0.900000f,Higgs_mRelReso,Higgs_mReso}, {22,3})) # feacc8871724e46e2aeac6a93552a98c
+##########
+DNN18AtanNoMass := atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),125.,Higgs_mRelReso,Higgs_mReso}, {22,3})) # f8e18b1d3e43c79d42b80b70b9f409e9
+##########
+SRplusSBDNNWeighted := Higgs_m < 150 && Higgs_m > 110 && VBFRegion &&  qqDeltaEta > 2.5 # 0d8051bb0b9f34eb4d3392ae35f0efbb
+
+
+#Used inputs: {'SoftActivityJet_eta', 'year', 'FsrPhoton_eta', 'SoftActivityJetHT2', 'Jet_puId', 'Jet_puId17', 'nSoftActivityJet', 'Jet_muonIdx1', 'SoftActivityJet_phi', 'FsrPhoton_pt', 'SoftActivityJetNjets5', 'Muon_pfRelIso04_all', 'Electron_pt', 'Muon_pt', 'Muon_mass', 'FsrPhoton_relIso03', 'Jet_pt_newJEC', 'Muon_eta', 'Jet_phi', 'Muon_corrected_pt', 'Jet_btagDeepB', 'FsrPhoton_dROverEt2', 'event', 'SoftActivityJet_pt', 'Jet_pt', 'Muon_fsrPhotonIdx', 'Muon_mediumId', 'Jet_muonIdx2', 'Jet_jetId', 'Jet_mass', 'Muon_phi', 'FsrPhoton_phi', 'Jet_eta', 'TriggerSel', 'Muon_dxybs', 'Muon_charge', 'Jet_qgl', 'Electron_eta', 'Electron_mvaFall17V2Iso_WP90'}

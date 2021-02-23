@@ -126,24 +126,24 @@ fillcolor={
 #systematicsToPlot=["JERUp","JERDown","JESUp","JESDown","WithJER","puWeightUp","puWeightDown"]
 #ystematicsToPlot=["JERUp","JERDown","puWeightUp","puWeightDown","LHERenUp","LHERenDown","LHEFacUp","LHEFacDown","MuScaleUp","MuScaleDown"]
 #systematicsToPlot=["PSWeightISRUp","PSWeightISRDown","PSWeightFSRUp","PSWeightFSRDown","LHEPdfUp","LHEPdfDown","QGLweightUp","QGLweightDown","JERUp","JERDown","puWeightUp","puWeightDown","LHERenUp","LHERenDown","LHEFacUp","LHEFacDown","MuScaleUp","MuScaleDown"]
-systematicsToPlot=["PrefiringWeightUp","PrefiringWeightDown","LHEPdfUp","LHEPdfDown","QGLweightUp","QGLweightDown","JERUp","JERDown","puWeightUp","puWeightDown","LHERenUp","LHERenDown","LHEFacUp","LHEFacDown","MuScaleUp","MuScaleDown","AlternativeUp","AlternativeDown","PDFX1Up","PDFX1Down","PDFX0Up","PDFX0Down","PDFX2Up","PDFX2Down","EWKZjjPartonShowerUp","EWKZjjPartonShowerDown","SignalPartonShowerUp","SignalPartonShowerDown","DYModelUp","DYModelDown"]
+#systematicsToPlot=["PrefiringWeightUp","PrefiringWeightDown","LHEPdfUp","LHEPdfDown","QGLweightUp","QGLweightDown","JERUp","JERDown","puWeightUp","puWeightDown","LHERenUp","LHERenDown","LHEFacUp","LHEFacDown","MuScaleUp","MuScaleDown","AlternativeUp","AlternativeDown","PDFX1Up","PDFX1Down","PDFX0Up","PDFX0Down","PDFX2Up","PDFX2Down","EWKZjjPartonShowerUp","EWKZjjPartonShowerDown","SignalPartonShowerUp","SignalPartonShowerDown","DYModelUp","DYModelDown"]
 
-systematicsToPlot+=["JESUp","JESDown"]
-from btagvariations import btagsys
-systematicsToPlot+=btagsys
+#systematicsToPlot+=["JESUp","JESDown"]
+#from btagvariations import btagsys
+#systematicsToPlot+=btagsys
 
-sthsNames=["Yield","PTH200","Mjj60","Mjj120","Mjj350","Mjj700","Mjj1000","Mjj1500","PTH25","JET01"]
-THUs=["THU_VBF_"+x+"Up" for x in sthsNames]
-THUs+=["THU_VBF_"+x+"Down" for x in sthsNames]
-systematicsToPlot+=THUs
+#sthsNames=["Yield","PTH200","Mjj60","Mjj120","Mjj350","Mjj700","Mjj1000","Mjj1500","PTH25","JET01"]
+#THUs=["THU_VBF_"+x+"Up" for x in sthsNames]
+#THUs+=["THU_VBF_"+x+"Down" for x in sthsNames]
+#systematicsToPlot+=THUs
 
 
-from jesnames import jesnames2018
-from jernames import jernames
-jesList=jesnames2018
-systematicsForDC=systematicsToPlot+[x[7:] for x in jesList ]+jernames
+#from jesnames import jesnames2018
+#from jernames import jernames
+#jesList=jesnames2018
+#systematicsForDC=systematicsToPlot+[x[7:] for x in jesList ]+jernames
 
-systematicsToPlot=jernames+["JERUp","JERDown"]
+#systematicsToPlot=jernames+["JERUp","JERDown"]
 
 
 linecolor=fillcolor
@@ -152,10 +152,10 @@ markercolor=fillcolor
 from rebinning import *
 #rebin["DNN18Atan"]=dnnnewfew18
 #rebin["DNN18AtanNoMass"]=dnnnewfew18
-rebin["DNN18Atan"]=dnn062018
-rebin["DNN18AtanNoMass"]=dnn062018
+#rebin["DNN18Atan"]=dnn062018
+#rebin["DNN18AtanNoMass"]=dnn062018
 
-rebin["DNN18Atan2"]= [0 , 0.311666666667 , 0.635 , 0.845 , 1.04166666667 , 1.185 , 1.31666666667 , 1.42666666667 , 1.53166666667 , 1.645 , 1.76166666667 , 1.87 , 1.97666666667 , 2.07833333333 , 2.17666666667 , 2.27666666667 , 2.37666666667 , 2.485 , 2.61333333333 , 2.76333333333 , 2.96833333333 , 5.0 ]
+#rebin["DNN18Atan2"]= [0 , 0.311666666667 , 0.635 , 0.845 , 1.04166666667 , 1.185 , 1.31666666667 , 1.42666666667 , 1.53166666667 , 1.645 , 1.76166666667 , 1.87 , 1.97666666667 , 2.07833333333 , 2.17666666667 , 2.27666666667 , 2.37666666667 , 2.485 , 2.61333333333 , 2.76333333333 , 2.96833333333 , 5.0 ]
 #rebin["DNN18Atan2"]=  [0 , 0.49 , 0.768333333333 , 0.993333333333 , 1.15333333333 , 1.295 , 1.41 , 1.515 , 1.61833333333 , 1.73 , 1.83166666667 , 1.925 , 2.01166666667 , 2.09666666667 , 2.175 , 2.255 , 2.32666666667 , 2.40166666667 , 2.475 , 2.55666666667 , 2.645 , 2.73666666667 , 2.83833333333 , 2.96 , 3.13166666667 , 5.0 ]
 
 #ebin["DNN18Atan"]=dnn032018
