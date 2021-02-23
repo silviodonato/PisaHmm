@@ -1,8 +1,8 @@
 from nail.nail import *
 import ROOT
 import traceback
-nthreads=36
-nprocesses=6
+nthreads=32
+nprocesses=5
 import sys
 import copy
 ROOT.gROOT.ProcessLine(".x softactivity.h")
@@ -128,7 +128,7 @@ for region in histosWithFullJecs:
 print("The following histograms will be created in the following regions")
 for sel in  histosWithSystematics:
     print(sel,":",histosWithSystematics[sel])
-print("Number of known columns", len(flow.validCols), file=sys.stderr)
+#print("Number of known columns", len(flow.validCols), file=sys.stderr)
 
 proc=flow.CreateProcessor("eventProcessor"+year,snaplist,histosWithSystematics,snap,"",nthreads)
 #proc=None
