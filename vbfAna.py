@@ -1,8 +1,8 @@
 from nail.nail import *
 import ROOT
 import traceback
-nthreads=36
-nprocesses=6
+nthreads=32
+nprocesses=5
 import sys
 import copy
 ROOT.gROOT.ProcessLine(".x softactivity.h")
@@ -15,7 +15,8 @@ from eventprocessing import getFlow
 year=sys.argv[1]
 flow=getFlow(year)
 
-from histograms import histosPerSelection,histosPerSelectionFullJecs
+from histograms import histosPerSelection
+#histosPerSelectionFullJecs
 
 
 def sumwsents(files):
@@ -117,18 +118,18 @@ if False:
     addDecorrelatedJER(flow)
     addCompleteJecs(flow,year)
 print("######### full systematics #######")
-histosWithFullJecs=flow.createSystematicBranches(systematics,histosPerSelectionFullJecs)
-
+#histosWithFullJecs=flow.createSystematicBranches(systematics,histosPerSelectionFullJecs)
+'''
 for region in histosWithFullJecs:
     if region not in histosWithSystematics :
         histosWithSystematics[region]=histosWithFullJecs[region]
     else:
         histosWithSystematics[region]=list(set(histosWithSystematics[region]+histosWithFullJecs[region]))
-
+'''
 print("The following histograms will be created in the following regions")
 for sel in  histosWithSystematics:
     print(sel,":",histosWithSystematics[sel])
-print("Number of known columns", len(flow.validCols), file=sys.stderr)
+#print("Number of known columns", len(flow.validCols), file=sys.stderr)
 
 proc=flow.CreateProcessor("eventProcessor"+year,snaplist,histosWithSystematics,snap,"",nthreads)
 #proc=None
