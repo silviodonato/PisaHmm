@@ -77,7 +77,7 @@ from histobinning import binningrules
 flow.binningRules = binningrules
 
 flowData=copy.deepcopy(flow)
-flowData.CentralWeight("weightDNNSB",["SignalRegionDNNWeighted","SRplusSBDNNWeighted"])
+#flowData.CentralWeight("weightDNNSB",["SignalRegionDNNWeighted","SRplusSBDNNWeighted"])
 procData=flowData.CreateProcessor("eventProcessorData"+year,snaplist+["QGLweight"],histosPerSelection,snap,"SignalRegion",nthreads)
 #procData=flowData.CreateProcessor("eventProcessorData"+year,snaplist,histosPerSelection,snap,"SignalRegion",nthreads)
 
@@ -89,7 +89,7 @@ addDefaultWeights(flow)
 addMuEffWeight(flow)
 addQGLweight(flow)
 addPreFiring(flow)
-flow.CentralWeight("weightDNNSB",["SignalRegionDNNWeighted","SRplusSBDNNWeighted"])
+#flow.CentralWeight("weightDNNSB",["SignalRegionDNNWeighted","SRplusSBDNNWeighted"])
 
 from systematics import *
 if False : #switch off all systs

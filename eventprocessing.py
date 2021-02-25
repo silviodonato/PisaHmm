@@ -297,6 +297,7 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
     flow.Define("minEtaHQ","std::min(abs(EtaHQ1),(EtaHQ2))")
     flow.Define("minPhiHQ","std::min(abs(PhiHQ1),abs(PhiHQ2))")
 
+
     flow.AddCppCode('\n#include "boost_to_CS.h"\n')
         #flow.Define("CS_pair", "boost_to_CS(LeadMuon_p4, SubMuon_p4)",requires=["twoOppositeSignMuons"])
         ##flow.Define("CS_theta","CS_pair.first",requires=["twoOppositeSignMuons"])
@@ -381,7 +382,7 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
         if x!=5 :
            flow.Define(name,"atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m+%ff,Higgs_mRelReso,Higgs_mReso}, {22,3}))"%bias)
          
-    return flow
+    flow.Define("MET_pt", "MET.Pt()")
 
 #        flow.Define("DNNwithZClassifier","lwtnn_withZ.eval(event, {Mqq_log,Rpt,qqDeltaEta,log(ll_zstar),float(NSoft5New),minEtaHQ,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m,Higgs_mRelReso,Higgs_mReso}, {19,3})")
 #        flow.Define("DNNnovClassifier_GF","lwtnn_nov.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),Higgs_m_GF,Higgs_mRelReso,Higgs_mReso}, {22,3})")
@@ -393,8 +394,8 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
 #        flow.Define("DNN18ClassifierNoMass","lwtnn_all.eval(event, {Mqq_log,Rpt,qqDeltaEta,log(ll_zstar),float(NSoft5New),minEtaHQ,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),125.,Higgs_mRelReso,Higgs_mReso}, {19,3})")
 #        flow.Define("DNNwithZClassifierNoMass","lwtnn_withZ.eval(event, {Mqq_log,Rpt,qqDeltaEta,log(ll_zstar),float(NSoft5New),minEtaHQ,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),125.,Higgs_mRelReso,Higgs_mReso}, {19,3})")
            
-       #flow.Define("DNN18AtanNoMass","atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, 	CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),125.,Higgs_mRelReso,Higgs_mReso}, {22,3}))")
-	#flow.Define("DNN18AtanNoMass2","atanh(lwtnn_feb2.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),125.,Higgs_mRelReso,Higgs_mReso}, {22,3}))")
+    #flow.Define("DNN18AtanNoMass","atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, 	CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),125.,Higgs_mRelReso,Higgs_mReso}, {22,3}))")
+    #flow.Define("DNN18AtanNoMass2","atanh(lwtnn_feb2.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),125.,Higgs_mRelReso,Higgs_mReso}, {22,3}))")
 
 	#flow.Define("DNN18AtanMassSpread","atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),(Higgs_m<115)?(Higgs_m+5.f):(Higgs_m-15.f) ,Higgs_mRelReso,Higgs_mReso}, {22,3}))")
 	#flow.Define("DNN18AtanMassSpread2","atanh(lwtnn_feb.eval(event, {Mqq_log,Rpt,qqDeltaEta,ll_zstar_log,float(NSoft5NewNoRapClean),SAHT2,minEtaHQ,CS_phi, CS_theta,Higgs_pt,log(Higgs_pt),Higgs_eta,Mqq,QJet0_pt_touse,QJet1_pt_touse,QJet0_eta,QJet1_eta,QJet0_phi,QJet1_phi,QJet0_qgl,QJet1_qgl,float(year),(Higgs_m<115)?(Higgs_m+12.5f):(Higgs_m-15.f) ,Higgs_mRelReso,Higgs_mReso}, {22,3}))")
@@ -406,7 +407,7 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
 #        flow.Define("DNNZAtan","atanh(DNNClassifierZ)")
 #        flow.Define("DNNwithZAtan","atanh(DNNwithZClassifier)")
 #        flow.Define("DNN18AtanNoQGL","atanh(DNN18ClassifierNoQGL)")
-#        flow.Define("DNN18AtanNoMass","atanh(DNN18ClassifierNoMass)")
+    #flow.Define("DNN18AtanNoMass","atanh(DNN18ClassifierNoMass)")
 #        flow.Define("DNNwithZAtanNoMass","atanh(DNNwithZClassifierNoMass)")
 
 #        flow.Define("DNNnovAtan","atanh(DNNnovClassifier)")
@@ -425,7 +426,7 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
     #flow.Define("CS_phi","CS_pair.second")
 
 #flow.AddExternalCode(header="weightedMass.h",cppfiles=["weightedMass.C"],ipaths=["."])
-#flow.Define("weightDNNSB","weightDNNSB(DNN18AtanNoMass,year)")
+    #flow.Define("weightDNNSB","weightDNNSB(DNN18AtanNoMass,year)")
 #flow.Selection("SignalRegionDNNWeighted","SignalRegion",requires=["SignalRegion"])
 #flow.Selection("SRplusSBDNNWeighted","Higgs_m < 150 && Higgs_m > 110 && VBFRegion &&  qqDeltaEta > 2.5",requires=["VBFRegion","PreSel"])
 		#flow.Selection("SRplusSBDNNWeighted","SignalRegion || SideBand")
@@ -445,4 +446,4 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
 #flow.Define("QQ_mass","MemberMap(QQ_p4,M())")
 #flow.Define("HighestGenQQMass","At(QQ_mass,Argmax(QQ_mass),-99)")
 #flow.AddExternalCode(header="qq2Hqq_uncert_scheme.h",cppfiles=["qq2Hqq_uncert_scheme.cpp"],ipaths=["."])
-
+    return flow
