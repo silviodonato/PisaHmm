@@ -44,7 +44,7 @@ def getFlow(year):
     flow.Define("LHEScaleWeightSafe","nLHEScaleWeight>=8?LHEScaleWeight:std::vector<float>(9,1)")
     flow.Define("PSWeightSafe","nPSWeight>=4?PSWeight:std::vector<float>(4,1)")
     #flow.Define("Jet_pt_touse","Jet_pt_newJEC")
-    #flow.Define("Jet_pt_touse","Jet_pt")
+    
     
     if int(year)==2018 or int(year)==2026 : ##FIXME###
         print("Use NEW JEC")
@@ -57,13 +57,13 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
 '''
     #Higgs to mumu reconstruction
     #flow.DefaultConfig(muIsoCut=0.25,muIdCut=2,muPtCut=20, dzCut=1e99,dxyCut=1e99) #cuts value should not be hardcoded below but rather being declared here so that scans and optimizations are possible
-   
+
     flow.Define("Muon_id","Muon_tightId*4+Muon_mediumId*2+Muon_softId")
     flow.Define("Muon_mass","0.f*Muon_pt")
     flow.Define("Muon_mass","0.f*Muon_pt")
     flow.Define("Muon_p4_orig","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Muon_pt , Muon_eta, Muon_phi, Muon_mass)")
     flow.SubCollection("SelectedMuon","Muon",sel="abs(Muon_eta) < 2.4") ### I've put a simple selection as example
-    flow.Define("SelectedMuon_p4","SelectedMuon_p4_orig")
+#    flow.Define("SelectedMuon_p4","SelectedMuon_p4")
     flow.Distinct("MuMu","SelectedMuon")
     flow.Define("OppositeSignMuMu","Nonzero(MuMu0_charge != MuMu1_charge)",requires=["twoMuons"])
     flow.Selection("twoOppositeSignMuons","OppositeSignMuMu.size() > 0")
@@ -149,12 +149,13 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
     #flow.TakePair("Mu","SelectedMuon","MuMu","At(OppositeSignMuMu,0,-200)",requires=["twoOppositeSignMuons"])
     #flow.Define("SelectedMuon_p4","SelectedMuon_p4_orig")
     #flow.Define("Higgs","Mu0_GFp4+Mu1_GFp4")
-    flow.Define("Higgs","Mu0_p4+Mu1_p4")
-    flow.Define("Higgs_noGF","Mu0_p4+Mu1_p4")
-    flow.Define("HiggsUncalib","Mu0_p4uncalib+Mu1_p4uncalib")
+    
+    #flow.Define("Higgs","Mu0_p4+Mu1_p4")
+    #flow.Define("Higgs_noGF","Mu0_p4+Mu1_p4")
+    #flow.Define("HiggsUncalib","Mu0_p4uncalib+Mu1_p4uncalib")
 
-    flow.Define("Higgs_m_GF","Higgs.M()")
-    flow.Define("Higgs_m_noGF","Higgs_noGF.M()")
+    flow.Define("Higgs_m","Higgs.M()")
+    #flow.Define("Higgs_m","Higgs_noGF.M()")
 
 
     flow.AddExternalCode(header="muonEfficiency.h",cppfiles=["muonEfficiency.C"])
@@ -164,11 +165,12 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
     flow.AddExternalCode(header="prefiring.h",cppfiles=["prefiring.C"])
     flow.Define("Jet_prefireWeight","Map(Jet_pt,Jet_eta, [ year](float pt,float eta) { return prefiringJetWeight(year,pt,eta); }) ")
 
-    #flow.Define("Jet_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Jet_pt_touse , Jet_eta, Jet_phi, Jet_mass)")
+    
+
+    flow.Define("Jet_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Jet_pt_touse , Jet_eta, Jet_phi, Jet_mass)")
         #VBF Jets kinematics
     flow.DefaultConfig(jetPtCut=25)
-    
-    
+        
     #Jet_pt_touse > jetPtCut && ( Jet_pt_touse > 50 || Jet_puId >0 ) &&   Jet_jetId > 0  && abs(Jet_eta) < 4.7 && (abs(Jet_eta)<2.5 || Jet_puId > 6  || (Jet_puId>0 && Jet_pt_touse > 50 ) ) &&
     #(year != 2017 ||  Jet_pt_touse > 50 || abs(Jet_eta) < 2.7 || abs(Jet_eta) > 3.0 ||  Jet_neEmEF<0.55 ) &&
     #flow.SubCollection("SelectedJet","Jet",'''
@@ -177,8 +179,8 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
     #(Jet_muonIdx2==-1 || TakeDef(Muon_pfRelIso04_all,Jet_muonIdx2,100) > 0.25 || abs(TakeDef(Muon_pt,Jet_muonIdx2,0)) < 20 || abs(TakeDef(Muon_id,Jet_muonIdx1,0) < muIdCut ))
     #''')
     #flow.Define("Jet_associatedMuonPt","abs(TakeDef(Muon_correctedFSR_pt,Jet_muonIdx1,0))")
-
-    #flow.SubCollection("SelectedJet","Jet",'''
+    flow.Define("Jet_pt_touse","Jet_pt")
+    flow.SubCollection("SelectedJet","Jet",'''
     #(year != 2017 ||  Jet_puId17 > 6 || abs(Jet_eta) < 2.6 || abs(Jet_eta) > 3.0) &&
     #Jet_pt_touse > jetPtCut && ( Jet_pt > 50
     #|| (  Jet_puId17  > 0  && year==2017)
@@ -199,9 +201,10 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
 
 
     flow.Define("GenJet_p4","@p4v(GenJet)")
-        #flow.Define("SelectedJet_p4","@p4v(SelectedJet)")
+    
+    #flow.Define("SelectedJet_p4","@p4v(SelectedJet)")
     flow.Distinct("JetPair","SelectedJet")
-        #flow.TakePair("QJet","SelectedJet","JetPair","Argmax(MemberMap((JetPair0_p4+JetPair1_p4),M() ))",requires=["twoJets"])
+    flow.TakePair("QJet","SelectedJet","JetPair","Argmax(MemberMap((JetPair0_p4+JetPair1_p4),M() ))",requires=["twoJets"])
     flow.Define("SortedSelectedJetIndices","Argsort(-SelectedJet_pt_touse)")
     flow.ObjectAt("QJet0","SelectedJet",'At(SortedSelectedJetIndices,0)',requires=["twoJets"])
     flow.ObjectAt("QJet1","SelectedJet",'At(SortedSelectedJetIndices,1)',requires=["twoJets"])
@@ -275,12 +278,12 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
 
 
 
-    #flow.Define("qq","QJet0_p4+QJet1_p4")
+    flow.Define("qq","QJet0_p4+QJet1_p4")
     flow.Define("Mqq","qq.M()")
     flow.Define("MqqGenJet","(QJet0_genJetIdx>=0&&QJet1_genJetIdx>=0&&QJet0_genJetIdx<nGenJet&&QJet1_genJetIdx<nGenJet)?(At(GenJet_p4,QJet0_genJetIdx)+At(GenJet_p4,QJet1_genJetIdx)).M():-99")
     flow.Define("qq_pt","qq.Pt()")
-    #flow.Define("qqDeltaEta","abs(QJet0_eta-QJet1_eta)")
-    #flow.Define("qqDeltaPhi","abs(ROOT::Math::VectorUtil::DeltaPhi(QJet0_p4,QJet1_p4))")
+    flow.Define("qqDeltaEta","abs(QJet0_eta-QJet1_eta)")
+    flow.Define("qqDeltaPhi","abs(ROOT::Math::VectorUtil::DeltaPhi(QJet0_p4,QJet1_p4))")
 
         #QQ vs ll kinematic
     flow.Define("ll_ystar","Higgs.Rapidity() - (QJet0_p4.Rapidity() + QJet1_p4.Rapidity())/2.f")
@@ -344,16 +347,16 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
     #flow.Define("nelectrons","int(Nonzero(Electron_pt > 20 && abs(Electron_eta) < 2.5 && Electron_mvaFall17V2Iso_WP90 ).size())")
 
 
-    flow.Selection("MassWindow","abs(Higgs.M()-nominalHMass)<higgsMassWindowWidth")
-    flow.Selection("MassWindowZ","abs(Higgs.M()-91)<15")
+    #flow.Selection("MassWindow","abs(Higgs.M()-nominalHMass)<higgsMassWindowWidth")
+    #flow.Selection("MassWindowZ","abs(Higgs.M()-91)<15")
     flow.Selection("VBFRegion","Mqq > mQQcut && QJet0_pt_touse> 35 && QJet1_pt_touse > 25")
     flow.Selection("PreSel","nelectrons==0 && nbtaggedL < 2 && VBFRegion && twoOppositeSignMuons && nbtagged < 1 && (( year == 2016 && LeadMuon_pt > 26 ) || ( year == 2017 && LeadMuon_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuon_pt > 26 )) && SubMuon_pt > 20 && TriggerSel && abs(SubMuon_eta) <2.4 && abs(LeadMuon_eta) < 2.4",requires=["VBFRegion","twoOppositeSignMuons"])
    # flow.Selection("SideBand","Higgs_m < 150 && Higgs_m > 110 && ! MassWindow && VBFRegion &&  qqDeltaEta > 2.5",requires=["VBFRegion","PreSel"])
-    flow.Selection("SignalRegion","VBFRegion && MassWindow &&  qqDeltaEta > 2.5", requires=["VBFRegion","MassWindow","PreSel"])
-    flow.Selection("ZRegion","VBFRegion && MassWindowZ  && qqDeltaEta > 2.5", requires=["VBFRegion","MassWindowZ","PreSel"])
-    flow.Selection("ZRegionSMP","Mqq > 250 && MassWindowZ && QJet0_pt_touse> 50 && QJet1_pt_touse > 30 && twoOppositeSignMuons && twoJets && TriggerSel&& abs(SubMuon_eta) <2.4 && abs(LeadMuon_eta) < 2.4 ", requires=["twoOppositeSignMuons","twoJets"])
+    flow.Selection("SignalRegion","VBFRegion && MassWindow &&  qqDeltaEta > 2.5", requires=["VBFRegion","PreSel"])
+    #flow.Selection("ZRegion","VBFRegion && MassWindowZ  && qqDeltaEta > 2.5", requires=["VBFRegion","MassWindowZ","PreSel"])
+    #flow.Selection("ZRegionSMP","Mqq > 250 && MassWindowZ && QJet0_pt_touse> 50 && QJet1_pt_touse > 30 && twoOppositeSignMuons && twoJets && TriggerSel&& abs(SubMuon_eta) <2.4 && abs(LeadMuon_eta) < 2.4 ", requires=["twoOppositeSignMuons","twoJets"])
     flow.Selection("TwoJetsTwoMu","twoJets && twoOppositeSignMuons", requires=["twoJets","twoOppositeSignMuons"])
-    flow.Selection("SignalRegionT","SignalRegion && QJet0_pt_touse>45 && QJet1_pt_touse > 27",requires=["SignalRegion"])
+    #flow.Selection("SignalRegionT","SignalRegion && QJet0_pt_touse>45 && QJet1_pt_touse > 27",requires=["SignalRegion"])
     flow.Selection("ZRegionT","ZRegion && QJet0_pt_touse>45 && QJet1_pt_touse > 27",requires=["ZRegion"])
     flow.Selection("SideBandT","SideBand && QJet0_pt_touse>45 && QJet1_pt_touse > 27",requires=["SideBand"])
         #with bug
