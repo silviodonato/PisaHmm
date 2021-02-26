@@ -181,14 +181,14 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
     #flow.Define("Jet_associatedMuonPt","abs(TakeDef(Muon_correctedFSR_pt,Jet_muonIdx1,0))")
     flow.Define("Jet_pt_touse","Jet_pt")
     flow.SubCollection("SelectedJet","Jet",'''
-    #(year != 2017 ||  Jet_puId17 > 6 || abs(Jet_eta) < 2.6 || abs(Jet_eta) > 3.0) &&
-    #Jet_pt_touse > jetPtCut && ( Jet_pt > 50
-    #|| (  Jet_puId17  > 0  && year==2017)
-    #|| ((Jet_puId ) > 0 && year!=2017 ) )
-    # &&   Jet_jetId  > 0  && abs(Jet_eta) < 4.7  &&
-    #(Jet_muonIdx1==-1 || TakeDef(Muon_iso,Jet_muonIdx1,100) > 0.25 || abs(TakeDef(Muon_correctedFSR_pt,Jet_muonIdx1,0)) < 20 || abs(TakeDef(Muon_mediumId,Jet_muonIdx1,0) == 0 )) &&
-    #(Jet_muonIdx2==-1 || TakeDef(Muon_iso,Jet_muonIdx2,100) > 0.25 || abs(TakeDef(Muon_correctedFSR_pt,Jet_muonIdx2,0)) < 20 || abs(TakeDef(Muon_mediumId,Jet_muonIdx2,0) == 0 ))
-    #''')
+    (year != 2017 ||  Jet_puId17 > 6 || abs(Jet_eta) < 2.6 || abs(Jet_eta) > 3.0) &&
+    Jet_pt_touse > jetPtCut && ( Jet_pt > 50
+    || (  Jet_puId17  > 0  && year==2017)
+    || ((Jet_puId ) > 0 && year!=2017 ) )
+     &&   Jet_jetId  > 0  && abs(Jet_eta) < 4.7  &&
+    (Jet_muonIdx1==-1 || TakeDef(Muon_iso,Jet_muonIdx1,100) > 0.25 || abs(TakeDef(Muon_correctedFSR_pt,Jet_muonIdx1,0)) < 20 || abs(TakeDef(Muon_mediumId,Jet_muonIdx1,0) == 0 )) &&
+    (Jet_muonIdx2==-1 || TakeDef(Muon_iso,Jet_muonIdx2,100) > 0.25 || abs(TakeDef(Muon_correctedFSR_pt,Jet_muonIdx2,0)) < 20 || abs(TakeDef(Muon_mediumId,Jet_muonIdx2,0) == 0 ))
+    ''')
     #flow.SubCollection("SelectedJet","Jet",'''
     #(year != 2017 ||  abs(Jet_eta) < 2.7 || abs(Jet_eta) > 3.1 ) &&
     #Jet_pt_touse > jetPtCut && ( Jet_pt_touse > 50 || ((Jet_puId ) > 0 && year!=2017 ) ) &&   Jet_jetId  > 0  && abs(Jet_eta) < 4.7  &&
