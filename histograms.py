@@ -22,7 +22,7 @@ histosPerSelection={
 #"SignalRegionDNNWeighted" : ["Higgs_m"],
 #"SRplusSBDNNWeighted" : ["Higgs_m","Higgs_m38"],
 #"TightMassRegion" : ["DNN18AtanNoMass"],
-"SignalRegion": ["MET_pt"]
+"SignalRegion": ["MET_met"]
 #"SignalRegion": signalHistos+signalHistosVariations+signalHistosMassScan, #+bdtInputHistos+ genericHistos,
 #"ZRegion": signalHistosVariations+balance,#+genericHistos +bdtInputHistos,
 #"SideBand" : signalHistosVariations, #+ ["DNN18AtanMassSpread","DNN18AtanMassSpread2"],#+genericHistos+bdtInputHistos,
