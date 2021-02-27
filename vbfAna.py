@@ -59,8 +59,8 @@ used=list(set(used))
 ftxt=open("out/description.txt","w")
 ftxt.write(flow.Describe(used))
 
-snap=[]
-snaplist=["Mu0_charge","Mu1_charge","Mu0_dxybs","Mu1_dxybs","event","Higgs_m_uncalib","nJet","Higgs_m","QJet0_qgl","QJet1_qgl","QJet0_eta","QJet1_eta","Mqq","Higgs_pt","Mu0_pt","Mu0_corrected_pt","Mu1_corrected_pt","Mu1_pt","Mu0_eta","Mu1_eta","Mu1_phi","Mu0_phi","nGenPart","GenPart_pdgId","GenPart_eta","GenPart_phi","GenPart_pt"]#,"twoJets","twoOppositeSignMuons","PreSel","VBFRegion","MassWindow","SignalRegion","qqDeltaEta","event","HLT_IsoMu24","QJet0_pt_nom","QJet1_pt_nom","QJet0_puId","QJet1_puId","SBClassifier","Higgs_m","Mqq_log","mmjj_pt_log","NSoft5","ll_zstar","theta2","mmjj_pz_logabs","MaxJetAbsEta","ll_zstar_log"]#,"QJet0_prefireWeight","QJet1_prefireWeight","PrefiringCorrection","CorrectedPrefiringWeight"]
+snap=[]                     #"nJet"
+snaplist=["Mu0_charge","Mu1_charge","Mu0_dxybs","Mu1_dxybs","event","Higgs_m_uncalib","Higgs_m","QJet0_qgl","QJet1_qgl","QJet0_eta","QJet1_eta","Mqq","Higgs_pt","Mu0_pt","Mu0_corrected_pt","Mu1_corrected_pt","Mu1_pt","Mu0_eta","Mu1_eta","Mu1_phi","Mu0_phi","nGenPart","GenPart_pdgId","GenPart_eta","GenPart_phi","GenPart_pt"]#,"twoJets","twoOppositeSignMuons","PreSel","VBFRegion","MassWindow","SignalRegion","qqDeltaEta","event","HLT_IsoMu24","QJet0_pt_nom","QJet1_pt_nom","QJet0_puId","QJet1_puId","SBClassifier","Higgs_m","Mqq_log","mmjj_pt_log","NSoft5","ll_zstar","theta2","mmjj_pz_logabs","MaxJetAbsEta","ll_zstar_log"]#,"QJet0_prefireWeight","QJet1_prefireWeight","PrefiringCorrection","CorrectedPrefiringWeight"]
 #snaplist=["QJet0_prefireWeight","QJet1_prefireWeight","PrefiringCorrection","CorrectedPrefiringWeight"]
 snaplist=[]# "event"]
 fullsnaplist=["Mu0_charge","Mu1_charge","Mu0_dxybs","Mu1_dxybs","Mu0_pt_GeoFitCorrection","Mu1_pt_GeoFitCorrection","Mu0_eta","Mu0_pt","Mu1_eta","Mu1_pt",
@@ -142,16 +142,16 @@ from samples2026 import samples as samples2026
 
 if year == "2016":
     samples=samples2016
-    trigger="HLT_IsoMu24 || HLT_IsoTkMu24"
+    #trigger="HLT_IsoMu24 || HLT_IsoTkMu24"
 if year == "2017":
     samples=samples2017
-    trigger="HLT_IsoMu27"
+    #trigger="HLT_IsoMu27"
 if year == "2018":
     samples=samples2018
-    trigger="HLT_IsoMu24"
+    #trigger="HLT_IsoMu24"
 if year == "2026":
     samples=samples2026
-    trigger="HLT_IsoMu24"
+    #trigger="HLT_IsoMu24"
 
 
 from samplepreprocessing import flow as preflow
@@ -178,10 +178,11 @@ def f(ar):
     '''%nthreads)
     s,f=ar
     print(f)
-    if not "lumi" in list(samples[s].keys())  :
-        sumws, LHEPdfSumw = sumwsents(f)
-    else:
-        sumws, LHEPdfSumw = 1., []
+    sumws, LHEPdfSumw = 1., []
+    #if not "lumi" in list(samples[s].keys())  :
+    #   sumws, LHEPdfSumw = sumwsents(f)
+    #else:
+     #   sumws, LHEPdfSumw = 1., []
     rf=ROOT.TFile.Open(f[0])
     ev=rf.Get("Events")
     hessian=False
@@ -206,9 +207,9 @@ def f(ar):
     if rdf :
         try:
             rdf=rdf.Define("year",year)
-            rdf=rdf.Define("TriggerSel",trigger)
-            if  year!="2017" and ("Jet_puId17" not in rdf.GetColumnNames()):
-                rdf=rdf.Define("Jet_puId17","ROOT::VecOps::RVec<int>(nJet, 0)")
+            #rdf=rdf.Define("TriggerSel",trigger)
+            #if  year!="2017" and ("Jet_puId17" not in rdf.GetColumnNames()):
+            #    rdf=rdf.Define("Jet_puId17","ROOT::VecOps::RVec<int>(nJet, 0)")
             if "lumi" in list(samples[s].keys())  :
 #           if "Muon_dxybs" not  in  rdf.GetColumnNames() :
 #               rdf=rdf.Define("Muon_dxybs","Muon_pt*10000.f")
@@ -258,21 +259,21 @@ def f(ar):
                 else:
                     print("Setting LHEPdfHasHessian to false")
                     rdf=rdf.Define("LHEPdfHasHessian","false")
-                if year == "2016":
-                    rdf=rdf.Define("Muon_sf","(20.1f/36.4f*Muon_ISO_SF + 16.3f/36.4f*Muon_ISO_eraGH_SF)*(20.1f/36.4f*Muon_ID_SF + 16.3f/36.4f*Muon_ID_eraGH_SF)")
-                else :
-                    rdf=rdf.Define("Muon_sf","Muon_ISO_SF*Muon_ID_SF")
-                if "btagWeight_DeepCSVB" in  rdf.GetColumnNames() :
-                    rdf=rdf.Define("btagWeight","btagWeight_DeepCSVB")
-                else :
-                    rdf=rdf.Define("btagWeight","btagWeight_CMVA")
+                #if year == "2016":
+                #    rdf=rdf.Define("Muon_sf","(20.1f/36.4f*Muon_ISO_SF + 16.3f/36.4f*Muon_ISO_eraGH_SF)*(20.1f/36.4f*Muon_ID_SF + 16.3f/36.4f*Muon_ID_eraGH_SF)")
+                #else :
+                #    rdf=rdf.Define("Muon_sf","Muon_ISO_SF*Muon_ID_SF")
+                #if "btagWeight_DeepCSVB" in  rdf.GetColumnNames() :
+                #    rdf=rdf.Define("btagWeight","btagWeight_DeepCSVB")
+                #else :
+                 #   rdf=rdf.Define("btagWeight","btagWeight_CMVA")
 
                 if "Muon_dxybs" not  in  rdf.GetColumnNames() :
                     rdf=rdf.Define("Muon_dxybs","Muon_pt*10000.f")
 
                 rdf=rdf.Define("isMC","true")
-                if "LHEWeight_originalXWGTUP" not in rdf.GetColumnNames():
-                    rdf=rdf.Define("LHEWeight_originalXWGTUP","genWeight")
+               # if "LHEWeight_originalXWGTUP" not in rdf.GetColumnNames():
+               #     rdf=rdf.Define("LHEWeight_originalXWGTUP","genWeight")
                 if "LHEScaleWeight" not in rdf.GetColumnNames():
                     print("ADDING FAKE LHE",f)
                     rdf=rdf.Define("LHEScaleWeight","ROOT::VecOps::RVec<float>(9,1)")
@@ -297,10 +298,10 @@ def f(ar):
                 rdf=rdf.Filter(samples[s]["filter"])
 
             print("Samples", s, list(samples[s].keys()))
-            if "lumi" in list(samples[s].keys()) :
-                ou=procData(rdf)
-            else :
-                ou=proc(rdf)
+            #if "lumi" in list(samples[s].keys()) :
+            #    ou=procData(rdf)
+            #else :
+            #    ou=proc(rdf)
             ouspec=None
             if s in list(specificPostProcessors.keys()):
                 print("adding postproc",s)
@@ -308,14 +309,14 @@ def f(ar):
                 print("added")
 
             print("Normalization 2")
-            normalizationHandle = ou.rdf[""].Filter("twoJets","twoJets").Mean("QGLweight")
+            #normalizationHandle = ou.rdf[""].Filter("twoJets","twoJets").Mean("QGLweight")
 #         normalizationHandleSR = ou.rdf["SignalRegion"].Mean("QGLweight")
 #         normalizationHandleSB = ou.rdf["SideBand"].Mean("QGLweight")
             #Event loop should not be triggered anove this point
 
             ###FIXME###
-            normalizationHandleSR = normalizationHandle
-            normalizationHandleSB = normalizationHandle
+            #normalizationHandleSR = normalizationHandle
+            #normalizationHandleSB = normalizationHandle
             #snaplist=["nJet","nGenJet","Jet_pt_touse","GenJet_pt","Jet_genJetIdx","Jet_pt_touse","Jet_pt","Jet_pt_nom","Jet_genPt","LHERenUp","LHERenDown","LHEFacUp","LHEFacDown","PrefiringWeight","DNN18Atan","QJet0_prefireWeight","QJet1_prefireWeight", "QJet0_pt_touse","QJet1_pt_touse","QJet0_eta","QJet1_eta","QGLweight","genWeight","btagWeight","muEffWeight"]
 #"QJet0_pt_touse","QJet1_pt_touse","QJet0_eta","QJet1_eta","Mqq","Higgs_pt","twoJets","twoOppositeSignMuons","PreSel","VBFRegion","MassWindow","SignalRegion"]
 
@@ -352,31 +353,32 @@ def f(ar):
 
 
             print("Start Normalization")
-            normalization=normalizationHandle.GetValue()#1./(ou.rdf.Filter("twoJets","twoJets").Mean("QGLweight").GetValue())
+            #normalization=normalizationHandle.GetValue()#1./(ou.rdf.Filter("twoJets","twoJets").Mean("QGLweight").GetValue())
             print("1")
-            normalizationSB=normalizationHandleSB.GetValue()#1./(ou.rdf.Filter("twoJets","twoJets").Mean("QGLweight").GetValue())
-            normalizationSR=normalizationHandleSR.GetValue()#1./(ou.rdf.Filter("twoJets","twoJets").Mean("QGLweight").GetValue())
-            print("Normalization = ", normalization, normalizationSB, normalizationSR, s)
+            #normalizationSB=normalizationHandleSB.GetValue()#1./(ou.rdf.Filter("twoJets","twoJets").Mean("QGLweight").GetValue())
+            #normalizationSR=normalizationHandleSR.GetValue()#1./(ou.rdf.Filter("twoJets","twoJets").Mean("QGLweight").GetValue())
+            #print("Normalization = ", normalization, normalizationSB, normalizationSR, s)
             ffftxt=open("out/%s.txt"%s,"w")
-            ffftxt.write("Normalization = %s %s %s %s \n"%( normalization, normalizationSB, normalizationSR, s))
+            #ffftxt.write("Normalization = %s %s %s %s \n"%( normalization, normalizationSB, normalizationSR, s))
             ffftxt.close()
-            print("Normalization = ", normalization, normalizationSB, normalizationSR, s)
-            if normalization == 0:
-                normalization =1.
-                normalizationSR =1.
-                normalizationSB =1.
+            #print("Normalization = ", normalization, normalizationSB, normalizationSR, s)
+            
+            #if normalization == 0:
+             #   normalization =1.
+              #  normalizationSR =1.
+               # normalizationSB =1.
             if ouspec is not None :
                 print("Postproc hisots")
                 for h in ouspec.histos :
                     hname = h.GetName()
-                    nor=normalization
-                    if "SignalRegion" in hname:
-                        nor=normalizationSR
-                    if "SideBand" in hname:
-                        nor=normalizationSB
+                #    nor=normalization
+                    #if "SignalRegion" in hname:
+                    #    nor=normalizationSR
+                    #if "SideBand" in hname:
+                    #    nor=normalizationSB
                     h.GetValue()
                     fff.cd()
-                    h.Scale(1./nor/sumws)
+                    h.Scale(1./sumws)
                     if "__syst__LHEPdf" in hname:
                         if h.GetMaximum()==0.: continue ## skip empty LHEPdf
                         PdfIdx = hname.split("__syst__LHEPdf")[-1]
@@ -386,11 +388,11 @@ def f(ar):
                     h.Write()
             for h in  ou.histos :
                 hname = h.GetName()
-                nor=normalization
-                if "SignalRegion" in hname:
-                    nor=normalizationSR
-                if "SideBand" in hname:
-                    nor=normalizationSB
+                #nor=normalization
+                #if "SignalRegion" in hname:
+                 #   nor=normalizationSR
+                #if "SideBand" in hname:
+                 #   nor=normalizationSB
                 h.GetValue()
                 fff.cd()
                 h.Scale(1./nor/sumws)
