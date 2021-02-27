@@ -78,7 +78,7 @@ flow.binningRules = binningrules
 
 flowData=copy.deepcopy(flow)
 #flowData.CentralWeight("weightDNNSB",["SignalRegionDNNWeighted","SRplusSBDNNWeighted"])
-procData=flowData.CreateProcessor("eventProcessorData"+year,snaplist+["QGLweight"],histosPerSelection,snap,"SignalRegion",nthreads)
+procData=flowData.CreateProcessor("eventProcessorData"+year,snaplist,histosPerSelection,snap,"SignalRegion",nthreads)
 #procData=flowData.CreateProcessor("eventProcessorData"+year,snaplist,histosPerSelection,snap,"SignalRegion",nthreads)
 
 print("Data processor created")
@@ -86,9 +86,9 @@ print("Data processor created")
 #define some event weights
 from weights import *
 addDefaultWeights(flow)
-addMuEffWeight(flow)
-addQGLweight(flow)
-addPreFiring(flow)
+#addMuEffWeight(flow)
+#addQGLweight(flow)
+#ddPreFiring(flow)
 #flow.CentralWeight("weightDNNSB",["SignalRegionDNNWeighted","SRplusSBDNNWeighted"])
 
 from systematics import *

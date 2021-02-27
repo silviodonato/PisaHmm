@@ -1,1 +1,1 @@
-selection_VBFFilterFlag,VBFFilterFlag,VBFFilterFlag,2000,0,2000,VBFFilterFlag,VBFFilterFlagWeight__Central
+selection_SignalRegion,MET_met,MET_met,2000,0,2000,MET_met,SignalRegionWeight__Central
