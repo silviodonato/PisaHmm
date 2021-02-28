@@ -151,7 +151,7 @@ if year == "2018":
     #trigger="HLT_IsoMu24"
 if year == "2026":
     samples=samples2026
-    #trigger="HLT_IsoMu24"
+    trigger="true" ## no trigger in 2026
 
 
 from samplepreprocessing import flow as preflow
@@ -207,7 +207,7 @@ def f(ar):
     if rdf :
         try:
             rdf=rdf.Define("year",year)
-            #rdf=rdf.Define("TriggerSel",trigger)
+            rdf=rdf.Define("TriggerSel",trigger)
             #if  year!="2017" and ("Jet_puId17" not in rdf.GetColumnNames()):
             #    rdf=rdf.Define("Jet_puId17","ROOT::VecOps::RVec<int>(nJet, 0)")
             if "lumi" in list(samples[s].keys())  :
@@ -298,10 +298,10 @@ def f(ar):
                 rdf=rdf.Filter(samples[s]["filter"])
 
             print("Samples", s, list(samples[s].keys()))
-            #if "lumi" in list(samples[s].keys()) :
-            #    ou=procData(rdf)
-            #else :
-            #    ou=proc(rdf)
+            if "lumi" in list(samples[s].keys()) :
+                ou=procData(rdf)
+            else :
+                ou=proc(rdf)
             ouspec=None
             if s in list(specificPostProcessors.keys()):
                 print("adding postproc",s)
@@ -395,7 +395,8 @@ def f(ar):
                  #   nor=normalizationSB
                 h.GetValue()
                 fff.cd()
-                h.Scale(1./nor/sumws)
+                h.Scale(1./sumws)
+#                h.Scale(1./nor/sumws)
                 if "__syst__LHEPdf" in hname:
                     if h.GetMaximum()==0.: continue ## skip empty LHEPdf
                     PdfIdx = hname.split("__syst__LHEPdf")[-1]
