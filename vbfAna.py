@@ -19,6 +19,16 @@ from histograms import histosPerSelection
 #histosPerSelectionFullJecs
 
 
+def sumwsentsDelphes(files):
+    sumws=1e-9
+    LHEPdfSumw=[]
+    for fn in files:
+        f=ROOT.TFile.Open(fn)
+        processedEvents=f.Get("processedEvents")
+        sumws+=processedEvents.GetSumOfWeights()
+    if sumws < 1: sumws = 1
+    return sumws, LHEPdfSumw
+
 def sumwsents(files):
     sumws=1e-9
     LHEPdfSumw=[]
@@ -179,10 +189,13 @@ def f(ar):
     s,f=ar
     print(f)
     sumws, LHEPdfSumw = 1., []
-    #if not "lumi" in list(samples[s].keys())  :
-    #   sumws, LHEPdfSumw = sumwsents(f)
-    #else:
-     #   sumws, LHEPdfSumw = 1., []
+    if not "lumi" in list(samples[s].keys())  :
+       try:
+           sumws, LHEPdfSumw = sumwsents(f)
+       except:
+           sumws, LHEPdfSumw = sumwsentsDelphes(f)
+    else:
+        sumws, LHEPdfSumw = 1., []
     rf=ROOT.TFile.Open(f[0])
     ev=rf.Get("Events")
     hessian=False
@@ -378,7 +391,9 @@ def f(ar):
                     #    nor=normalizationSB
                     h.GetValue()
                     fff.cd()
+                    print("Bef Integral = %d"%h.Integral()) 
                     h.Scale(1./sumws)
+                    print("Aft Integral = %d"%h.Integral())
                     if "__syst__LHEPdf" in hname:
                         if h.GetMaximum()==0.: continue ## skip empty LHEPdf
                         PdfIdx = hname.split("__syst__LHEPdf")[-1]
@@ -395,7 +410,9 @@ def f(ar):
                  #   nor=normalizationSB
                 h.GetValue()
                 fff.cd()
+                print("Bef Integral = %d"%h.Integral())
                 h.Scale(1./sumws)
+                print("Aft Integral = %d"%h.Integral())
 #                h.Scale(1./nor/sumws)
                 if "__syst__LHEPdf" in hname:
                     if h.GetMaximum()==0.: continue ## skip empty LHEPdf

@@ -36,10 +36,9 @@ signalSortedForLegend+=[x for x in signal if x not in signalSortedForLegend]
 
 
 
-#data={
-#"2018":["data2018"]
-#}
-
+data={
+"2026":150E3 ##nb-1. If list => take histogram. If number => just take the lumi
+}
 import ROOT
 fillcolor={
 "DY": ROOT.kOrange,
@@ -56,6 +55,9 @@ fillcolor={
 "VH":ROOT.kPink+5,
 "ttH":ROOT.kRed-4,
 }
+
+systematicsToPlot = []
+systematicsForDC = systematicsToPlot
 
 #systematicsToPlot=["JESUp","JESDown"]
 
@@ -75,10 +77,10 @@ from rebinning import *
 #rebin["DNN18Atan2"]=  [0 , 0.49 , 0.768333333333 , 0.993333333333 , 1.15333333333 , 1.295 , 1.41 , 1.515 , 1.61833333333 , 1.73 , 1.83166666667 , 1.925 , 2.01166666667 , 2.09666666667 , 2.175 , 2.255 , 2.32666666667 , 2.40166666667 , 2.475 , 2.55666666667 , 2.645 , 2.73666666667 , 2.83833333333 , 2.96 , 3.13166666667 , 5.0 ]
 
 #ebin["DNN18Atan"]=dnn032018
-from histograms import signalHistosMassScanAll
+from histograms import genericHistos
 
-for i in  signalHistosMassScanAll :
-    rebin[i]=rebin["DNN18Atan"]
+#for i in  genericHistos :
+#    rebin[i]=rebin["DNN18Atan"]
 
-from systematicGrouping import *
-systematicDetail = systematicGrouping(background, signal,jesList,"2018")
+#from systematicGrouping import *
+#systematicDetail = systematicGrouping(background, signal,jesList,"2018")

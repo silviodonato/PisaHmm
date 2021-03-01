@@ -25,7 +25,8 @@ year="+".join(list(model.data.keys()))
 lumi = "%2.1f fb^{-1}"
 from math import *
 from array import array
-ROOT.gROOT.ProcessLine(".x setTDRStyle.C")
+#ROOT.gROOT.ProcessLine(".x setTDRStyle.C")
+ROOT.gROOT.ProcessLine(".x tdrstyle.C")
 import re
 import WorkSpace
 #import WorkSpace2 as WorkSpace
@@ -482,6 +483,36 @@ def makeEnvelopeShapeOld(hn,sy,f, d, model):
 #    testFile.Close()
     return copy.copy(nhisto)
 
+def getYear(sample):
+    if "201" in sample: return "201"+sample.split("201")[1][:1]
+    elif "202" in sample: return "202"+sample.split("202")[1][:1]
+    else:
+#        raise Exception("ERROR in getYear ( sample = %s ) "%sample) ##FIXME!!!!!!!!
+        return "2026"
+        return
+
+def getLumisFromModel(model):
+        lumis = {}
+        print(("model.data=", model.data))
+        for gr in model.data:
+            element = model.data[gr]
+            if type(element)==list:  ##if it is a list (standard case) take the corresponding luminosity through samples201X.py
+                for d in element:
+                    lumi=samples[d]["lumi"]
+                    yr = getYear(d)
+                    if yr in lumis: lumis[yr] += lumi
+                    else: lumis[yr] = lumi
+            elif type(element)==float or type(element)==int: ##if there it is a number means there are no data histograms (blinded) -> take it as integrated lumi
+                lumis[getYear(gr)]=float(element)
+                model.data[gr]=[] ##replace it with an empy list (empty list = no data histograms)
+            else:
+                print(("model.data=", model.data))
+                raise Exception("Something is wrong in getLumisFromModel")
+        print(("model.data=", model.data))
+        print(("lumis=", lumis))
+        return lumis
+
+lumis = getLumisFromModel(model)
 
 f={}
 folder=args.folder
@@ -552,17 +583,14 @@ def addHistoInTStack (hs, stackSys, all_histo_all_syst, gr, hn, sy, d, makeWorks
 
     if makeWorkspace : all_histo_all_syst[hn][d][sy]=hs.Clone()
 
-def getYear(sample):
-    if "201" in sample: return "201"+sample.split("201")[1][:1]
-    else:
-        raise Exception("ERROR in getYear ( sample = %s ) "%sample)
-        return
 
 def fill_datasum(f, gr, samplesToPlot, SumTH1, stack, stackSys, hn, myLegend, ftxt, lumis=[], data=False) :
+    h=None
     integral[gr]={}
     integral[gr]["nom"]=0
     error[gr]=0
     #for d in samplesToPlot[gr]:
+    print(samplesToPlot[gr])
     for n in range(len(samplesToPlot[gr])) :
         d = samplesToPlot[gr][n]
         if lumis:
@@ -657,16 +685,13 @@ def fill_datasum(f, gr, samplesToPlot, SumTH1, stack, stackSys, hn, myLegend, ft
             if gr in model.signal :
                 if gr not in list(histosSignal[hn].keys()) : histosSignal[hn][gr] = h.Clone()
                 else : histosSignal[hn][gr].Add(h)
-    if not data : writeYields(ftxt, gr, integral, error, datasum[hn].Integral(0,datasum[hn].GetNbinsX()+1))
+    if not data and hn in datasum: writeYields(ftxt, gr, integral, error, datasum[hn].Integral(0,datasum[hn].GetNbinsX()+1))
     #if not data :
             #ftxt.write("%s\t%s +- %s\t%s \n"%(gr,integral[gr]["nom"], error[gr],integral[gr]["nom"]/datasum[hn].Integral(0,datasum[hn].GetNbinsX()+1)))
             #for sy in integral[gr].keys() : ftxt.write("%s\t%s +- %s\t%s \n"%(gr,integral[gr]["nom"], error[gr],integral[gr]["nom"]/datasum[hn].Integral(0,datasum[hn].GetNbinsX()+1)))
     #if (data) : myLegend.AddEntry(h,"data","P")
     #else : myLegend.AddEntry(h,gr,"f")
     return h
-
-
-
 
 def makeplot(hn,saveintegrals=True):
     if "__syst__" not in hn :
@@ -702,17 +727,11 @@ def makeplot(hn,saveintegrals=True):
         if makeWorkspace : all_histo_all_syst[hn] = {}
 
         lumitot=0
-        lumis = {}
-        print(("model.data=", model.data))
-        for gr in model.data:
-            for d in model.data[gr]:
-                lumitot+=samples[d]["lumi"]
-                print("lumitot=%f"%lumitot)
-                yr = getYear(d)
-                if yr in lumis: lumis[yr] += samples[d]["lumi"]
-                else: lumis[yr] = samples[d]["lumi"]
-
         print(("lumis=",lumis))
+        for yr in lumis:
+            lumitot+=lumis[yr]
+            print("lumitot=%f"%lumitot)
+        print(("model.data=",model.data))
 
         histoSingleSyst[hn] = {}
         histosSignal[hn]={}
@@ -725,7 +744,7 @@ def makeplot(hn,saveintegrals=True):
             DataYieldLine = DataYieldLine + "," + sy + ""
         ftxt.write(DataYieldLine+"\n")
         #if saveintegrals:
-        ftxt.write("DATA,%s \n"%(datasum[hn].Integral(0,datasum[hn].GetNbinsX()+1)))
+        if hn in datasum: ftxt.write("DATA,%s \n"%(datasum[hn].Integral(0,datasum[hn].GetNbinsX()+1)))
 
 
         for gr in model.backgroundSorted:
@@ -787,6 +806,15 @@ def makeplot(hn,saveintegrals=True):
         myLegend.Draw() #NEW
         canvas[hn].cd(1)
         histos[hn].SetTitle("")
+        if not hn in datasum:
+            datasum[hn] = histosum[hn].Clone(histosum[hn].GetName()+"_copy")
+            datasum[hn].Rebuild()
+            datasum[hn].Sumw2()
+            for i in range(len(datasum[hn])+2):
+#                datasum[hn].SetBinError(i, (datasum[hn].GetBinContent(i)/datasum[hn].GetBinWidth(i))**0.5)
+                datasum[hn].SetBinError(i, (datasum[hn].GetBinContent(i))**0.5)
+            datasum[hn].SetMarkerStyle(10)
+            datasum[hn].UseCurrentStyle()
         datasum[hn].SetMinimum(max(0.1*datasum[hn].GetMinimum(),0.1)) ## zoom out y axis
         datasum[hn].Draw("E P")
         #datastack[hn].GetXaxis().SetTitle(hn)
