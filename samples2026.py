@@ -14,8 +14,10 @@ samples={
 
 "DYJetsToLL_M_100_madgraphMLM" : {"xsec": 246.5 , "files": ["/scratchssd/thakore/PROD_2_0/DYJetsToLL_M_100_madgraphMLM_merged.root"] },
 
-"TT_Tune_powheg" : {"xsec": 864.4, "files": ["/scratchssd/thakore/PROD_2_0/TT_Tune_powheg_merged.root"] }
+"TT_Tune_powheg" : {"xsec": 864.4, "files": ["/scratchssd/thakore/PROD_2_0/TT_Tune_powheg_merged.root"] },
+
 }
+
 
 ## Add "files" automatically if not defined
 for sample in samples:
