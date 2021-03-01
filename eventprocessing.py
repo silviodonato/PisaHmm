@@ -60,14 +60,9 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
     flow.AddExpectedInput("TriggerSel","bool")
     flow.Define("Muon_id","Muon_tightId*4+Muon_mediumId*2+Muon_softId")
     flow.Define("Muon_mass","0.f*Muon_pt")
-    flow.Define("Muon_mass","0.f*Muon_pt")
     flow.Define("Muon_p4_orig","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Muon_pt , Muon_eta, Muon_phi, Muon_mass)")
     flow.SubCollection("SelectedMuon","Muon",sel="abs(Muon_eta) < 2.4") ### I've put a simple selection as example
 #    flow.Define("SelectedMuon_p4","SelectedMuon_p4")
-    flow.Distinct("MuMu","SelectedMuon")
-    flow.Define("OppositeSignMuMu","Nonzero(MuMu0_charge != MuMu1_charge)",requires=["twoMuons"])
-    flow.Selection("twoOppositeSignMuons","OppositeSignMuMu.size() > 0")
-    flow.TakePair("Mu","SelectedMuon","MuMu","At(OppositeSignMuMu,0,-200)",requires=["twoOppositeSignMuons"])
 
     
     
@@ -81,11 +76,7 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
     #flow.Define("OppositeSignMuMu","Nonzero(MuMu0_charge != MuMu1_charge)",requires=["twoMuons"])
     #flow.Selection("twoOppositeSignMuons","OppositeSignMuMu.size() > 0")
     #flow.TakePair("Mu","SelectedMuon","MuMu","At(OppositeSignMuMu,0,-200)",requires=["twoOppositeSignMuons"])
-    flow.Selection("threeJets","nJet>=3")
-    flow.Distinct("TriJets","Jet",n=3,requires=["threeJets"])
-    flow.TakeTriplet("SelTriJet","Jet","TriJets","Argmax(-abs(MemberMap((TriJets0_p4+TriJets1_p4+TriJets2_p4),M() )-172.5))",requires=["threeJets"])
-    flow.Define("SelTriJet_btagMax","std::max(std::max(SelTriJet0_btag,SelTriJet1_btag),SelTriJet2_btag)")
-	    
+
     flow.AddCppCode('\n#include "geoFitCorr.h"\n')
 
 
@@ -127,7 +118,7 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
 
 #   flow.Define("Muon_p4GFcorr","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > >(Muon_pt_GeoFitCorrection , Muon_eta, Muon_phi , Muon_mass)")
     #flow.Define("Muon_p4GFcorr","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > >(Muon_pt_GeoFitCorrection , Muon_eta, Muon_phi , Muon_mass*0.f)")
-    flow.SubCollection("SelectedMuon","Muon", sel="abs(Muon_eta) < 2.4")
+#    flow.SubCollection("SelectedMuon","Muon", sel="abs(Muon_eta) < 2.4")
 #&& Muon_correctedFSR_pt > 20.  Muon_mediumId  && Muon_iso < 0.25 &&
     #flow.Define("SelectedMuon_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(SelectedMuon_corrected_pt , SelectedMuon_eta, SelectedMuon_phi, SelectedMuon_mass)")
 
@@ -141,20 +132,20 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
 #        flow.Define("SelectedMuon_GFp4","SelectedMuon_p4GFcorr")
      
     flow.Define("SelectedMuon_p4uncalib","@p4v(SelectedMuon)")
+    flow.Define("SelectedMuon_p4","SelectedMuon_p4_orig")
     flow.Selection("twoUnpreselMuons","nMuon>=2")
     flow.Selection("twoMuons","nSelectedMuon==2")
-    #flow.Distinct("MuMu","SelectedMuon")
-    #flow.Define("OppositeSignMuMu","Nonzero(MuMu0_charge != MuMu1_charge)",requires=["twoMuons"])
-    #flow.Selection("twoOppositeSignMuons","OppositeSignMuMu.size() > 0")
-    #flow.TakePair("Mu","SelectedMuon","MuMu","At(OppositeSignMuMu,0,-200)",requires=["twoOppositeSignMuons"])
-    #flow.Define("SelectedMuon_p4","SelectedMuon_p4_orig")
-    #flow.Define("Higgs","Mu0_GFp4+Mu1_GFp4")
-    
-    #flow.Define("Higgs","Mu0_p4+Mu1_p4")
+    flow.Distinct("MuMu","SelectedMuon")
+    flow.Define("OppositeSignMuMu","Nonzero(MuMu0_charge != MuMu1_charge)",requires=["twoMuons"])
+    flow.Selection("twoOppositeSignMuons","OppositeSignMuMu.size() > 0")
+    flow.TakePair("Mu","SelectedMuon","MuMu","At(OppositeSignMuMu,0,-200)",requires=["twoOppositeSignMuons"])
+    flow.Define("Higgs_noGF","Mu0_p4+Mu1_p4")
+    flow.Define("Higgs","Higgs_noGF")
+  
     #flow.Define("Higgs_noGF","Mu0_p4+Mu1_p4")
     #flow.Define("HiggsUncalib","Mu0_p4uncalib+Mu1_p4uncalib")
 
-    flow.Define("Higgs_m","Higgs.M()")
+#    flow.Define("Higgs_m","Higgs.M()")
     #flow.Define("Higgs_m","Higgs_noGF.M()")
 
 
@@ -342,7 +333,7 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
     flow.Define("btagCut","(year==2018||year==2026)?0.4184f:((year==2017)?0.4941f:0.6321f)")
     flow.Define("btagCutL","(year==2018||year==2026)?0.1241f:((year==2017)?0.1522f:0.2217f)")
         #adding for sync
-    flow.Define("SelectedJet_btagDeepB","1")
+    flow.Define("SelectedJet_btagDeepB","0")
     flow.Define("nbtagged","int(Nonzero(SelectedJet_btagDeepB > btagCut && abs(SelectedJet_eta)< 2.5).size())")
     flow.Define("nbtaggedL","int(Nonzero(SelectedJet_btagDeepB > btagCutL && abs(SelectedJet_eta)< 2.5).size())")
     flow.Define("nelectrons","int(Nonzero(Electron_pt > 20 && abs(Electron_eta) < 2.5 ).size())")
@@ -355,6 +346,13 @@ flow.Define("Jet_pt_mix","Jet_pt*(20.f/Jet_pt) + Jet_pt_nom*(1.f-20.f/Jet_pt)")
     #flow.Selection("SideBand","Higgs_m < 150 && Higgs_m > 110 && ! MassWindow && VBFRegion &&  qqDeltaEta > 2.5",requires=["VBFRegion","PreSel"])
     flow.Selection("SignalRegion","VBFRegion &&  qqDeltaEta > 2.5", requires=["VBFRegion","PreSel"])
     flow.Selection("InclusiveRegion","1")    #flow.Selection("ZRegion","VBFRegion && MassWindowZ  && qqDeltaEta > 2.5", requires=["VBFRegion","MassWindowZ","PreSel"])
+    flow.Selection("SelectionTest1","VBFRegion &&  qqDeltaEta > 2.5", requires=["VBFRegion","PreSel"])
+    flow.Selection("SelectionTest2","VBFRegion ", requires=["VBFRegion","PreSel"])
+    flow.Selection("SelectionTest3","qqDeltaEta > 2.5", requires=["VBFRegion","PreSel"])
+    flow.Selection("SelectionTest4","1", requires=["VBFRegion","PreSel"])
+    flow.Selection("SelectionTest5","VBFRegion &&  qqDeltaEta > 2.5")
+    flow.Selection("SelectionTest6","qqDeltaEta > 2.5", requires=["PreSel"])
+
     #flow.Selection("ZRegionSMP","Mqq > 250 && MassWindowZ && QJet0_pt_touse> 50 && QJet1_pt_touse > 30 && twoOppositeSignMuons && twoJets && TriggerSel&& abs(SubMuon_eta) <2.4 && abs(LeadMuon_eta) < 2.4 ", requires=["twoOppositeSignMuons","twoJets"])
     flow.Selection("TwoJetsTwoMu","twoJets && twoOppositeSignMuons", requires=["twoJets","twoOppositeSignMuons"])
     #flow.Selection("SignalRegionT","SignalRegion && QJet0_pt_touse>45 && QJet1_pt_touse > 27",requires=["SignalRegion"])
