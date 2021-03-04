@@ -7,7 +7,7 @@ def getFlow(year):
     FSRnew=False
     FSRnew=True
     #flow=SampleProcessing("VBF Hmumu Analysis","/scratch/arizzi/Hmm/nail/samples/6B8A2AC8-35E6-1146-B8A8-B1BA90E3F3AA.root"
-    flow=SampleProcessing("VBF Hmumu Analysis","/scratchssd/thakore/PROD_2_0/vbfHmm_powheg_merged.root")
+    flow=SampleProcessing("VBF Hmumu Analysis","/scratchssd/thakore/PROD_2_2/vbfHmm_2026POWPY.root")
     
 #    ##FIXME## SD
     #variables that we will add file by file before passing the RNode to the event processor
@@ -122,7 +122,7 @@ def getFlow(year):
     flow.Selection("VBFRegion","Mqq > mQQcut && QJet0_pt> 35 && QJet1_pt > 25")
     flow.Selection("PreSel","nelectrons==0 && nbtaggedL < 2 && VBFRegion && twoOppositeSignMuons && nbtagged < 1 && (( year == 2016 && LeadMuon_pt > 26 ) || ( year == 2017 && LeadMuon_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuon_pt > 26 )) && SubMuon_pt > 20 && TriggerSel && abs(SubMuon_eta) <2.4 && abs(LeadMuon_eta) < 2.4",requires=["VBFRegion","twoOppositeSignMuons"])
     #flow.Selection("SideBand","Higgs_m < 150 && Higgs_m > 110 && ! MassWindow && VBFRegion &&  qqDeltaEta > 2.5",requires=["VBFRegion","PreSel"])
-    flow.Selection("SignalRegion","VBFRegion &&  (1 || qqDeltaEta > 2.5)", requires=["VBFRegion","PreSel"]) ##FIXME qqDeltaEta > 2.5
+    flow.Selection("SignalRegion","VBFRegion && qqDeltaEta > 2.5", requires=["VBFRegion","PreSel"]) ##FIXME qqDeltaEta > 2.5
     flow.Selection("InclusiveRegion","1")    #flow.Selection("ZRegion","VBFRegion && MassWindowZ  && qqDeltaEta > 2.5", requires=["VBFRegion","MassWindowZ","PreSel"])
 #    flow.Selection("SelectionTest1","VBFRegion &&  qqDeltaEta > 2.5", requires=["VBFRegion","PreSel"])
 #    flow.Selection("SelectionTest2","VBFRegion ", requires=["VBFRegion","PreSel"])
