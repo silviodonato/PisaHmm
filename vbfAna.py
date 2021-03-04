@@ -221,57 +221,39 @@ def f(ar):
         try:
             rdf=rdf.Define("year",year)
             rdf=rdf.Define("TriggerSel",trigger)
-            #if  year!="2017" and ("Jet_puId17" not in rdf.GetColumnNames()):
-            #    rdf=rdf.Define("Jet_puId17","ROOT::VecOps::RVec<int>(nJet, 0)")
             if "lumi" in list(samples[s].keys())  :
-#           if "Muon_dxybs" not  in  rdf.GetColumnNames() :
-#               rdf=rdf.Define("Muon_dxybs","Muon_pt*10000.f")
-#               print "WWWWWWWWWWAAAAAAAAAAAAAARRRRRRRNINGGGGGGGGGG"
                 rdf=rdf.Filter("passJson(run,luminosityBlock)","jsonFilter")
                 rdf=rdf.Define("isMC","false")
-#           rdf=rdf.Define("PrefireWeight","1.0f")
                 rdf=rdf.Define("isHerwig","false")
-                if year != "2018" and year != "2026": ##FIXME##
-                    rdf=rdf.Define("Jet_pt_nom","Jet_pt")
-                else :
-                    rdf=rdf.Define("Jet_pt_newJEC","Jet_pt")
                 rdf=rdf.Define("LHE_NpNLO","0")
                 rdf=rdf.Define("Jet_partonFlavour","ROOT::VecOps::RVec<int>(nJet, 0)")
             else :
-                if year == "2018" or  year == "2026": ##FIXME##
-                    rdf=rdf.Define("PrefiringWeight","1.f")
-                    rdf=rdf.Define("PrefiringWeightUp","1.f")
-                    rdf=rdf.Define("PrefiringWeightDown","1.f")
-                else:
-                    rdf=rdf.Define("PrefiringWeight","L1PreFiringWeight_Nom")
-                    rdf=rdf.Define("PrefiringWeightUp","L1PreFiringWeight_Up")
-                    rdf=rdf.Define("PrefiringWeightDown","L1PreFiringWeight_Dn")
-                print("Is herwig?",("true" if "HERWIG" in s else "false"), s)
-                rdf=rdf.Define("isHerwig",("true" if "HERWIG" in s else "false"))
-                if  "HTXS_stage1_1_fine_cat_pTjet30GeV" not in rdf.GetColumnNames() :
-                    print("Add fake STXS category")
-                    rdf=rdf.Define("HTXS_stage1_1_fine_cat_pTjet30GeV","-1l")
-                    print("Added")
-                if  "ggH" in s :
-                    print("Adding ggH weights")
-                    rdf=rdf.Define("nnlopsWeight","evalNnlopsWeight(HTXS_njets30,HTXS_Higgs_pt)")
-                else :
-                    rdf=rdf.Define("nnlopsWeight","1.f")
-
-                if  s in  ["DY0J_2018AMCPY","DY0J_2017AMCPY","DY1J_2017AMCPY","DY1J_2018AMCPY","DY0J_2026AMCPY","DY1J_2026AMCPY"] :
-                    rdf=rdf.Define("lhefactor","2.f")
-                else:
-                    rdf=rdf.Define("lhefactor","1.f")
-                if "LHEPdfWeight" not in rdf.GetColumnNames():
-                    print("ADDING FAKE PDF",f)
-                    rdf=rdf.Define("LHEPdfWeight","ROOT::VecOps::RVec<float>(1,1)")
-                    rdf=rdf.Define("nLHEPdfWeight","uint32_t(1)")
-                if hessian:
-                    print("Setting LHEPdfHasHessian to true")
-                    rdf=rdf.Define("LHEPdfHasHessian","true")
-                else:
-                    print("Setting LHEPdfHasHessian to false")
-                    rdf=rdf.Define("LHEPdfHasHessian","false")
+#                print("Is herwig?",("true" if "HERWIG" in s else "false"), s)
+#                rdf=rdf.Define("isHerwig",("true" if "HERWIG" in s else "false"))
+#                if  "HTXS_stage1_1_fine_cat_pTjet30GeV" not in rdf.GetColumnNames() :
+#                    print("Add fake STXS category")
+#                    rdf=rdf.Define("HTXS_stage1_1_fine_cat_pTjet30GeV","-1l")
+#                    print("Added")
+#                if  "ggH" in s :
+#                    print("Adding ggH weights")
+#                    rdf=rdf.Define("nnlopsWeight","evalNnlopsWeight(HTXS_njets30,HTXS_Higgs_pt)")
+#                else :
+#                    rdf=rdf.Define("nnlopsWeight","1.f")
+#                
+#                if  s in  ["DY0J_2018AMCPY","DY0J_2017AMCPY","DY1J_2017AMCPY","DY1J_2018AMCPY","DY0J_2026AMCPY","DY1J_2026AMCPY"] :
+#                    rdf=rdf.Define("lhefactor","2.f")
+#                else:
+#                    rdf=rdf.Define("lhefactor","1.f")
+#                if "LHEPdfWeight" not in rdf.GetColumnNames():
+#                    print("ADDING FAKE PDF",f)
+#                    rdf=rdf.Define("LHEPdfWeight","ROOT::VecOps::RVec<float>(1,1)")
+#                    rdf=rdf.Define("nLHEPdfWeight","uint32_t(1)")
+#                if hessian:
+#                    print("Setting LHEPdfHasHessian to true")
+#                    rdf=rdf.Define("LHEPdfHasHessian","true")
+#                else:
+#                    print("Setting LHEPdfHasHessian to false")
+#                    rdf=rdf.Define("LHEPdfHasHessian","false")
                 #if year == "2016":
                 #    rdf=rdf.Define("Muon_sf","(20.1f/36.4f*Muon_ISO_SF + 16.3f/36.4f*Muon_ISO_eraGH_SF)*(20.1f/36.4f*Muon_ID_SF + 16.3f/36.4f*Muon_ID_eraGH_SF)")
                 #else :
@@ -281,28 +263,28 @@ def f(ar):
                 #else :
                  #   rdf=rdf.Define("btagWeight","btagWeight_CMVA")
 
-                if "Muon_dxybs" not  in  rdf.GetColumnNames() :
-                    rdf=rdf.Define("Muon_dxybs","Muon_pt*10000.f")
+#                if "Muon_dxybs" not  in  rdf.GetColumnNames() :
+#                    rdf=rdf.Define("Muon_dxybs","Muon_pt*10000.f")
 
                 rdf=rdf.Define("isMC","true")
                # if "LHEWeight_originalXWGTUP" not in rdf.GetColumnNames():
                #     rdf=rdf.Define("LHEWeight_originalXWGTUP","genWeight")
-                if "LHEScaleWeight" not in rdf.GetColumnNames():
-                    print("ADDING FAKE LHE",f)
-                    rdf=rdf.Define("LHEScaleWeight","ROOT::VecOps::RVec<float>(9,1)")
-                    rdf=rdf.Define("nLHEScaleWeight","uint32_t(0)")
-                if "PSWeight" not in rdf.GetColumnNames():
-                    print("ADDING FAKE PS WEIGHT",f)
-                    rdf=rdf.Define("PSWeight","ROOT::VecOps::RVec<float>(9,1)")
-                    rdf=rdf.Define("nPSWeight","uint32_t(1)")
-                if "LHE_NpNLO" not in rdf.GetColumnNames():
-                    rdf=rdf.Define("LHE_NpNLO","-1")
+#                if "LHEScaleWeight" not in rdf.GetColumnNames():
+#                    print("ADDING FAKE LHE",f)
+#                    rdf=rdf.Define("LHEScaleWeight","ROOT::VecOps::RVec<float>(9,1)")
+#                    rdf=rdf.Define("nLHEScaleWeight","uint32_t(0)")
+#                if "PSWeight" not in rdf.GetColumnNames():
+#                    print("ADDING FAKE PS WEIGHT",f)
+#                    rdf=rdf.Define("PSWeight","ROOT::VecOps::RVec<float>(9,1)")
+#                    rdf=rdf.Define("nPSWeight","uint32_t(1)")
+#                if "LHE_NpNLO" not in rdf.GetColumnNames():
+#                    rdf=rdf.Define("LHE_NpNLO","-1")
 
-            if s.startswith("EWKZ_") and s.endswith("MGPY") :
-                #rdf=rdf.Define("EWKreweight","weightSofAct5(1)")
-                rdf=rdf.Define("EWKreweight","weightGenJet(nGenJet)")
-            else :
-                rdf=rdf.Define("EWKreweight","1.f")
+#            if s.startswith("EWKZ_") and s.endswith("MGPY") :
+#                #rdf=rdf.Define("EWKreweight","weightSofAct5(1)")
+#                rdf=rdf.Define("EWKreweight","weightGenJet(nGenJet)")
+#            else :
+#                rdf=rdf.Define("EWKreweight","1.f")
 
             if "filter" in samples[s] :
                 ou=specificPreProcessors[s](rdf)
@@ -391,9 +373,9 @@ def f(ar):
                     #    nor=normalizationSB
                     h.GetValue()
                     fff.cd()
-                    print("Bef Integral = %d"%h.Integral()) 
+                   # print("Bef Integral = %d"%h.Integral()) 
                     h.Scale(1./sumws)
-                    print("Aft Integral = %d"%h.Integral())
+                   # print("Aft Integral = %d"%h.Integral())
                     if "__syst__LHEPdf" in hname:
                         if h.GetMaximum()==0.: continue ## skip empty LHEPdf
                         PdfIdx = hname.split("__syst__LHEPdf")[-1]
@@ -410,9 +392,9 @@ def f(ar):
                  #   nor=normalizationSB
                 h.GetValue()
                 fff.cd()
-                print("Bef Integral = %d"%h.Integral())
+            #    print("Bef Integral = %d"%h.Integral())
                 h.Scale(1./sumws)
-                print("Aft Integral = %d"%h.Integral())
+             #   print("Aft Integral = %d"%h.Integral())
 #                h.Scale(1./nor/sumws)
                 if "__syst__LHEPdf" in hname:
                     if h.GetMaximum()==0.: continue ## skip empty LHEPdf
