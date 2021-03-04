@@ -1,20 +1,20 @@
-path2026 = "/scratchssd/thakore/PROD_2_0/" #reduced JES
+path2026 = "/scratchssd/thakore/PROD_2_2/" #reduced JES
 
 samples={
 
-"vbfHmm_powheg" : {"xsec": 0.0008210722 , "files": ["/scratchssd/thakore/PROD_2_0/vbfHmm_powheg_merged.root"] }, #xsec need to be set later on with actual values
+"vbfHmm_2026POWPY" : {"xsec": 0.0008210722, "files": ["/scratchssd/thakore/PROD_2_2/vbfHmm_2026POWPY.root"] }, #xsec need to be set later on with actual values
 
-"GluGluHToMuMu_powheg" : {"xsec": 0.0008210722 , "files": ["/scratchssd/thakore/PROD_2_0/GluGluHToMuMu_powheg_merged.root"] }, #xsec need to be set later on with actual values
+"ggHmm_2026POWPY" : {"xsec": 0.0008210722, "files": ["/scratchssd/thakore/PROD_2_2/ggHmm_2026POWPY.root"] }, #xsec need to be set later on with actual values
 
-"DYToLL_madgraphMLM" : {"xsec": 32.95, "files":["/scratchssd/thakore/PROD_2_0/DYToLL_madgraphMLM_merged.root"] },
+"DY50HT200_2026MGPY" : {"xsec": 32.95, "files": ["/scratchssd/thakore/PROD_2_2/DY50HT200_2026MGPY.root"] },
 
-"EWKZ2Jets_ZToLL_madgraph" : {"xsec": 4.38 , "files": ["/scratchssd/thakore/PROD_2_0/EWKZ2Jets_ZToLL_madgraph_merged.root"] },
+"EWKZ2JetsZToLL_2026MGPY" : {"xsec": 4.38, "files": ["/scratchssd/thakore/PROD_2_2/EWKZ2JetsZToLL_2026MGPY.root"] },
 
-"DYJets_MLL_50_madgraphMLM" : {"xsec": 5711, "files": ["/scratchssd/thakore/PROD_2_0/DYJets_MLL_50_madgraphMLM_merged.root"] }, 
+"DY50_2026MGPY" : {"xsec": 5711, "files": ["/scratchssd/thakore/PROD_2_2/DY50_2026MGPY.root"] }, 
 
-"DYJetsToLL_M_100_madgraphMLM" : {"xsec": 246.5 , "files": ["/scratchssd/thakore/PROD_2_0/DYJetsToLL_M_100_madgraphMLM_merged.root"] },
+"DY100_2026MGPY" : {"xsec": 246.5, "files": ["/scratchssd/thakore/PROD_2_2/DY100_2026MGPY.root"] },
 
-"TT_Tune_powheg" : {"xsec": 864.4, "files": ["/scratchssd/thakore/PROD_2_0/TT_Tune_powheg_merged.root"] },
+"TT_2026POWPY" : {"xsec": 864.4, "files": ["/scratchssd/thakore/PROD_2_2/TT_2026POWPY.root"] },
 
 }
 
