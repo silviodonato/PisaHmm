@@ -6,7 +6,7 @@ binningrules=[
 ("n.*" , "%s , 0 , 30"%nbins),
 ("N.*" , "%s , 0 , 30"%nbins),
 (".*_pt(_|$).*" , "%s , 0 , 300"%nbins),
-(".*HT.*" , "%s , 0 , 300"%nbins),
+(".*HT.*" , "%s , 0 , 1000"%nbins),
 (".*_qgl" , "%s , 0 , 1"%nbins),
 ("QGLweight*" , "%s , 0 , 10"%nbins),
 (".*_eta(_|$).*" , "%s , -5 , 5"%nbins),

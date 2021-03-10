@@ -9,7 +9,7 @@ histosPerSelection={
 #"SignalRegionPhase1DNNWeighted" : ["Higgs_m"],
 #"SRplusSBDNNWeighted" : ["Higgs_m","Higgs_m38"],
 #"TightMassRegion" : ["DNN18AtanNoMass"],
-"SignalRegionPhase1": ["MET_met", "QJet0_pt", "qq_pt", "qqDeltaEta", "qqDeltaPhi", "JetHT"]+genericHistos,
+"SignalRegionPhase1": ["MET_met", "QJet0_pt", "qq_pt", "qqDeltaEta", "qqDeltaPhi", "GenJetHT"]+genericHistos,
 "InclusiveRegion": ["MET_met"],
 "VBFRegion": ["MET_met"],
 "MassWindowZ": ["MET_met"],

@@ -82,7 +82,18 @@ def getFlow(year):
     flow.Define("Higgs_pt","Higgs.Pt()")
     flow.Define("Higgs_rapidity","Higgs.Rapidity()")
 
-    flow.Define("JetHT","Sum(Jet_pt)")
+    #HT definition in the generator: https://github.com/cms-sw/genproductions/blob/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/DYJets_HT_LO_MLM/DYJets_HT_mll50/DYJets_HT-400to600/DYJets_HT-400to600_run_card.dat
+    flow.SubCollection("GenJetForHT","GenJet",'''
+    GenJet_pt > 30 && abs(GenJet_eta) < 5.0 && GenJet_mass>1.5
+    ''')
+    flow.MergeCollections("Lepton",["Muon","Electron"])
+    flow.SubCollection("SelectedLepton","Lepton","Lepton_pt > 10")
+    flow.MatchDeltaR("GenJetForHT","SelectedLepton")
+    flow.SubCollection("CleanGenJetForHT","GenJetForHT",'''
+    (GenJetForHT_SelectedLeptonIdx==-1 || GenJetForHT_SelectedLeptonDr > 0.4)
+    ''')
+    
+    flow.Define("GenJetHT","Sum(CleanGenJetForHT_pt)")
     flow.Define("pTbalanceLead","QJet0_pt/Higgs_pt")
     #flow.Define("pTbalance","qq.Pt()/Higgs_pt")
     flow.Define("pTbalanceAll","SumDef(SelectedJet_p4).pt()/Higgs_pt")
