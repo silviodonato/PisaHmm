@@ -82,6 +82,7 @@ def getFlow(year):
     flow.Define("Higgs_pt","Higgs.Pt()")
     flow.Define("Higgs_rapidity","Higgs.Rapidity()")
 
+    flow.Define("JetHT","Sum(Jet_pt)")
     flow.Define("pTbalanceLead","QJet0_pt/Higgs_pt")
     #flow.Define("pTbalance","qq.Pt()/Higgs_pt")
     flow.Define("pTbalanceAll","SumDef(SelectedJet_p4).pt()/Higgs_pt")
