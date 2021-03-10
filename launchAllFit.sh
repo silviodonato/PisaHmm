@@ -1,6 +1,6 @@
 #DNNZAtan___ZRegion
 #DNN18AtanNoMass___ZRegion
-#DNN18Atan___SignalRegion
+#DNN18Atan___SignalRegionPhase1
 #DNN18AtanNoMass___SideBand
 
 
@@ -35,7 +35,7 @@ python makeFitScript.py \
 --directory workspacefitH_classic \
 --inputDirectory workspace \
 --years 2016,2017,2018,All,Comb \
---fullfitPlots      DNN18AtanNoMass___ZRegion,DNN18AtanNoMass___SideBand,DNN18Atan___SignalRegion \
+--fullfitPlots      DNN18AtanNoMass___ZRegion,DNN18AtanNoMass___SideBand,DNN18Atan___SignalRegionPhase1 \
 --partialfitPlots   DNN18AtanNoMass___ZRegion,DNN18AtanNoMass___SideBand \
 --fitOptions "--cminDefaultMinimizerStrategy 0" \
 --fitH \
@@ -48,7 +48,7 @@ python makeFitScript.py \
 --directory workspacefitH_DNNZ \
 --inputDirectory workspace \
 --years 2016,2017,2018,All,Comb \
---fullfitPlots      DNNZAtan___ZRegion,DNN18AtanNoMass___SideBand,DNN18Atan___SignalRegion \
+--fullfitPlots      DNNZAtan___ZRegion,DNN18AtanNoMass___SideBand,DNN18Atan___SignalRegionPhase1 \
 --partialfitPlots   DNNZAtan___ZRegion,DNN18AtanNoMass___SideBand \
 --fitOptions "--cminDefaultMinimizerStrategy 0" \
 --fitH \

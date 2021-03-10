@@ -3,9 +3,9 @@ ZREGION=ch1_DNN18AtanNoMass___ZRegion
 ZCONTROL=ch1_pTbalanceAll___ZRegion
 ZREGIONBDT=ch1_BDTAtanNoMass___ZRegion
 
-SIGNAL=ch2_DNN18Atan___SignalRegion
+SIGNAL=ch2_DNN18Atan___SignalRegionPhase1
 SIDE=ch2_DNN18AtanNoMass___SideBand
-SIGNALBDT=ch2_BDTAtan___SignalRegion
+SIGNALBDT=ch2_BDTAtan___SignalRegionPhase1
 SIDEBDT=ch2_BDTAtanNoMass___SideBand
 
 YEARS="run2016 run2017 run2018"

@@ -145,14 +145,14 @@ else:
     models2018H=importlib.import_module("models"+args.year+"H")
 
 background_schemes['ch1']=[backgroundComp(x,models2018Z.background[x],models2018Z.fillcolor[x]) for x in models2018Z.backgroundSorted]+[backgroundComp(x,models2018Z.signal[x],models2018Z.fillcolor[x]) for x in models2018Z.signal]
-#background_schemes['ch2_SignalRegion']=[backgroundComp(x,models2018H.background[x],models2018H.fillcolor[x]) for x in models2018H.backgroundSorted]+[backgroundComp(x,models2018H.signal[x],models2018H.fillcolor[x]) for x in models2018H.signal]
+#background_schemes['ch2_SignalRegionPhase1']=[backgroundComp(x,models2018H.background[x],models2018H.fillcolor[x]) for x in models2018H.backgroundSorted]+[backgroundComp(x,models2018H.signal[x],models2018H.fillcolor[x]) for x in models2018H.signal]
 background_schemes['ch1']=[backgroundComp(x,models2018H.background[x],models2018H.fillcolor[x]) for x in models2018H.backgroundSorted]+[backgroundComp(x,models2018H.signal[x],models2018H.fillcolor[x]) for x in models2018H.signal]
 
 
 
 #To be filled later depending on which histograms actually exist
-plot_background_schemes = {'ch1':[],'ch2':[]} #'ch2_SignalRegion':[]}
-#plot_background_schemes = {'ch2_SideBand':[],'ch2_SignalRegion':[]}
+plot_background_schemes = {'ch1':[],'ch2':[]} #'ch2_SignalRegionPhase1':[]}
+#plot_background_schemes = {'ch2_SideBand':[],'ch2_SignalRegionPhase1':[]}
 
 #Extract relevant histograms from shape file
 [sighist,binname] = getHistogram(histo_file,'TotalSig', file_dir, mode, args.no_signal, log_x)

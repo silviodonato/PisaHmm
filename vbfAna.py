@@ -70,7 +70,7 @@ ftxt=open("out/description.txt","w")
 ftxt.write(flow.Describe(used))
 
 snap=[]                     #"nJet"
-snaplist=["Mu0_charge","Mu1_charge","Mu0_dxybs","Mu1_dxybs","event","Higgs_m_uncalib","Higgs_m","QJet0_qgl","QJet1_qgl","QJet0_eta","QJet1_eta","Mqq","Higgs_pt","Mu0_pt","Mu0_corrected_pt","Mu1_corrected_pt","Mu1_pt","Mu0_eta","Mu1_eta","Mu1_phi","Mu0_phi","nGenPart","GenPart_pdgId","GenPart_eta","GenPart_phi","GenPart_pt"]#,"twoJets","twoOppositeSignMuons","PreSel","VBFRegion","MassWindow","SignalRegion","qqDeltaEta","event","HLT_IsoMu24","QJet0_pt_nom","QJet1_pt_nom","QJet0_puId","QJet1_puId","SBClassifier","Higgs_m","Mqq_log","mmjj_pt_log","NSoft5","ll_zstar","theta2","mmjj_pz_logabs","MaxJetAbsEta","ll_zstar_log"]#,"QJet0_prefireWeight","QJet1_prefireWeight","PrefiringCorrection","CorrectedPrefiringWeight"]
+snaplist=["Mu0_charge","Mu1_charge","Mu0_dxybs","Mu1_dxybs","event","Higgs_m_uncalib","Higgs_m","QJet0_qgl","QJet1_qgl","QJet0_eta","QJet1_eta","Mqq","Higgs_pt","Mu0_pt","Mu0_corrected_pt","Mu1_corrected_pt","Mu1_pt","Mu0_eta","Mu1_eta","Mu1_phi","Mu0_phi","nGenPart","GenPart_pdgId","GenPart_eta","GenPart_phi","GenPart_pt"]#,"twoJets","twoOppositeSignMuons","PreSel","VBFRegion","MassWindow","SignalRegionPhase1","qqDeltaEta","event","HLT_IsoMu24","QJet0_pt_nom","QJet1_pt_nom","QJet0_puId","QJet1_puId","SBClassifier","Higgs_m","Mqq_log","mmjj_pt_log","NSoft5","ll_zstar","theta2","mmjj_pz_logabs","MaxJetAbsEta","ll_zstar_log"]#,"QJet0_prefireWeight","QJet1_prefireWeight","PrefiringCorrection","CorrectedPrefiringWeight"]
 #snaplist=["QJet0_prefireWeight","QJet1_prefireWeight","PrefiringCorrection","CorrectedPrefiringWeight"]
 snaplist=[]# "event"]
 fullsnaplist=["Mu0_charge","Mu1_charge","Mu0_dxybs","Mu1_dxybs","Mu0_pt_GeoFitCorrection","Mu1_pt_GeoFitCorrection","Mu0_eta","Mu0_pt","Mu1_eta","Mu1_pt",
@@ -87,9 +87,9 @@ from histobinning import binningrules
 flow.binningRules = binningrules
 
 flowData=copy.deepcopy(flow)
-#flowData.CentralWeight("weightDNNSB",["SignalRegionDNNWeighted","SRplusSBDNNWeighted"])
-procData=flowData.CreateProcessor("eventProcessorData"+year,snaplist,histosPerSelection,snap,"SignalRegion",nthreads)
-#procData=flowData.CreateProcessor("eventProcessorData"+year,snaplist,histosPerSelection,snap,"SignalRegion",nthreads)
+#flowData.CentralWeight("weightDNNSB",["SignalRegionPhase1DNNWeighted","SRplusSBDNNWeighted"])
+procData=flowData.CreateProcessor("eventProcessorData"+year,snaplist,histosPerSelection,snap,"SignalRegionPhase1",nthreads)
+#procData=flowData.CreateProcessor("eventProcessorData"+year,snaplist,histosPerSelection,snap,"SignalRegionPhase1",nthreads)
 
 print("Data processor created")
 
@@ -99,7 +99,7 @@ addDefaultWeights(flow)
 #addMuEffWeight(flow)
 #addQGLweight(flow)
 #ddPreFiring(flow)
-#flow.CentralWeight("weightDNNSB",["SignalRegionDNNWeighted","SRplusSBDNNWeighted"])
+#flow.CentralWeight("weightDNNSB",["SignalRegionPhase1DNNWeighted","SRplusSBDNNWeighted"])
 
 from systematics import *
 if False : #switch off all systs
@@ -305,7 +305,7 @@ def f(ar):
 
             print("Normalization 2")
             #normalizationHandle = ou.rdf[""].Filter("twoJets","twoJets").Mean("QGLweight")
-#         normalizationHandleSR = ou.rdf["SignalRegion"].Mean("QGLweight")
+#         normalizationHandleSR = ou.rdf["SignalRegionPhase1"].Mean("QGLweight")
 #         normalizationHandleSB = ou.rdf["SideBand"].Mean("QGLweight")
             #Event loop should not be triggered anove this point
 
@@ -313,29 +313,29 @@ def f(ar):
             #normalizationHandleSR = normalizationHandle
             #normalizationHandleSB = normalizationHandle
             #snaplist=["nJet","nGenJet","Jet_pt_touse","GenJet_pt","Jet_genJetIdx","Jet_pt_touse","Jet_pt","Jet_pt_nom","Jet_genPt","LHERenUp","LHERenDown","LHEFacUp","LHEFacDown","PrefiringWeight","DNN18Atan","QJet0_prefireWeight","QJet1_prefireWeight", "QJet0_pt_touse","QJet1_pt_touse","QJet0_eta","QJet1_eta","QGLweight","genWeight","btagWeight","muEffWeight"]
-#"QJet0_pt_touse","QJet1_pt_touse","QJet0_eta","QJet1_eta","Mqq","Higgs_pt","twoJets","twoOppositeSignMuons","PreSel","VBFRegion","MassWindow","SignalRegion"]
+#"QJet0_pt_touse","QJet1_pt_touse","QJet0_eta","QJet1_eta","Mqq","Higgs_pt","twoJets","twoOppositeSignMuons","PreSel","VBFRegion","MassWindow","SignalRegionPhase1"]
 
-    #        snaplist=["nJet","SelectedJet_pt_touse","Jet_pt","Jet_pt_nom","Jet_puId","Jet_eta","Jet_jetId","PreSel","VBFRegion","MassWindow","SignalRegion","jetIdx1","jetIdx2","Jet_muonIdx1","Jet_muonIdx2","LHEPdfUp","LHEPdfDown","LHEPdfSquaredSum","LHEPdfRMS","nLHEPdfWeight","LHEPdfWeight","PrefiringWeight","DNN18Atan__syst__MuScaleDown","Higgs_eta__syst__MuScaleUp","Higgs_mRelReso__syst__MuScaleUp","Higgs_mReso__syst__MuScaleUp","Higgs_m__syst__MuScaleUp","Higgs_pt__syst__MuScaleUp","Mqq","Mqq_log","NSoft5__syst__MuScaleUp","QJet0_eta","QJet0_phi","QJet0_pt_touse","QJet0_qgl","QJet1_eta","QJet1_phi","QJet1_pt_touse","QJet1_qgl","Rpt__syst__MuScaleUp","event","ll_zstar__syst__MuScaleUp","minEtaHQ__syst__MuScaleUp","qqDeltaEta"]
-            snaplist=["run","event","Higgs_m","QJet0_pt_touse","QJet1_pt_touse","QJet0_eta","QJet1_eta","Mqq","Higgs_pt","Higgs_m","qqDeltaEta","SelectedMuon_GFp4_pt0","SelectedMuon_GFp4_pt1","SignalRegionWeight__Central","QGLweight","DNN18Atan"]
+    #        snaplist=["nJet","SelectedJet_pt_touse","Jet_pt","Jet_pt_nom","Jet_puId","Jet_eta","Jet_jetId","PreSel","VBFRegion","MassWindow","SignalRegionPhase1","jetIdx1","jetIdx2","Jet_muonIdx1","Jet_muonIdx2","LHEPdfUp","LHEPdfDown","LHEPdfSquaredSum","LHEPdfRMS","nLHEPdfWeight","LHEPdfWeight","PrefiringWeight","DNN18Atan__syst__MuScaleDown","Higgs_eta__syst__MuScaleUp","Higgs_mRelReso__syst__MuScaleUp","Higgs_mReso__syst__MuScaleUp","Higgs_m__syst__MuScaleUp","Higgs_pt__syst__MuScaleUp","Mqq","Mqq_log","NSoft5__syst__MuScaleUp","QJet0_eta","QJet0_phi","QJet0_pt_touse","QJet0_qgl","QJet1_eta","QJet1_phi","QJet1_pt_touse","QJet1_qgl","Rpt__syst__MuScaleUp","event","ll_zstar__syst__MuScaleUp","minEtaHQ__syst__MuScaleUp","qqDeltaEta"]
+            snaplist=["run","event","Higgs_m","QJet0_pt_touse","QJet1_pt_touse","QJet0_eta","QJet1_eta","Mqq","Higgs_pt","Higgs_m","qqDeltaEta","SelectedMuon_GFp4_pt0","SelectedMuon_GFp4_pt1","SignalRegionPhase1Weight__Central","QGLweight","DNN18Atan"]
             branchList = ROOT.vector('string')()
             list(map(lambda x : branchList.push_back(x), snaplist))
     #        if "lumi" not in samples[s].keys()  :
-    #        rep=ou.rdf[""].Filter("twoMuons","twoMuons").Filter("twoOppositeSignMuons","twoOppositeSignMuons").Filter("twoJets","twoJets").Filter("MassWindow","MassWindow").Filter("VBFRegion","VBFRegion").Filter("PreSel","PreSel").Filter("SignalRegion","ZRegion").Report()
+    #        rep=ou.rdf[""].Filter("twoMuons","twoMuons").Filter("twoOppositeSignMuons","twoOppositeSignMuons").Filter("twoJets","twoJets").Filter("MassWindow","MassWindow").Filter("VBFRegion","VBFRegion").Filter("PreSel","PreSel").Filter("SignalRegionPhase1","ZRegion").Report()
 #         rep.Print()
             print("Above the cutflow for",s)
-#         ou.rdf["SignalRegion"].Define("SelectedMuon_GFp4_pt0","SelectedMuon_GFp4[0].Pt()").Define("SelectedMuon_GFp4_pt1","SelectedMuon_GFp4[1].Pt()").Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
+#         ou.rdf["SignalRegionPhase1"].Define("SelectedMuon_GFp4_pt0","SelectedMuon_GFp4[0].Pt()").Define("SelectedMuon_GFp4_pt1","SelectedMuon_GFp4[1].Pt()").Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
 
             if "training" in list(samples[s].keys()) and samples[s]["training"] :
-                #ou.rdf.Filter("twoMuons","twoMuons").Filter("twoOppositeSignMuons","twoOppositeSignMuons").Filter("twoJets","twoJets").Filter("MassWindow","MassWindow").Filter("VBFRegion","VBFRegion").Filter("PreSel","PreSel").Filter("SignalRegion","SignalRegion").Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
+                #ou.rdf.Filter("twoMuons","twoMuons").Filter("twoOppositeSignMuons","twoOppositeSignMuons").Filter("twoJets","twoJets").Filter("MassWindow","MassWindow").Filter("VBFRegion","VBFRegion").Filter("PreSel","PreSel").Filter("SignalRegionPhase1","SignalRegionPhase1").Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
                 #ou.rdf["ZRegion"].Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
                 print("Snapshot")
                 ou.rdf["PreSel"].Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
 #         if "lumi" in samples[s].keys()  :
-                #u.rdf["SignalRegion"].Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
-#               ou.rdf["SignalRegion"].Define("Mu0_GFpt","Mu0_GFp4.pt()").Define("Mu1_GFpt","Mu1_GFp4.pt()").Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
+                #u.rdf["SignalRegionPhase1"].Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
+#               ou.rdf["SignalRegionPhase1"].Define("Mu0_GFpt","Mu0_GFp4.pt()").Define("Mu1_GFpt","Mu1_GFp4.pt()").Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
 
 
-#         ou.rdf.Filter("twoJets","twoJets").Filter("VBFRegion","VBFRegion").Filter("twoMuons__syst__MuScaleDown","twoMuons__syst__MuScaleDown").Filter("twoOppositeSignMuons__syst__MuScaleDown","twoOppositeSignMuons__syst__MuScaleDown").Filter("PreSel__syst__MuScaleDown","PreSel__syst__MuScaleDown").Filter("MassWindow__syst__MuScaleDown","MassWindow__syst__MuScaleDown").Filter("SignalRegion__syst__MuScaleDown","SignalRegion__syst__MuScaleDown").Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
+#         ou.rdf.Filter("twoJets","twoJets").Filter("VBFRegion","VBFRegion").Filter("twoMuons__syst__MuScaleDown","twoMuons__syst__MuScaleDown").Filter("twoOppositeSignMuons__syst__MuScaleDown","twoOppositeSignMuons__syst__MuScaleDown").Filter("PreSel__syst__MuScaleDown","PreSel__syst__MuScaleDown").Filter("MassWindow__syst__MuScaleDown","MassWindow__syst__MuScaleDown").Filter("SignalRegionPhase1__syst__MuScaleDown","SignalRegionPhase1__syst__MuScaleDown").Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
             #ou.rdf.Filter("event==63262831 || event == 11701422 || event== 60161978").Snapshot("Events","out/%sEventPick.root"%(s),branchList)
 #         return 1
 #         print ou.histos.size()#,ouspec.histos.size()
@@ -367,7 +367,7 @@ def f(ar):
                 for h in ouspec.histos :
                     hname = h.GetName()
                 #    nor=normalization
-                    #if "SignalRegion" in hname:
+                    #if "SignalRegionPhase1" in hname:
                     #    nor=normalizationSR
                     #if "SideBand" in hname:
                     #    nor=normalizationSB
@@ -386,7 +386,7 @@ def f(ar):
             for h in  ou.histos :
                 hname = h.GetName()
                 #nor=normalization
-                #if "SignalRegion" in hname:
+                #if "SignalRegionPhase1" in hname:
                  #   nor=normalizationSR
                 #if "SideBand" in hname:
                  #   nor=normalizationSB

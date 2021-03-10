@@ -1,7 +1,7 @@
 #!/bin/bash
 ZREGION=DNNAtanNoMass___ZRegion
 ZCONTROL=pTbalanceAll___ZRegion
-SIGNAL=DNNAtan___SignalRegion
+SIGNAL=DNNAtan___SignalRegionPhase1
 SIDE=DNNAtanNoMass___SideBand
 if /bin/true ; then 
 combineCards.py datacard${1}Z.txt datacard${1}H.txt > datacard${1}.txt 2> ${1}.log

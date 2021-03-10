@@ -12,7 +12,7 @@ ALLMASS="12538"
 echo $ALLMASS
 for m in $ALLMASS ; do
   cd MassScan$m
-#  combineCards.py DNN18AtanNoMass___SideBand=datacard${YEAR}HSB.txt DNN18AtanM${m}___SignalRegion=datacard${YEAR}HSR.txt > datacard${YEAR}H.txt
+#  combineCards.py DNN18AtanNoMass___SideBand=datacard${YEAR}HSB.txt DNN18AtanM${m}___SignalRegionPhase1=datacard${YEAR}HSR.txt > datacard${YEAR}H.txt
 
   ../makerateparam1.sh ${YEAR} H
   cd -
@@ -22,7 +22,7 @@ for m in $ALLMASS ; do
   LAST=$[$N-$FIRST]
   echo $N $FIRST $LAST
 STRING='''
-shapes ggHmm_YYYYAMCPY DNN18AtanMXXXX___SignalRegion  ../MassScan1250/fileCombineYYYYH.root DNN18AtanM1250_DNN18AtanM1250___SignalRegion_$PROCESS DNN18AtanM1250_DNN18AtanM1250___SignalRegion_$PROCESS_$SYSTEMATIC\nshapes vbfHmm_YYYYAMCPY DNN18AtanMXXXX___SignalRegion  ../MassScan1250/fileCombineYYYYH.root DNN18AtanM1250_DNN18AtanM1250___SignalRegion_$PROCESS DNN18AtanM1250_DNN18AtanM1250___SignalRegion_$PROCESS_$SYSTEMATIC
+shapes ggHmm_YYYYAMCPY DNN18AtanMXXXX___SignalRegionPhase1  ../MassScan1250/fileCombineYYYYH.root DNN18AtanM1250_DNN18AtanM1250___SignalRegionPhase1_$PROCESS DNN18AtanM1250_DNN18AtanM1250___SignalRegionPhase1_$PROCESS_$SYSTEMATIC\nshapes vbfHmm_YYYYAMCPY DNN18AtanMXXXX___SignalRegionPhase1  ../MassScan1250/fileCombineYYYYH.root DNN18AtanM1250_DNN18AtanM1250___SignalRegionPhase1_$PROCESS DNN18AtanM1250_DNN18AtanM1250___SignalRegionPhase1_$PROCESS_$SYSTEMATIC
 '''
 UPDATE=`echo $STRING | perl -pe 's/XXXX/'$m'/g; s/YYYY/'$YEAR'/g'`
 head -n $FIRST $F > $FO

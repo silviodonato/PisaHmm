@@ -1,6 +1,6 @@
 #DNNZAtan___ZRegion
 #DNN18AtanNoMass___ZRegion
-#DNN18Atan___SignalRegion
+#DNN18Atan___SignalRegionPhase1
 #DNN18AtanNoMass___SideBand
 
 
@@ -30,7 +30,7 @@ python makeScript.py \
 --steps makeDC,significance_asimov,significance_prefit,postFitPlot_prefit,impacts_asimov,impacts_prefit,impacts_fit \
 --directory workspace_new_fitH_classic \
 --years 2016,2017,2018,All,Comb \
---fitPlots      DNN18AtanNoMass___ZRegion,DNN18AtanNoMass___SideBand,DNN18Atan___SignalRegion \
+--fitPlots      DNN18AtanNoMass___ZRegion,DNN18AtanNoMass___SideBand,DNN18Atan___SignalRegionPhase1 \
 --prefitPlots   DNN18AtanNoMass___ZRegion,DNN18AtanNoMass___SideBand \
 --fitOptions "--cminDefaultMinimizerStrategy 0" \
 --fitH \
@@ -41,7 +41,7 @@ python makeScript.py \
 --steps makeDC,significance_asimov,significance_prefit,postFitPlot_prefit,impacts_asimov,impacts_prefit,impacts_fit \
 --directory workspace_new_fitH_DNNZ \
 --years 2016,2017,2018,All,Comb \
---fitPlots      DNNZAtan___ZRegion,DNN18AtanNoMass___SideBand,DNN18Atan___SignalRegion \
+--fitPlots      DNNZAtan___ZRegion,DNN18AtanNoMass___SideBand,DNN18Atan___SignalRegionPhase1 \
 --prefitPlots   DNNZAtan___ZRegion,DNN18AtanNoMass___SideBand \
 --fitOptions "--cminDefaultMinimizerStrategy 0" \
 --fitH \

@@ -5,11 +5,23 @@ samples.update(samples2016.samples)
 name="H"
 background= {
 
-"DY": ["DY50HT200_2026MGPY", "DY100_2026MGPY"], 
+"DY": ["DY50_2026MGPY", "DY100_2026MGPY"], 
 
-"Top": ["TT_2026POWPY"], 
+"DYHT": ["DY50HT70_2026MGPY", "DY50HT100_2026MGPY", "DY50HT200_2026MGPY", "DY50HT400_2026MGPY", "DY50HT600_2026MGPY", "DY50HT800_2026MGPY", "DY50HT1200_2026MGPY", "DY50HT2500_2026MGPY"], 
 
-"VBF Z": ["EWKZ2JetsZToLL_2026MGPY"]}
+"DY0J": ["DY0J50_2026MGPY", "DY0J50_2026MGPY_FNAL"],
+
+"DY01J": ["DY1J50_2026MGPY"],
+
+"DY2J": ["DY2J50_2026MGPY"],
+
+"DY3J": ["DY3J50_2026MGPY", "DY3J50_2026MGPY_FNAL"],
+
+"Top": ["TT_2026POWPY", "TTlep_2026MGPY"], 
+
+"VBF Z": ["EWKZ2JetsZToLL_2026MGPY"] 
+
+}
 
 #"DYVBF":[
 #    "DY105VBF_2026MGPY"
@@ -25,7 +37,7 @@ background= {
 
 #sorting
 ##SD test
-backgroundSorted=["DY", "VBF Z", "Top"]
+backgroundSorted=["DY", "DYHT", "DY0J", "DY01J", "DY2J", "DY3J", "VBF Z", "Top"]
 backgroundSorted+=[x for x in background if x not in backgroundSorted]
 
 
@@ -34,7 +46,7 @@ signal={
 }
 
 #legend sorting
-backgroundSortedForLegend=["DY","VBF Z", "Top"]
+backgroundSortedForLegend=["DY", "DYHT", "DY0J", "DY01J", "DY2J", "DY3J", "VBF Z", "Top"]
 backgroundSortedForLegend+=[x for x in background if x not in backgroundSortedForLegend]
 signalSortedForLegend=["VBF H", "gg H"]
 signalSortedForLegend+=[x for x in signal if x not in signalSortedForLegend]
@@ -48,14 +60,17 @@ data={
 import ROOT
 fillcolor={
 "DY": ROOT.kOrange,
-"DY01J": ROOT.kOrange-1,
-"DY2J": ROOT.kOrange-2,
-"DYVBF": ROOT.kOrange-3,
+"DYHT": ROOT.kOrange-1,
+"DY0J": ROOT.kOrange-2,
+"DY01J": ROOT.kOrange-3,
+"DY2J": ROOT.kOrange-4,
+"DY3J": ROOT.kOrange-5,
+"DYVBF": ROOT.kOrange-6,
 "VBF Z": ROOT.kMagenta+2,
 "Top": ROOT.kGreen+1,
 "Other" : ROOT.kGreen+3,
 "VBF H":ROOT.kRed,
-"gg H":ROOT.kRed+4,
+"gg H":ROOT.kRed+4,	
 "ZH":ROOT.kPink+4,
 "WH":ROOT.kPink+9,
 "VH":ROOT.kPink+5,

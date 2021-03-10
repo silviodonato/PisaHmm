@@ -122,7 +122,7 @@ def getFlow(year):
     flow.Selection("VBFRegion","Mqq > mQQcut && QJet0_pt> 35 && QJet1_pt > 25")
     flow.Selection("PreSel","nelectrons==0 && nbtaggedL < 2 && VBFRegion && twoOppositeSignMuons && nbtagged < 1 && (( year == 2016 && LeadMuon_pt > 26 ) || ( year == 2017 && LeadMuon_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuon_pt > 26 )) && SubMuon_pt > 20 && TriggerSel && abs(SubMuon_eta) <2.4 && abs(LeadMuon_eta) < 2.4",requires=["VBFRegion","twoOppositeSignMuons"])
     #flow.Selection("SideBand","Higgs_m < 150 && Higgs_m > 110 && ! MassWindow && VBFRegion &&  qqDeltaEta > 2.5",requires=["VBFRegion","PreSel"])
-    flow.Selection("SignalRegion","VBFRegion && qqDeltaEta > 2.5", requires=["VBFRegion","PreSel"]) ##FIXME qqDeltaEta > 2.5
+    flow.Selection("SignalRegionPhase1","VBFRegion && qqDeltaEta > 2.5", requires=["VBFRegion","PreSel"]) ##FIXME qqDeltaEta > 2.5
     flow.Selection("InclusiveRegion","1")    #flow.Selection("ZRegion","VBFRegion && MassWindowZ  && qqDeltaEta > 2.5", requires=["VBFRegion","MassWindowZ","PreSel"])
 #    flow.Selection("SelectionTest1","VBFRegion &&  qqDeltaEta > 2.5", requires=["VBFRegion","PreSel"])
 #    flow.Selection("SelectionTest2","VBFRegion ", requires=["VBFRegion","PreSel"])
@@ -133,9 +133,12 @@ def getFlow(year):
 
     #flow.Selection("ZRegionSMP","Mqq > 250 && MassWindowZ && QJet0_pt> 50 && QJet1_pt > 30 && twoOppositeSignMuons && twoJets && TriggerSel&& abs(SubMuon_eta) <2.4 && abs(LeadMuon_eta) < 2.4 ", requires=["twoOppositeSignMuons","twoJets"])
     flow.Selection("TwoJetsTwoMu","twoJets && twoOppositeSignMuons", requires=["twoJets","twoOppositeSignMuons"])
-    #flow.Selection("SignalRegionT","SignalRegion && QJet0_pt>45 && QJet1_pt > 27",requires=["SignalRegion"])
+    #flow.Selection("SignalRegionPhase1T","SignalRegionPhase1 && QJet0_pt>45 && QJet1_pt > 27",requires=["SignalRegionPhase1"])
     flow.Selection("ZRegionT","ZRegion && QJet0_pt>45 && QJet1_pt > 27",requires=["ZRegion"])
     flow.Selection("SideBandT","SideBand && QJet0_pt>45 && QJet1_pt > 27",requires=["SideBand"])
         #with bug
+    #flow.Define("HT","Sum(qq_pt)")
+
+    
 
     return flow

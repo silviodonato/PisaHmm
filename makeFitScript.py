@@ -19,14 +19,14 @@ def launch(cmd):
         cmd = "echo 1 >> "+cmd.split(">>")[1]
     script = script + cmd + "\n"
 
-# Get the bins from the existing datacard (eg. ['ch1_DNN18AtanNoMass___ZRegion', 'ch1_DNNZAtan___ZRegion', 'ch2_DNN18AtanNoMass___SideBand', 'ch2_DNN18Atan___SignalRegion'])
+# Get the bins from the existing datacard (eg. ['ch1_DNN18AtanNoMass___ZRegion', 'ch1_DNNZAtan___ZRegion', 'ch2_DNN18AtanNoMass___SideBand', 'ch2_DNN18Atan___SignalRegionPhase1'])
 def getBins(fName):
     f = open(fName)
     for l in f.readlines():
         if l[:3] == "bin":
             return [bin_.replace("\t","") for bin_ in l[3:].split(" ") if len(bin_)>2]
 
-# Define the bins of the future datacard (eg. ['ch1_DNN18AtanNoMass___ZRegion', 'ch1_DNNZAtan___ZRegion', 'ch2_DNN18AtanNoMass___SideBand', 'ch2_DNN18Atan___SignalRegion'])
+# Define the bins of the future datacard (eg. ['ch1_DNN18AtanNoMass___ZRegion', 'ch1_DNNZAtan___ZRegion', 'ch2_DNN18AtanNoMass___SideBand', 'ch2_DNN18Atan___SignalRegionPhase1'])
 def getBinsFromScratch(inputDirectory, year):
     bins = []
     if year=="Comb":
@@ -40,7 +40,7 @@ def getBinsFromScratch(inputDirectory, year):
                 bins += ["ch2_"+b for b in getBins(inputDirectory+"/datacard%sH.txt"%y)]
     return bins
 
-# Create mask option for combine, masking all bins that are excluded from the fit (eg. mask_ch1_DNN18AtanNoMass___ZRegion=1,mask_ch1_DNNZAtan___ZRegion=1,mask_ch2_DNN18AtanNoMass___SideBand=0,mask_ch2_DNN18Atan___SignalRegion=1).
+# Create mask option for combine, masking all bins that are excluded from the fit (eg. mask_ch1_DNN18AtanNoMass___ZRegion=1,mask_ch1_DNNZAtan___ZRegion=1,mask_ch2_DNN18AtanNoMass___SideBand=0,mask_ch2_DNN18Atan___SignalRegionPhase1=1).
 def makeMask(fitPlots, bins):
     mask = ""
     for bin_ in bins:
@@ -182,7 +182,7 @@ for year in years.split(","):
                 plot = bin_.split(ch+"_")[1]
                 y_axis_min = '"1E-2"'
                 blindOpt = ""
-                if "SignalRegion" in bin_: blindOpt = " --blind --x_blind_min 1.5  --x_blind_max 4.0 "
+                if "SignalRegionPhase1" in bin_: blindOpt = " --blind --x_blind_min 1.5  --x_blind_max 4.0 "
                 for fit in ["prefit", "postfit"]:
                     launch('python ./postFitPlot.py --year=%s --file=shapes%s.root --ratio --extra_pad=0.43   --ratio_range 0.4,1.6 --empty_bin_error --channel=%s --outname %s  --mode %s --log_y --custom_y_range --y_axis_min %s %s --channel_label "VBF Hmm" --file_dir %s_%s_%s >> %s 2>&1'%(year, name, ch, fit, plot, y_axis_min, blindOpt, ch, plot, fit, logFile))
                     launch('cp %s_shapes%s_%s_logy.png  ../figure/%s/ >> %s 2>&1'%(plot, name, fit, year, logFile))

@@ -1,6 +1,6 @@
 import ROOT
 
-hName = "LeadMuon_pt___SignalRegion"
+hName = "LeadMuon_pt___SignalRegionPhase1"
 #sample = "EWKZ105_2018MGHERWIG"
 #sample = "ttHmm_2018POWPY"
 sample = "DY105_2018AMCPY"
@@ -13,8 +13,8 @@ filePrefit = ROOT.TFile.Open("out/%s"%fName)
 filePostfit = ROOT.TFile.Open("out/postfit/%s"%fName)
 filePrefitWS = ROOT.TFile.Open("workspaceForPostFitHisto/fileCombine2018H.root")
 filePostfitWS = ROOT.TFile.Open("workspace/fileCombine2018H.root")
-filePrefitPlot = ROOT.TFile.Open("figure_prefit/2018/H/LeadMuon_pt___SignalRegion_log.root")
-filePostfitPlot = ROOT.TFile.Open("figure_postfit/2018/H/LeadMuon_pt___SignalRegion_log.root")
+filePrefitPlot = ROOT.TFile.Open("figure_prefit/2018/H/LeadMuon_pt___SignalRegionPhase1_log.root")
+filePostfitPlot = ROOT.TFile.Open("figure_postfit/2018/H/LeadMuon_pt___SignalRegionPhase1_log.root")
 fitDiag = ROOT.TFile.Open("workspaceForPostFitHisto/fitDiagnostics.root")
 
 
@@ -35,8 +35,8 @@ print(("postfit/prefit ",postfit/prefit))
 #~ fName = "%sHistos.root"%sample
 
 
-#~ prefit_WS = filePrefitWS.Get("LeadMuon_pt_LeadMuon_pt___SignalRegion_%s"%sample).Clone()
-#~ postfit_WS = filePostfitWS.Get("LeadMuon_pt_LeadMuon_pt___SignalRegion_%s"%sample).Clone()
+#~ prefit_WS = filePrefitWS.Get("LeadMuon_pt_LeadMuon_pt___SignalRegionPhase1_%s"%sample).Clone()
+#~ postfit_WS = filePostfitWS.Get("LeadMuon_pt_LeadMuon_pt___SignalRegionPhase1_%s"%sample).Clone()
 #~ prefit = prefit_WS.GetBinContent(8)
 #~ postfit = postfit_WS.GetBinContent(8)
 #~ print("WORKSPACE ",prefit)
@@ -48,7 +48,7 @@ print(("postfit/prefit ",postfit/prefit))
 
 ##################################################
 
-#LeadMuon_pt___SignalRegion->GetBinContent(8)
+#LeadMuon_pt___SignalRegionPhase1->GetBinContent(8)
 
 
 print("FitDiagnostic")
@@ -93,8 +93,8 @@ for sample in [
 
 #~ print("DATA/MC (fitDiag) ")
 
-#~ finalplot_prefit = filePrefitPlot.Get("canvas_LeadMuon_pt___SignalRegion").GetListOfPrimitives().At(1).GetListOfPrimitives().At(1)
-#~ finalplot_postfit = filePostfitPlot.Get("canvas_LeadMuon_pt___SignalRegion").GetListOfPrimitives().At(1).GetListOfPrimitives().At(1)
+#~ finalplot_prefit = filePrefitPlot.Get("canvas_LeadMuon_pt___SignalRegionPhase1").GetListOfPrimitives().At(1).GetListOfPrimitives().At(1)
+#~ finalplot_postfit = filePostfitPlot.Get("canvas_LeadMuon_pt___SignalRegionPhase1").GetListOfPrimitives().At(1).GetListOfPrimitives().At(1)
 
 #~ for i in range(1,len(fitDiag.Get("shapes_prefit/%s/%s"%(hName,"data")).GetY())):
     #~ dat = fitDiag.Get("shapes_prefit/%s/%s"%(hName,"data")).GetY()[i-1]

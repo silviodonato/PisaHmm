@@ -46,8 +46,8 @@ fSignal     =ROOT.TFile.Open("outROCCNoRetrain/"+signalSample+"Histos.root")
 fBackground =ROOT.TFile.Open("outROCCNoRetrain/"+signalSample+"Histos.root")
 
 
-hSignal     = fSignal.Get(variable+"___SignalRegion").Clone()
-hBackground = fBackground.Get(variable+"___SignalRegion").Clone()
+hSignal     = fSignal.Get(variable+"___SignalRegionPhase1").Clone()
+hBackground = fBackground.Get(variable+"___SignalRegionPhase1").Clone()
 
 
 xMax=5.

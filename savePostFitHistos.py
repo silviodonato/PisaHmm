@@ -212,7 +212,7 @@ def createPostFitFile(inputFile, outputFile, nuisances):
             histo = hKey.ReadObj()
             hName = histo.GetName()
             ## Hack to save only one variable
-            if not (("LeadMuon_pt" in hName and "SignalRegion" in hName) or ("data" in hName)):
+            if not (("LeadMuon_pt" in hName and "SignalRegionPhase1" in hName) or ("data" in hName)):
                 continue
             histos[hName] = histo
             if "_syst_" in hName:

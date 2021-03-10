@@ -6,7 +6,7 @@ rm -rf workspace/*pyc
 rm -rf workspace/datacard*
 rm -rf workspace/combine*
 
-python plot.py models2018H -f out/  -v LeadMuon_pt___SignalRegion -o figure_prefit >& logPlotPrefit
+python plot.py models2018H -f out/  -v LeadMuon_pt___SignalRegionPhase1 -o figure_prefit >& logPlotPrefit
 
 cp -r workspace workspaceForPostFitHisto
 
@@ -16,5 +16,5 @@ cat workspace/datacard2018H.txt | grep -v autoMC > workspaceForPostFitHisto/data
 
 python savePostFitHistos.py   >& logMakePostFitPlot
 
-python plot.py models2018H -f out/postfit/  -v LeadMuon_pt___SignalRegion -o figure_postfit  >& logPlotPostfit
+python plot.py models2018H -f out/postfit/  -v LeadMuon_pt___SignalRegionPhase1 -o figure_postfit  >& logPlotPostfit
 

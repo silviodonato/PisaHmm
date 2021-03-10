@@ -1,6 +1,6 @@
 
 labelRegion={
-"SignalRegion"  : "Signal Region",
+"SignalRegionPhase1"  : "Signal Region",
 "SideBand"      : "SideBand",
 "ZRegion"       : "Z Region",
 "ZRegion"       : "Z Region",

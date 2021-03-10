@@ -1,4 +1,4 @@
-export VAR1_H=DNN18Atan___SignalRegion
+export VAR1_H=DNN18Atan___SignalRegionPhase1
 export VAR2_H=DNN18AtanNoMass___SideBand
 export VAR1_Z=DNNZAtan___ZRegion
 #export VAR2_Z=DNN18AtanNoMass___ZRegion

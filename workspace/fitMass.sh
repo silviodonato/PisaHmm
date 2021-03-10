@@ -1,5 +1,5 @@
 #!/bin/bash
-SIGNAL=DNN18Atan___SignalRegion
+SIGNAL=DNN18Atan___SignalRegionPhase1
 SIDE=DNN18AtanNoMass___SideBand
 
 YEAR=$1

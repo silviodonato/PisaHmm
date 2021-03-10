@@ -3,7 +3,7 @@ AbsoluteScale
 AbsoluteStat
 DNN18AtanNoMass___SideBand
 DNN18AtanNoMass___ZRegion
-DNN18Atan___SignalRegion
+DNN18Atan___SignalRegionPhase1
 FlavorQCD
 Fragmentation
 JEReta0pt0
