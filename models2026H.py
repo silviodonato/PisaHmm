@@ -28,10 +28,10 @@ background= {
 "DY3J": ["DY3J50_2026MGPY"],
 
 ## DY  M(LL)> 50 GeV binned in number of jets (using FNAL samples)
-"DY0J": ["DY0J50_2026MGPY_FNAL"],
-"DY1J": ["DY1J50_2026MGPY"],
-"DY2J": ["DY2J50_2026MGPY"],
-"DY3J": ["DY3J50_2026MGPY_FNAL"],
+#"DY0J": ["DY0J50_2026MGPY_FNAL"],
+#"DY1J": ["DY1J50_2026MGPY"],
+#"DY2J": ["DY2J50_2026MGPY"],
+#"DY3J": ["DY3J50_2026MGPY_FNAL"],
 
 "Top": ["TT_2026POWPY", "TTlep_2026MGPY"], 
 
@@ -53,10 +53,10 @@ background= {
 
 #sorting
 ##SD test
-backgroundSorted=["DY0J", "DY1J", "DY2J", "DY3J", "VBF Z", "Top"]
-#backgroundSorted=["DYHT70", "DYHT100", "DYHT200", "DYHT400", "DYHT600", "DYHT800", "DYHT1200", "DYHT2500", "VBF Z", "Top"]
+#backgroundSorted=["DY0J", "DY1J", "DY2J", "DY3J", "VBF Z", "Top"]
+#backgroundSorted=["DYHT2500", "DYHT1200", "DYHT800", "DYHT600", "DYHT400", "DYHT200", "DYHT100", "DYHT70", "VBF Z", "Top"]
 #backgroundSorted=["DY100", "VBF Z", "Top"]
-#backgroundSorted=["DY50", "VBF Z", "Top"]
+backgroundSorted=["DY50", "VBF Z", "Top"]
 backgroundSortedForLegend=backgroundSorted[:]
 #backgroundSorted+=[x for x in background if x not in backgroundSorted]
 

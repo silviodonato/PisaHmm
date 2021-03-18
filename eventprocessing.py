@@ -22,7 +22,9 @@ def getFlow(year):
     flow.Define("Muon_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Muon_pt , Muon_eta, Muon_phi, Muon_mass)")
     
     ##Jet Selection. FIXME: Missing Muon ID, Muon Isolation
-    flow.SubCollection("SelectedMuon","Muon",sel="abs(Muon_eta) < 2.4") ### I've put a simple selection as example
+    #see https://github.com/delphes/delphes/blob/master/modules/Isolation.cc#L247
+    #https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideMuonIdRun2#Particle_Flow_isolation
+    flow.SubCollection("SelectedMuon","Muon",sel="abs(Muon_eta) < 2.4 && (Muon_isolationvar)<0.25") ### I've put a simple selection as example
     
     flow.Selection("twoUnpreselMuons","nMuon>=2")
     flow.Selection("twoMuons","nSelectedMuon==2")
@@ -34,14 +36,27 @@ def getFlow(year):
     flow.TakePair("Mu","SelectedMuon","MuMu","At(OppositeSignMuMu,0,-200)",requires=["twoOppositeSignMuons"])
     flow.Define("Higgs","Mu0_p4+Mu1_p4")
     
-    flow.Define("Jet_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Jet_pt , Jet_eta, Jet_phi, Jet_mass)")
+#    flow.Define("Jet_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Jet_pt , Jet_eta, Jet_phi, Jet_mass)")
+#    flow.Define("JetPUPPI_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(JetPUPPI_pt , JetPUPPI_eta, JetPUPPI_phi, JetPUPPI_mass)")
+    
+
     
     #VBF Jets kinematics
     flow.DefaultConfig(jetPtCut=25)
     
-    ##Jet Selection. FIXME: Missing Jet ID, JetPU ID
-    flow.SubCollection("SelectedJet","Jet",'''
-    Jet_pt > jetPtCut && abs(Jet_eta) < 4.7
+#    flow.SubCollection("JetToUse","Jet","Jet_pt>0") ### Redefinition
+    flow.SubCollection("JetToUse","JetPUPPI","JetPUPPI_pt>0") ### Redefinition
+
+    ###For jet cleaning
+    flow.MergeCollections("Lepton",["Muon","Electron"])
+    flow.SubCollection("SelectedLepton","Lepton","Lepton_pt > 10")
+    flow.MatchDeltaR("JetToUse","SelectedLepton")
+        
+    flow.Define("JetToUse_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(JetToUse_pt , JetToUse_eta, JetToUse_phi, JetToUse_mass)")
+
+    flow.SubCollection("SelectedJet","JetToUse",'''
+    JetToUse_pt > jetPtCut && abs(JetToUse_eta) < 4.7
+    &&     (JetToUse_SelectedLeptonIdx==-1 || JetToUse_SelectedLeptonDr > 0.4)
     ''')
     
     flow.Selection("twoJets","nSelectedJet>=2")
@@ -86,14 +101,32 @@ def getFlow(year):
     flow.SubCollection("GenJetForHT","GenJet",'''
     GenJet_pt > 30 && abs(GenJet_eta) < 5.0 && GenJet_mass>1.5
     ''')
-    flow.MergeCollections("Lepton",["Muon","Electron"])
-    flow.SubCollection("SelectedLepton","Lepton","Lepton_pt > 10")
     flow.MatchDeltaR("GenJetForHT","SelectedLepton")
     flow.SubCollection("CleanGenJetForHT","GenJetForHT",'''
     (GenJetForHT_SelectedLeptonIdx==-1 || GenJetForHT_SelectedLeptonDr > 0.4)
     ''')
     
     flow.Define("GenJetHT","Sum(CleanGenJetForHT_pt)")
+
+    flow.SubCollection("JetForHT","Jet",'''
+    Jet_pt > 0 && abs(Jet_eta) < 5.0 && Jet_flavour!=0
+    ''')
+    flow.MatchDeltaR("JetForHT","SelectedLepton")
+    flow.SubCollection("CleanJetForHT","JetForHT",'''
+    (JetForHT_SelectedLeptonIdx==-1 || JetForHT_SelectedLeptonDr > 0.4)
+    ''')
+    
+    flow.Define("JetHT","Sum(CleanJetForHT_pt)")
+    
+    flow.SubCollection("JetPUPPIForHT","JetPUPPI",'''
+    JetPUPPI_pt > 0 && abs(JetPUPPI_eta) < 5.0 && JetPUPPI_flavour!=0
+    ''')
+    flow.MatchDeltaR("JetPUPPIForHT","SelectedLepton")
+    flow.SubCollection("CleanJetPUPPIForHT","JetPUPPIForHT",'''
+    (JetPUPPIForHT_SelectedLeptonIdx==-1 || JetPUPPIForHT_SelectedLeptonDr > 0.4)
+    ''')
+    flow.Define("JetPUPPIHT","Sum(CleanJetPUPPIForHT_pt)")
+
     flow.Define("pTbalanceLead","QJet0_pt/Higgs_pt")
     #flow.Define("pTbalance","qq.Pt()/Higgs_pt")
     flow.Define("pTbalanceAll","SumDef(SelectedJet_p4).pt()/Higgs_pt")
@@ -112,6 +145,7 @@ def getFlow(year):
     flow.Define("MaxJetAbsEta","std::max(std::abs(QJet0_eta), std::abs(QJet1_eta))")
     flow.Define("minEtaHQ","std::min(abs(EtaHQ1),(EtaHQ2))")
     flow.Define("minPhiHQ","std::min(abs(PhiHQ1),abs(PhiHQ2))")
+    flow.Define("yield","1")
 
 
     flow.AddCppCode('\n#include "boost_to_CS.h"\n')
@@ -120,21 +154,20 @@ def getFlow(year):
 
     flow.DefaultConfig(higgsMassWindowWidth=10,mQQcut=400,nominalHMass=125.03) #,btagCut=0.8)
     ## no b-tag discriminant in delphes, just 0 or 1
-    flow.Define("SelectedJet_btagDeepB","0") ##FIXME: use actual b-tagging
     flow.Define("btagCut","0.5")
     flow.Define("btagCutL","0.5")
     #adding for sync
-    flow.Define("nbtagged","int(Nonzero(SelectedJet_btagDeepB > btagCut && abs(SelectedJet_eta)< 2.5).size())")
-    flow.Define("nbtaggedL","int(Nonzero(SelectedJet_btagDeepB > btagCutL && abs(SelectedJet_eta)< 2.5).size())")
+    flow.Define("nbtagged","int(Nonzero(SelectedJet_btag > btagCut && abs(SelectedJet_eta)< 2.5).size())")
+    flow.Define("nbtaggedL","int(Nonzero(SelectedJet_btag > btagCutL && abs(SelectedJet_eta)< 2.5).size())")
     flow.Define("nelectrons","int(Nonzero(Electron_pt > 20 && abs(Electron_eta) < 2.5 ).size())")
 
 
-    #flow.Selection("MassWindow","Higgs.M()")
+    flow.Selection("MassWindow","abs(Higgs.M()-nominalHMass)<higgsMassWindowWidth")
     flow.Selection("MassWindowZ","abs(Higgs.M()-91)<15")
     flow.Selection("VBFRegion","Mqq > mQQcut && QJet0_pt> 35 && QJet1_pt > 25")
     flow.Selection("PreSel","nelectrons==0 && nbtaggedL < 2 && VBFRegion && twoOppositeSignMuons && nbtagged < 1 && (( year == 2016 && LeadMuon_pt > 26 ) || ( year == 2017 && LeadMuon_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuon_pt > 26 )) && SubMuon_pt > 20 && TriggerSel && abs(SubMuon_eta) <2.4 && abs(LeadMuon_eta) < 2.4",requires=["VBFRegion","twoOppositeSignMuons"])
     #flow.Selection("SideBand","Higgs_m < 150 && Higgs_m > 110 && ! MassWindow && VBFRegion &&  qqDeltaEta > 2.5",requires=["VBFRegion","PreSel"])
-    flow.Selection("SignalRegionPhase1","VBFRegion && qqDeltaEta > 2.5", requires=["VBFRegion","PreSel"]) ##FIXME qqDeltaEta > 2.5
+    flow.Selection("SignalRegionPhase1","VBFRegion && MassWindow && qqDeltaEta > 2.5", requires=["VBFRegion","PreSel"]) ##FIXME qqDeltaEta > 2.5
     flow.Selection("InclusiveRegion","1")    #flow.Selection("ZRegion","VBFRegion && MassWindowZ  && qqDeltaEta > 2.5", requires=["VBFRegion","MassWindowZ","PreSel"])
 #    flow.Selection("SelectionTest1","VBFRegion &&  qqDeltaEta > 2.5", requires=["VBFRegion","PreSel"])
 #    flow.Selection("SelectionTest2","VBFRegion ", requires=["VBFRegion","PreSel"])

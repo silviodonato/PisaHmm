@@ -14,7 +14,7 @@ binningrules=[
 (".*_m(_|$).*" , "%s , 0,500"%nbins),
 (".*_M(_|$).*" , "%s , 0,500"%nbins),
 (".*_Mass(_|$).*" , "%s , 0,500"%nbins),
-(".*Higgs_m.*" , "80 , 70,150"),
+(".*Higgs_m.*" , "80 , 70,170"),
 (".*Higgs_mReso.*" , "%s , 0,20"%(nbins)),
 (".*_.*tag.*" , "%s , 0,1"%nbins),
 (".*Class.*" , "%s , -1,1"%nbins),
@@ -47,4 +47,5 @@ binningrules=[
 ("Jet_puId.*","%s , 0 , %s"%(nbins,nbins-1)),
 ("fixedGridRhoFastjetAll*","40 , 0 , 40"),
 ("CS*","%s , -3.2 , 3.2"%nbins),
+("yield","1 , -10 , 10"),
 ]
