@@ -23,17 +23,17 @@ def getFlow(year):
     
     ###################################   Phase1 ##################
     ##Jet Selection. FIXME: Missing Muon ID, Muon Isolation
-    flow.SubCollection("SelectedMuonPhase1","MuonPhase1",sel="abs(Muon_eta) < 2.4") ### I've put a simple selection as example
-    flow.Selection("twoUnpreselMuonsPhase1","nMuonPhase1>=2")
+    flow.SubCollection("SelectedMuonPhase1","Muon",sel="abs(Muon_eta) < 2.4") ### I've put a simple selection as example
+    flow.Selection("twoUnpreselMuonsPhase1","nMuon>=2")
     flow.Selection("twoMuonsPhase1","nSelectedMuonPhase1==2")
 
     ## Get the pair of opposite side muons, 
     flow.Distinct("MuMuPhase1","SelectedMuonPhase1")
-    flow.Define("OppositeSignMuMuPhase1","Nonzero(MuMuPhase1_0_charge != MuMuPhase1_1_charge)",requires=["twoMuonsPhase1"])
+    flow.Define("OppositeSignMuMuPhase1","Nonzero(MuMuPhase10_charge != MuMuPhase11_charge)",requires=["twoMuonsPhase1"])
     flow.Selection("twoOppositeSignMuonsPhase1","OppositeSignMuMuPhase1.size() > 0")
     flow.TakePair("MuPhase1","SelectedMuonPhase1","MuMuPhase1","At(OppositeSignMuMuPhase1,0,-200)",requires=["twoOppositeSignMuonsPhase1"])
              
-    flow.Define("Higgs_Phase1","MuPhase1_0_p4+MuPhase1_1_p4")
+    flow.Define("Higgs_Phase1","MuPhase10_p4+MuPhase11_p4")
     
     flow.Define("Jet_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Jet_pt , Jet_eta, Jet_phi, Jet_mass)")
     
@@ -93,7 +93,7 @@ def getFlow(year):
     flow.Define("Higgs_Phase1_eta","Higgs_Phase1.Eta()")
     flow.Define("Higgs_Phase1_m_uncalib","Higgs_Phase1_Uncalib.M()")
     flow.Define("MqqPhase1_log","log(MqqPhase1)")
-    flow.Define("MqqPhase1_over400_log","log(Mqq_Phase1/400)")
+    flow.Define("MqqPhase1_over400_log","log(MqqPhase1/400)")
     flow.Define("mmjj_Phase1_pt","mmjj_Phase1.Pt()")
     flow.Define("mmjj_Phase1_pt_log","log(mmjj_Phase1_pt)")
     flow.Define("mmjj_Phase1_pz","mmjj_Phase1.Pz()")
@@ -104,8 +104,8 @@ def getFlow(year):
 
 
     flow.AddCppCode('\n#include "boost_to_CS.h"\n')
-    flow.Define("CS_theta_Phase1","boost_to_CS(LeadMuonPhase1_p4, SubMuonPhase1_p4,  SubMuonPhase1_charge).first",requires=["twoOppositeSignMuonsPhase1"])
-    flow.Define("CS_phi_Phase1","boost_to_CS(LeadMuonPhase1_p4, SubMuonPhase1_p4, SubMuonPhase1_charge).second",requires=["twoOppositeSignMuonsPhase1"])
+    flow.Define("CS_Phase1_theta","boost_to_CS(LeadMuonPhase1_p4, SubMuonPhase1_p4,  SubMuonPhase1_charge).first",requires=["twoOppositeSignMuonsPhase1"])
+    flow.Define("CS_Phase1_phi","boost_to_CS(LeadMuonPhase1_p4, SubMuonPhase1_p4, SubMuonPhase1_charge).second",requires=["twoOppositeSignMuonsPhase1"])
 
     flow.DefaultConfig(higgsMassWindowWidth=10,mQQcut=400,nominalHMass=125.03) #,btagCut=0.8)
     ## no b-tag discriminant in delphes, just 0 or 1
@@ -115,12 +115,12 @@ def getFlow(year):
     #adding for sync
     flow.Define("nbtaggedPhase1","int(Nonzero(SelectedJetPhase1_btagDeepB > btagCut && abs(SelectedJetPhase1_eta)< 2.5).size())")
     flow.Define("nbtaggedLPhase1","int(Nonzero(SelectedJetPhase1_btagDeepB > btagCutL && abs(SelectedJetPhase1_eta)< 2.5).size())")
-    flow.Define("nelectronsPhase1","int(Nonzero(ElectronPhase1_pt > 20 && abs(ElectronPhase1_eta) < 2.5 ).size())")
+    flow.Define("nelectronsPhase1","int(Nonzero(Electron_pt > 20 && abs(Electron_eta) < 2.5 ).size())")
 
 
     #flow.Selection("MassWindow","Higgs.M()")
     flow.Selection("MassWindowZ_Phase1","abs(Higgs_Phase1.M()-91)<15")
-    flow.Selection("VBFRegion_Phase1","Mqq_Phase1 > mQQcutPhase1 && QJetPhase1_0_pt> 35 && QJetPhase1_1_pt > 25")
+    flow.Selection("VBFRegion_Phase1","MqqPhase1 > mQQcut && QJetPhase1_0_pt> 35 && QJetPhase1_1_pt > 25")
     flow.Selection("PreSel_Phase1","nelectronsPhase1==0 && nbtaggedLPhase1 < 2 && VBFRegion_Phase1 && twoOppositeSignMuonsPhase1 && nbtaggedPhase1 < 1 && (( year == 2016 && LeadMuonPhase1_pt > 26 ) || ( year == 2017 && LeadMuonPhase1_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuonPhase1_pt > 26 )) && SubMuonPhase1_pt > 20 && TriggerSel && abs(SubMuonPhase1_eta) <2.4 && abs(LeadMuonPhase1_eta) < 2.4",requires=["VBFRegion_Phase1","twoOppositeSignMuonsPhase1"])
     #flow.Selection("SideBand","Higgs_m < 150 && Higgs_m > 110 && ! MassWindow && VBFRegion &&  qqDeltaEta > 2.5",requires=["VBFRegion","PreSel"])
     flow.Selection("SignalRegionPhase1","VBFRegion_Phase1 && qqDeltaEtaPhase1 > 2.5", requires=["VBFRegion_Phase1","PreSel_Phase1"]) ##FIXME qqDeltaEta > 2.5
