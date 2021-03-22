@@ -1,7 +1,7 @@
 #define hist mapping
 '''
-genericHistos=["Higgs_m","Higgs_m38","pTbalanceAll","LeadMuon_pt","LeadMuon_eta","SubMuon_pt","SubMuon_eta","QJet0_eta","QJet1_eta","QJet0_pt_touse","QJet1_pt_touse","PV_npvs","LeadingSAJet_pt","SAHT","SAHT5","nFootprintSAJet","FootHT", "CS_theta", "CS_phi"]
-bdtInputHistos=["Mqq_over400_log","Rpt","mmjj_pt","qqDeltaEta","NSoft5","ll_zstar","Higgs_pt","theta2","mmjj_pz","MaxJetAbsEta","Higgs_m_uncalib","NSoft5New","ll_zstar_log", "Higgs_mReso","QJet0_qgl","QJet1_qgl","Jet_jetId","Jet_puId"]
+genericHistos=["Higgs_Phase1_m","Higgs_Phase1_m38","pTbalanceAllPhase1","LeadMuonPhase1_pt","LeadMuonPhase1_eta","SubMuonPhase1_pt","SubMuonPhase1_eta","QJetPhase1_0_eta","QJetPhase1_1_eta","QJetPhase1_0_pt_touse","QJetPhase1_1_pt_touse","PV_npvs","LeadingSAJet_pt","SAHTPhase1","SAHT5Phase1","nFootprintSAJetPhase1","FootHT", "CS_theta_Phase1", "CS_phi_Phase1"]
+bdtInputHistos=["Mqq_Phase1_over400_log","RptPhase1","mmjj_Phase1_pt","qqDeltaEtaPhase1","NSoft5Phase1","ll_zstarPhase1","Higgs_Phase1_pt","theta2Phase1","mmjj_Phase1_pz","MaxJetAbsEtaPhase1","Higgs_Phase1_m_uncalib","NSoft5NewPhase1","ll_zstar_Phase1_log", "Higgs_mResoPhase1","QJetPhase1_0_qgl","QJetPhase1_1_qgl","Jet_jetIdPhase1","Jet_puIdPhase1"]
 #signalHistosVariations=["SBClassifierNoMass","BDTAtanNoMass","SBClassifierNoMassNoNSJ","BDTAtanNoMassNoNSJ","DNNClassifierNoMass", "DNNAtanNoMass","DNN18AtanNoMass"]
 #signalHistos=["SBClassifier","BDTAtan","LHE_NpNLO","DNNClassifier", "DNNAtan", "DNN18Atan"]#,"DNN18AtanNoQGL"]
 '''
@@ -15,7 +15,7 @@ signalHistosMassScan=["DNN18AtanM%4.0f"%((x*0.1+125)*10) for x in range(0,11)]
 #signalHistosMassScan=["DNN18AtanM12538"]
 signalHistosMassScanAll=["DNN18AtanM%4.0f"%((x*0.5+120)*10) for x in range(0,21)]+["DNN18AtanM%4.0f"%((x*0.1+125)*10) for x in range(0,11)]+["DNN18AtanM12509","DNN18AtanM12538"]
 
-balance=["pTbalanceAll"]#"pTbalance","pTbalanceAllLog","pTbalanceLog", "pTbalanceLead","pTbalanceLeadLog"]
+balance=["pTbalanceAllPhase1"]#"pTbalance","pTbalanceAllLog","pTbalanceLog", "pTbalanceLead","pTbalanceLeadLog"]
 snapregion="SignalRegionPhase1"
 #signalHistos=["SBClassifier"]
 '''
@@ -47,9 +47,9 @@ manyZregions={
 
 
 histosPerSelectionFullJecs={
-#"SignalRegionPhase1DNNWeighted" : ["Higgs_m"],
-"SignalRegionPhase1DNNWeighted" : ["Higgs_m"],
-"SRplusSBDNNWeighted" : ["Higgs_m"],
+#"SignalRegionPhase1DNNWeighted" : ["Higgs_Phase1_m"],
+"SignalRegionPhase1DNNWeighted" : ["Higgs_Phase1_m"],
+"SRplusSBDNNWeighted" : ["Higgs_Phase1_m"],
 "SignalRegionPhase1":signalHistos+signalHistosMassScan,
 "SideBand":signalHistosVariations, #+["DNN18AtanMassSpread","DNN18AtanMassSpread2"],
 #"ZRegion":signalHistosVariations+balance,
@@ -69,10 +69,10 @@ if False:
     histosPerSelectionFullJecs={
   }
     histosPerSelection={
-      "SignalRegionPhase1":      ["Higgs_m_noGF","Mqq_over400_log","DNN18Atan"],#ericHistos+bdtInputHistos,
-      "SideBand":      ["Higgs_m_noGF","Mqq_over400_log","DNN18Atan"],#ericHistos+bdtInputHistos,
+      "SignalRegionPhase1":      ["Higgs_Phase1_m_noGF","Mqq_Phase1_over400_log","DNN18AtanPhase1"],#ericHistos+bdtInputHistos,
+      "SideBandPhase1":      ["Higgs_Phase1_m_noGF","Mqq_Phase1_over400_log","DNN18AtanPhase1"],#ericHistos+bdtInputHistos,
   }
 
 '''
-genericHistos=["Higgs_m",]
+genericHistos=["Higgs_Phase1_m",]
   
