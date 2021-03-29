@@ -46,24 +46,18 @@ def getFlow(year):
     flow.DefaultConfig(jetPtCut=25)
 
 ## Jet Cleaning:    
-#    flow.SubCollection("JetToUse","JetPUPPI","JetPUPPI_pt>0") ### Redefinition
-
+    flow.SubCollection("JetToUse","JetPUPPI","JetPUPPI_pt>0") ### Redefinition
+    
 #    ###For jet cleaning
-#    flow.MergeCollections("Lepton",["Muon","Electron"])
-#    flow.SubCollection("SelectedLepton","Lepton","Lepton_pt > 10")
-#    flow.MatchDeltaR("JetToUse","SelectedLepton")
-        
-#    flow.Define("JetToUse_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(JetToUse_pt , JetToUse_eta, JetToUse_phi, JetToUse_mass)")
-
-#    flow.SubCollection("SelectedJet","JetToUse",'''
-#    JetToUse_pt > jetPtCut && abs(JetToUse_eta) < 4.7
-#    &&     (JetToUse_SelectedLeptonIdx==-1 || JetToUse_SelectedLeptonDr > 0.4)
-
-    flow.Define("Jet_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Jet_pt , Jet_eta, Jet_phi, Jet_mass)")
-
+    flow.MergeCollections("Lepton",["Muon","Electron"])
+    flow.SubCollection("SelectedLepton","Lepton","Lepton_pt > 10")
+    flow.MatchDeltaR("JetToUse","SelectedLepton")
+    
+    flow.Define("JetToUse_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(JetToUse_pt , JetToUse_eta, JetToUse_phi, JetToUse_mass)")
+    
     ##Jet Selection. FIXME: Missing Jet ID, JetPU ID
-    flow.SubCollection("SelectedJetPhase1","Jet",'''
-    Jet_pt > jetPtCut && abs(Jet_eta) < 4.7
+    flow.SubCollection("SelectedJetPhase1","JetToUse",'''
+    JetToUse_pt > jetPtCut && abs(JetToUse_eta) < 4.7 && (JetToUse_SelectedLeptonIdx==-1 || JetToUse_SelectedLeptonDr > 0.4)
     ''')
     
     flow.Selection("twoJetsPhase1","nSelectedJetPhase1>=2")
@@ -216,8 +210,8 @@ def getFlow(year):
     #flow.DefaultConfig(jetPtCut=25)
     
     ##Jet Selection. FIXME: Missing Jet ID, JetPU ID
-    flow.SubCollection("SelectedJetPhase2","Jet",'''
-    Jet_pt > jetPtCut && abs(Jet_eta) < 4.7
+    flow.SubCollection("SelectedJetPhase2","JetToUse",'''
+    JetToUse_pt > jetPtCut && abs(JetToUse_eta) < 4.7 && (JetToUse_SelectedLeptonIdx==-1 || JetToUse_SelectedLeptonDr > 0.4)
     ''')
     
     flow.Selection("twoJetsPhase2","nSelectedJetPhase2>=2")
