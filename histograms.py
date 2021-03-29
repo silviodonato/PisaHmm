@@ -10,11 +10,17 @@ histosPerSelection={
 #"SRplusSBDNNWeighted" : ["Higgs_m","Higgs_m38"],
 #"TightMassRegion" : ["DNN18AtanNoMass"],
 "SignalRegionPhase1": ["MET_met", "QJetPhase1_0_pt", "qqPhase1_pt", "qqDeltaEtaPhase1", "qqDeltaPhiPhase1"]+genericHistos,
-#"SignalRegionPhase2": ["METPhase1_met", "QJetPhase1_0_pt", "qq_ptPhase1", "qqDeltaEtaPhase1", "qqDeltaPhiPhase1"]+genericHistos,
-"InclusiveRegion_Phase1": ["MET_met"],
-"VBFRegion_Phase1": ["MET_met"],
-"MassWindowZ_Phase1": ["MET_met"],
-"PreSel_Phase1": ["MET_met"],
+"InclusiveRegionPhase1": ["MET_met"],
+"VBFRegionPhase1": ["MET_met"],
+"MassWindowZPhase1": ["MET_met"],
+"PreSelPhase1": ["MET_met"],
+
+"SignalRegionPhase2": ["Higgs_Phase2_m","pTbalanceAllPhase2","LeadMuonPhase2_pt","LeadMuonPhase2_eta","SubMuonPhase2_pt","SubMuonPhase2_eta","QJetPhase2_0_eta","QJetPhase2_1_eta","QJetPhase2_0_pt","QJetPhase2_1_pt", "CS_Phase2_theta", "CS_Phase2_phi","MET_met", "QJetPhase2_0_pt", "qqPhase2_pt", "qqDeltaEtaPhase2", "qqDeltaPhiPhase2"],
+#"InclusiveRegionPhase2": ["MET_met"],
+#"VBFRegionPhase2": ["MET_met"],
+#"MassWindowZPhase2": ["MET_met"],
+#"PreSelPhase2": ["MET_met"],
+
 #"SelectionTest1Phase1": ["LeadMuonPhase1_pt"],
 #"SelectionTest2": ["MET_met"],
 #"SelectionTest3": ["MET_met"],
@@ -68,6 +74,7 @@ if False:
  # }
     histosPerSelection={
       "SignalRegionPhase1":      ["MET_pt"],
+      #"SignalRegionPhase2":      ["MET_pt"],
   }    
       #ericHistos+bdtInputHistos,
 #      "SideBand":      ["Higgs_m_noGF","Mqq_over400_log","DNN18Atan"],#ericHistos+bdtInputHistos,

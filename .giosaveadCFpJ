@@ -10,12 +10,12 @@ histosPerSelection={
 #"SRplusSBDNNWeighted" : ["Higgs_m","Higgs_m38"],
 #"TightMassRegion" : ["DNN18AtanNoMass"],
 "SignalRegionPhase1": ["MET_met", "QJetPhase1_0_pt", "qqPhase1_pt", "qqDeltaEtaPhase1", "qqDeltaPhiPhase1"]+genericHistos,
-#"SignalRegionPhase2": ["METPhase1_met", "QJetPhase1_0_pt", "qq_ptPhase1", "qqDeltaEtaPhase1", "qqDeltaPhiPhase1"]+genericHistos,
-"InclusiveRegion_Phase1": ["METPhase1_met"],
-"VBFRegion_Phase1": ["METPhase1_met"],
-"MassWindowZ_Phase1": ["METPhase1_met"],
-"PreSel_Phase1": ["METPhase1_met"],
-"SelectionTest1Phase1": ["LeadMuonPhase1_pt"],
+#"SignalRegionPhase2": ["MET_met", "QJetPhase1_0_pt", "qqPhase1_pt", "qqDeltaEtaPhase1", "qqDeltaPhiPhase1"]+genericHistos,
+"InclusiveRegionPhase1": ["MET_met"],
+"VBFRegionPhase1": ["MET_met"],
+"MassWindowZPhase1": ["MET_met"],
+"PreSelPhase1": ["MET_met"],
+#"SelectionTest1Phase1": ["LeadMuonPhase1_pt"],
 #"SelectionTest2": ["MET_met"],
 #"SelectionTest3": ["MET_met"],
 #"SelectionTest4": ["MET_met"],
@@ -67,7 +67,7 @@ if False:
 #    histosPerSelectionFullJecs={
  # }
     histosPerSelection={
-      "SignalRegionPhase1":      ["METPhase1_pt"],
+      "SignalRegionPhase1":      ["MET_pt"],
   }    
       #ericHistos+bdtInputHistos,
 #      "SideBand":      ["Higgs_m_noGF","Mqq_over400_log","DNN18Atan"],#ericHistos+bdtInputHistos,
