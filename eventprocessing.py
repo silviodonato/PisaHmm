@@ -59,6 +59,8 @@ def getFlow(year):
 #    JetToUse_pt > jetPtCut && abs(JetToUse_eta) < 4.7
 #    &&     (JetToUse_SelectedLeptonIdx==-1 || JetToUse_SelectedLeptonDr > 0.4)
 
+    flow.Define("Jet_p4","vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Jet_pt , Jet_eta, Jet_phi, Jet_mass)")
+
     ##Jet Selection. FIXME: Missing Jet ID, JetPU ID
     flow.SubCollection("SelectedJetPhase1","Jet",'''
     Jet_pt > jetPtCut && abs(Jet_eta) < 4.7
