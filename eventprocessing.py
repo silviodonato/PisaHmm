@@ -102,7 +102,6 @@ def getFlow(year):
     flow.Define("Higgs_Phase1_pt","Higgs_Phase1.Pt()")
     flow.Define("Higgs_Phase1_rapidity","Higgs_Phase1.Rapidity()")
 
-<<<<<<< HEAD
     #HT definition in the generator: https://github.com/cms-sw/genproductions/blob/master/bin/MadGraph5_aMCatNLO/cards/production/2017/13TeV/DYJets_HT_LO_MLM/DYJets_HT_mll50/DYJets_HT-400to600/DYJets_HT-400to600_run_card.dat
     flow.SubCollection("GenJetForHT","GenJet",'''
     GenJet_pt > 30 && abs(GenJet_eta) < 5.0 && GenJet_mass>1.5
