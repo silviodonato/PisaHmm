@@ -70,16 +70,16 @@ ftxt=open("out/description.txt","w")
 ftxt.write(flow.Describe(used))
 
 snap=[]                     #"nJet"
-snaplist=["Mu0_charge","Mu1_charge","Mu0_dxybs","Mu1_dxybs","event","Higgs_m_uncalib","Higgs_m","QJet0_qgl","QJet1_qgl","QJet0_eta","QJet1_eta","Mqq","Higgs_pt","Mu0_pt","Mu0_corrected_pt","Mu1_corrected_pt","Mu1_pt","Mu0_eta","Mu1_eta","Mu1_phi","Mu0_phi","nGenPart","GenPart_pdgId","GenPart_eta","GenPart_phi","GenPart_pt"]#,"twoJets","twoOppositeSignMuons","PreSel","VBFRegion","MassWindow","SignalRegionPhase1","qqDeltaEta","event","HLT_IsoMu24","QJet0_pt_nom","QJet1_pt_nom","QJet0_puId","QJet1_puId","SBClassifier","Higgs_m","Mqq_log","mmjj_pt_log","NSoft5","ll_zstar","theta2","mmjj_pz_logabs","MaxJetAbsEta","ll_zstar_log"]#,"QJet0_prefireWeight","QJet1_prefireWeight","PrefiringCorrection","CorrectedPrefiringWeight"]
+snaplist=["MuPhase1_0_charge","MuPhase1_1_charge","MuPhase1_0_dxybs","MuPhase1_1_dxybs","event","Higgs_Phase1_m_uncalib","Higgs_Phase1_m","QJetPhase1_0_qgl","QJetPhase1_1_qgl","QJetPhase1_0_eta","QJetPhase1_1_eta","MqqPhase1","Higgs_Phase1_pt","MuPhase1_0_pt","MuPhase1_0_corrected_pt","MuPhase1_1_corrected_pt","MuPhase1_1_pt","MuPhase1_0_eta","MuPhase1_1_eta","MuPhase1_1_phi","MuPhase1_0_phi","nGenPartPhase1","GenPart_pdgIdPhase1","GenPart_etaPhase1","GenPart_phiPhase1","GenPart_ptPhase1"]#,"twoJets","twoOppositeSignMuons","PreSel_Phase1","VBFRegion","MassWindow","SignalRegionPhase1","qqDeltaEta","event","HLT_IsoMu24","QJet0_pt_nom","QJet1_pt_nom","QJet0_puId","QJet1_puId","SBClassifier","Higgs_m","Mqq_log","mmjj_pt_log","NSoft5","ll_zstar","theta2","mmjj_pz_logabs","MaxJetAbsEta","ll_zstar_log"]#,"QJet0_prefireWeight","QJet1_prefireWeight","PrefiringCorrection","CorrectedPrefiringWeight"]
 #snaplist=["QJet0_prefireWeight","QJet1_prefireWeight","PrefiringCorrection","CorrectedPrefiringWeight"]
 snaplist=[]# "event"]
-fullsnaplist=["Mu0_charge","Mu1_charge","Mu0_dxybs","Mu1_dxybs","Mu0_pt_GeoFitCorrection","Mu1_pt_GeoFitCorrection","Mu0_eta","Mu0_pt","Mu1_eta","Mu1_pt",
-    "Higgs_pt", "Higgs_eta", "Higgs_mRelReso", "Higgs_mReso", "Higgs_m", "ll_zstar_log", "ll_zstar",
-    "QJet0_pt_touse", "QJet0_phi", "QJet0_eta", "QJet0_pt_nom", "QJet0_puId", "QJet0_qgl",
-    "QJet1_pt_touse", "QJet1_phi", "QJet1_eta", "QJet1_pt_nom", "QJet1_puId", "QJet1_qgl",
-    "qqDeltaEta", "qqDeltaPhi", "qq_pt", "Mqq", "Mqq_log", "MaxJetAbsEta", "mmjj_pt", "mmjj_pt_log", "mmjj_pz", "mmjj_pz_logabs", "CS_theta", "CS_phi","NSoft5NewNoRapClean", "SAHT2","nGenPart","GenPart_pdgId","GenPart_eta","GenPart_phi","GenPart_pt", "nLHEPart", "LHEPart_pt", "LHEPart_eta", "LHEPart_phi",  "LHEPart_pdgId",
-    "DeltaRelQQ", "DeltaEtaQQSum", "PhiHQ1", "PhiHQ2", "EtaHQ1", "EtaHQ2", "minEtaHQ", "Rpt", "theta2", "NSoft5", "NSoft5New", "SAHT",
-    "SBClassifier", "DNN18Atan","year",
+fullsnaplist=["MuPhase1_0_charge","MuPhase1_1_charge","MuPhase1_0_dxybs","MuPhase1_1_dxybs","MuPhase1_0_pt_GeoFitCorrection","MuPhase1_1_pt_GeoFitCorrection","MuPhase1_0_eta","MuPhase1_0_pt","MuPhase1_1_eta","MuPhase1_1_pt",
+    "Higgs_Phase1_pt", "Higgs_Phase1_eta", "Higgs_Phase1_mRelReso", "Higgs_Phase1_mReso", "Higgs_Phase1_m", "ll_zstar_Phase1_log", "ll_zstar_Phase1",
+    "QJetPhase1_0_pt_touse", "QJetPhase1_0_phi", "QJetPhase1_0_eta", "QJetPhase1_0_pt_nom", "QJetPhase1_0_puId", "QJetPhase1_0_qgl",
+    "QJetPhase1_1_pt_touse", "QJetPhase1_1_phi", "QJetPhase1_1_eta", "QJetPhase1_1_pt_nom", "QJetPhase1_1_puId", "QJetPhase1_1_qgl",
+    "qqDeltaEtaPhase1", "qqDeltaPhiPhase1", "qqPhase1_pt", "MqqPhase1", "MqqPhase1_log", "MaxJetAbsEtaPhase1", "mmjj_Phase1_pt", "mmjj_Phase1_pt_log", "mmjj_Phase1_pz", "mmjj_Phase1_pz_logabs", "CS_Phase1_theta", "CS_Phase1_phi","NSoft5NewNoRapCleanPhase1", "SAHT2Phase1","nGenPartPhase1","GenPart_pdgIdPhase1","GenPart_etaPhase1","GenPart_phiPhase1","GenPart_ptPhase1", "nLHEPartPhase1", "LHEPart_ptPhase1", "LHEPart_etaPhase1", "LHEPart_phiPhase1",  "LHEPart_pdgIdPhase1",
+    "DeltaRelQQPhase1", "DeltaEtaQQSumPhase1", "PhiHQ1Phase1", "PhiHQ2Phase1", "EtaHQ1Phase1", "EtaHQ2Phase1", "minEtaHQPhase1", "RptPhase1", "theta2Phase1", "NSoft5Phase1", "NSoft5NewPhase1", "SAHTPhase1",
+    "SBClassifierPhase1", "DNN18AtanPhase1","year",
      #"genWeight","puWeight","btagWeight","muEffWeight","EWKreweight", "QGLweight"
 ]
 
@@ -89,6 +89,7 @@ flow.binningRules = binningrules
 flowData=copy.deepcopy(flow)
 #flowData.CentralWeight("weightDNNSB",["SignalRegionPhase1DNNWeighted","SRplusSBDNNWeighted"])
 procData=flowData.CreateProcessor("eventProcessorData"+year,snaplist,histosPerSelection,snap,"SignalRegionPhase1",nthreads)
+#procData=flowData.CreateProcessor("eventProcessorData"+year,snaplist,histosPerSelection,snap,"SignalRegionPhase2",nthreads)
 #procData=flowData.CreateProcessor("eventProcessorData"+year,snaplist,histosPerSelection,snap,"SignalRegionPhase1",nthreads)
 
 print("Data processor created")
@@ -313,29 +314,29 @@ def f(ar):
             #normalizationHandleSR = normalizationHandle
             #normalizationHandleSB = normalizationHandle
             #snaplist=["nJet","nGenJet","Jet_pt_touse","GenJet_pt","Jet_genJetIdx","Jet_pt_touse","Jet_pt","Jet_pt_nom","Jet_genPt","LHERenUp","LHERenDown","LHEFacUp","LHEFacDown","PrefiringWeight","DNN18Atan","QJet0_prefireWeight","QJet1_prefireWeight", "QJet0_pt_touse","QJet1_pt_touse","QJet0_eta","QJet1_eta","QGLweight","genWeight","btagWeight","muEffWeight"]
-#"QJet0_pt_touse","QJet1_pt_touse","QJet0_eta","QJet1_eta","Mqq","Higgs_pt","twoJets","twoOppositeSignMuons","PreSel","VBFRegion","MassWindow","SignalRegionPhase1"]
+#"QJet0_pt_touse","QJet1_pt_touse","QJet0_eta","QJet1_eta","Mqq","Higgs_pt","twoJets","twoOppositeSignMuons","PreSel_Phase1","VBFRegion","MassWindow","SignalRegionPhase1"]
 
-    #        snaplist=["nJet","SelectedJet_pt_touse","Jet_pt","Jet_pt_nom","Jet_puId","Jet_eta","Jet_jetId","PreSel","VBFRegion","MassWindow","SignalRegionPhase1","jetIdx1","jetIdx2","Jet_muonIdx1","Jet_muonIdx2","LHEPdfUp","LHEPdfDown","LHEPdfSquaredSum","LHEPdfRMS","nLHEPdfWeight","LHEPdfWeight","PrefiringWeight","DNN18Atan__syst__MuScaleDown","Higgs_eta__syst__MuScaleUp","Higgs_mRelReso__syst__MuScaleUp","Higgs_mReso__syst__MuScaleUp","Higgs_m__syst__MuScaleUp","Higgs_pt__syst__MuScaleUp","Mqq","Mqq_log","NSoft5__syst__MuScaleUp","QJet0_eta","QJet0_phi","QJet0_pt_touse","QJet0_qgl","QJet1_eta","QJet1_phi","QJet1_pt_touse","QJet1_qgl","Rpt__syst__MuScaleUp","event","ll_zstar__syst__MuScaleUp","minEtaHQ__syst__MuScaleUp","qqDeltaEta"]
+    #        snaplist=["nJet","SelectedJet_pt_touse","Jet_pt","Jet_pt_nom","Jet_puId","Jet_eta","Jet_jetId","PreSel_Phase1","VBFRegion","MassWindow","SignalRegionPhase1","jetIdx1","jetIdx2","Jet_muonIdx1","Jet_muonIdx2","LHEPdfUp","LHEPdfDown","LHEPdfSquaredSum","LHEPdfRMS","nLHEPdfWeight","LHEPdfWeight","PrefiringWeight","DNN18Atan__syst__MuScaleDown","Higgs_eta__syst__MuScaleUp","Higgs_mRelReso__syst__MuScaleUp","Higgs_mReso__syst__MuScaleUp","Higgs_m__syst__MuScaleUp","Higgs_pt__syst__MuScaleUp","Mqq","Mqq_log","NSoft5__syst__MuScaleUp","QJet0_eta","QJet0_phi","QJet0_pt_touse","QJet0_qgl","QJet1_eta","QJet1_phi","QJet1_pt_touse","QJet1_qgl","Rpt__syst__MuScaleUp","event","ll_zstar__syst__MuScaleUp","minEtaHQ__syst__MuScaleUp","qqDeltaEta"]
             snaplist=["run","event","Higgs_m","QJet0_pt_touse","QJet1_pt_touse","QJet0_eta","QJet1_eta","Mqq","Higgs_pt","Higgs_m","qqDeltaEta","SelectedMuon_GFp4_pt0","SelectedMuon_GFp4_pt1","SignalRegionPhase1Weight__Central","QGLweight","DNN18Atan"]
             branchList = ROOT.vector('string')()
             list(map(lambda x : branchList.push_back(x), snaplist))
     #        if "lumi" not in samples[s].keys()  :
-    #        rep=ou.rdf[""].Filter("twoMuons","twoMuons").Filter("twoOppositeSignMuons","twoOppositeSignMuons").Filter("twoJets","twoJets").Filter("MassWindow","MassWindow").Filter("VBFRegion","VBFRegion").Filter("PreSel","PreSel").Filter("SignalRegionPhase1","ZRegion").Report()
+    #        rep=ou.rdf[""].Filter("twoMuons","twoMuons").Filter("twoOppositeSignMuons","twoOppositeSignMuons").Filter("twoJets","twoJets").Filter("MassWindow","MassWindow").Filter("VBFRegion","VBFRegion").Filter("PreSel_Phase1","PreSel_Phase1").Filter("SignalRegionPhase1","ZRegion").Report()
 #         rep.Print()
             print("Above the cutflow for",s)
 #         ou.rdf["SignalRegionPhase1"].Define("SelectedMuon_GFp4_pt0","SelectedMuon_GFp4[0].Pt()").Define("SelectedMuon_GFp4_pt1","SelectedMuon_GFp4[1].Pt()").Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
 
             if "training" in list(samples[s].keys()) and samples[s]["training"] :
-                #ou.rdf.Filter("twoMuons","twoMuons").Filter("twoOppositeSignMuons","twoOppositeSignMuons").Filter("twoJets","twoJets").Filter("MassWindow","MassWindow").Filter("VBFRegion","VBFRegion").Filter("PreSel","PreSel").Filter("SignalRegionPhase1","SignalRegionPhase1").Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
+                #ou.rdf.Filter("twoMuons","twoMuons").Filter("twoOppositeSignMuons","twoOppositeSignMuons").Filter("twoJets","twoJets").Filter("MassWindow","MassWindow").Filter("VBFRegion","VBFRegion").Filter("PreSel_Phase1","PreSel_Phase1").Filter("SignalRegionPhase1","SignalRegionPhase1").Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
                 #ou.rdf["ZRegion"].Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
                 print("Snapshot")
-                ou.rdf["PreSel"].Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
+                ou.rdf["PreSel_Phase1"].Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
 #         if "lumi" in samples[s].keys()  :
                 #u.rdf["SignalRegionPhase1"].Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
 #               ou.rdf["SignalRegionPhase1"].Define("Mu0_GFpt","Mu0_GFp4.pt()").Define("Mu1_GFpt","Mu1_GFp4.pt()").Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
 
 
-#         ou.rdf.Filter("twoJets","twoJets").Filter("VBFRegion","VBFRegion").Filter("twoMuons__syst__MuScaleDown","twoMuons__syst__MuScaleDown").Filter("twoOppositeSignMuons__syst__MuScaleDown","twoOppositeSignMuons__syst__MuScaleDown").Filter("PreSel__syst__MuScaleDown","PreSel__syst__MuScaleDown").Filter("MassWindow__syst__MuScaleDown","MassWindow__syst__MuScaleDown").Filter("SignalRegionPhase1__syst__MuScaleDown","SignalRegionPhase1__syst__MuScaleDown").Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
+#         ou.rdf.Filter("twoJets","twoJets").Filter("VBFRegion","VBFRegion").Filter("twoMuons__syst__MuScaleDown","twoMuons__syst__MuScaleDown").Filter("twoOppositeSignMuons__syst__MuScaleDown","twoOppositeSignMuons__syst__MuScaleDown").Filter("PreSel_Phase1__syst__MuScaleDown","PreSel_Phase1__syst__MuScaleDown").Filter("MassWindow__syst__MuScaleDown","MassWindow__syst__MuScaleDown").Filter("SignalRegionPhase1__syst__MuScaleDown","SignalRegionPhase1__syst__MuScaleDown").Snapshot("Events","out/%sSnapshot.root"%(s),branchList)
             #ou.rdf.Filter("event==63262831 || event == 11701422 || event== 60161978").Snapshot("Events","out/%sEventPick.root"%(s),branchList)
 #         return 1
 #         print ou.histos.size()#,ouspec.histos.size()
