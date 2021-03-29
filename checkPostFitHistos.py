@@ -1,6 +1,6 @@
 import ROOT
 
-hName = "LeadMuon_pt___SignalRegionPhase1"
+hName = "LeadMuonPhase1_pt___SignalRegionPhase1"
 #sample = "EWKZ105_2018MGHERWIG"
 #sample = "ttHmm_2018POWPY"
 sample = "DY105_2018AMCPY"
@@ -13,8 +13,8 @@ filePrefit = ROOT.TFile.Open("out/%s"%fName)
 filePostfit = ROOT.TFile.Open("out/postfit/%s"%fName)
 filePrefitWS = ROOT.TFile.Open("workspaceForPostFitHisto/fileCombine2018H.root")
 filePostfitWS = ROOT.TFile.Open("workspace/fileCombine2018H.root")
-filePrefitPlot = ROOT.TFile.Open("figure_prefit/2018/H/LeadMuon_pt___SignalRegionPhase1_log.root")
-filePostfitPlot = ROOT.TFile.Open("figure_postfit/2018/H/LeadMuon_pt___SignalRegionPhase1_log.root")
+filePrefitPlot = ROOT.TFile.Open("figure_prefit/2018/H/LeadMuonPhase1_pt___SignalRegionPhase1_log.root")
+filePostfitPlot = ROOT.TFile.Open("figure_postfit/2018/H/LeadMuonPhase1_pt___SignalRegionPhase1_log.root")
 fitDiag = ROOT.TFile.Open("workspaceForPostFitHisto/fitDiagnostics.root")
 
 
