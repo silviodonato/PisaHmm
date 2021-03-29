@@ -6,7 +6,7 @@ binningrules=[
 ("n.*" , "%s , 0 , 30"%nbins),
 ("N.*" , "%s , 0 , 30"%nbins),
 (".*_pt(_|$).*" , "%s , 0 , 300"%nbins),
-(".*HT.*" , "%s , 0 , 300"%nbins),
+(".*HT.*" , "%s , 0 , 1000"%nbins),
 (".*_qgl" , "%s , 0 , 1"%nbins),
 ("QGLweight*" , "%s , 0 , 10"%nbins),
 (".*_eta(_|$).*" , "%s , -5 , 5"%nbins),
@@ -14,7 +14,7 @@ binningrules=[
 (".*_m(_|$).*" , "%s , 0,500"%nbins),
 (".*_M(_|$).*" , "%s , 0,500"%nbins),
 (".*_Mass(_|$).*" , "%s , 0,500"%nbins),
-(".*Higgs_m.*" , "80 , 70,150"),
+(".*Higgs_m.*" , "80 , 70,170"),
 (".*Higgs_mReso.*" , "%s , 0,20"%(nbins)),
 (".*_.*tag.*" , "%s , 0,1"%nbins),
 (".*Class.*" , "%s , -1,1"%nbins),
@@ -47,4 +47,5 @@ binningrules=[
 ("Jet_puId.*","%s , 0 , %s"%(nbins,nbins-1)),
 ("fixedGridRhoFastjetAll*","40 , 0 , 40"),
 ("CS*","%s , -3.2 , 3.2"%nbins),
+("yield","1 , -10 , 10"),
 ]

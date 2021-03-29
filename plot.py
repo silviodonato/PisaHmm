@@ -815,7 +815,7 @@ def makeplot(hn,saveintegrals=True):
                 datasum[hn].SetBinError(i, (datasum[hn].GetBinContent(i))**0.5)
             datasum[hn].SetMarkerStyle(10)
             datasum[hn].UseCurrentStyle()
-        datasum[hn].SetMinimum(max(0.1*datasum[hn].GetMinimum(),0.1)) ## zoom out y axis
+        datasum[hn].SetMinimum(max(0.01*datasum[hn].GetMinimum(),0.1)) ## zoom out y axis
         datasum[hn].Draw("E P")
         #datastack[hn].GetXaxis().SetTitle(hn)
         setStyle(datasum[hn])

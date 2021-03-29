@@ -5,17 +5,33 @@ samples.update(samples2016.samples)
 name="H"
 background= {
 
-"DY": ["DY50_2026MGPY", "DY100_2026MGPY"], 
+## inclusive DY  M(LL)> 50 GeV
+"DY50": ["DY50_2026MGPY"],
 
-"DYHT": ["DY50HT70_2026MGPY", "DY50HT100_2026MGPY", "DY50HT200_2026MGPY", "DY50HT400_2026MGPY", "DY50HT600_2026MGPY", "DY50HT800_2026MGPY", "DY50HT1200_2026MGPY", "DY50HT2500_2026MGPY"], 
+## inclusive DY  M(LL)> 100 GeV
+"DY100": ["DY100_2026MGPY"],
 
-"DY0J": ["DY0J50_2026MGPY", "DY0J50_2026MGPY_FNAL"],
+## DY  M(LL)> 50 GeV - HT binned
+"DYHT70": ["DY50HT70_2026MGPY"],
+"DYHT100": ["DY50HT100_2026MGPY"],
+"DYHT200": ["DY50HT200_2026MGPY"],
+"DYHT400": ["DY50HT400_2026MGPY"],
+"DYHT600": ["DY50HT600_2026MGPY"],
+"DYHT800": ["DY50HT800_2026MGPY"],
+"DYHT1200": ["DY50HT1200_2026MGPY"],
+"DYHT2500": ["DY50HT2500_2026MGPY"],
 
-"DY01J": ["DY1J50_2026MGPY"],
-
+## DY  M(LL)> 50 GeV binned in number of jets 
+"DY0J": ["DY0J50_2026MGPY"],
+"DY1J": ["DY1J50_2026MGPY"],
 "DY2J": ["DY2J50_2026MGPY"],
+"DY3J": ["DY3J50_2026MGPY"],
 
-"DY3J": ["DY3J50_2026MGPY", "DY3J50_2026MGPY_FNAL"],
+## DY  M(LL)> 50 GeV binned in number of jets (using FNAL samples)
+#"DY0J": ["DY0J50_2026MGPY_FNAL"],
+#"DY1J": ["DY1J50_2026MGPY"],
+#"DY2J": ["DY2J50_2026MGPY"],
+#"DY3J": ["DY3J50_2026MGPY_FNAL"],
 
 "Top": ["TT_2026POWPY", "TTlep_2026MGPY"], 
 
@@ -37,8 +53,12 @@ background= {
 
 #sorting
 ##SD test
-backgroundSorted=["DY", "DYHT", "DY0J", "DY01J", "DY2J", "DY3J", "VBF Z", "Top"]
-backgroundSorted+=[x for x in background if x not in backgroundSorted]
+#backgroundSorted=["DY0J", "DY1J", "DY2J", "DY3J", "VBF Z", "Top"]
+#backgroundSorted=["DYHT2500", "DYHT1200", "DYHT800", "DYHT600", "DYHT400", "DYHT200", "DYHT100", "DYHT70", "VBF Z", "Top"]
+#backgroundSorted=["DY100", "VBF Z", "Top"]
+backgroundSorted=["DY50", "VBF Z", "Top"]
+backgroundSortedForLegend=backgroundSorted[:]
+#backgroundSorted+=[x for x in background if x not in backgroundSorted]
 
 
 signal={
@@ -46,8 +66,7 @@ signal={
 }
 
 #legend sorting
-backgroundSortedForLegend=["DY", "DYHT", "DY0J", "DY01J", "DY2J", "DY3J", "VBF Z", "Top"]
-backgroundSortedForLegend+=[x for x in background if x not in backgroundSortedForLegend]
+#backgroundSortedForLegend+=[x for x in background if x not in backgroundSortedForLegend]
 signalSortedForLegend=["VBF H", "gg H"]
 signalSortedForLegend+=[x for x in signal if x not in signalSortedForLegend]
 
@@ -62,6 +81,7 @@ fillcolor={
 "DY": ROOT.kOrange,
 "DYHT": ROOT.kOrange-1,
 "DY0J": ROOT.kOrange-2,
+"DY1J": ROOT.kOrange-3,
 "DY01J": ROOT.kOrange-3,
 "DY2J": ROOT.kOrange-4,
 "DY3J": ROOT.kOrange-5,
@@ -75,7 +95,19 @@ fillcolor={
 "WH":ROOT.kPink+9,
 "VH":ROOT.kPink+5,
 "ttH":ROOT.kRed-4,
+
+"DYHT70": ROOT.kBlue-2,
+"DYHT100": ROOT.kBlue-1,
+"DYHT200": ROOT.kBlue,
+"DYHT400": ROOT.kBlue+1,
+"DYHT600": ROOT.kBlue+2,
+"DYHT800": ROOT.kBlue+3,
+"DYHT1200": ROOT.kBlue+4,
+"DYHT2500": ROOT.kBlue+5,
 }
+
+fillcolor["DY100"] = fillcolor["DY"]
+fillcolor["DY50"] = fillcolor["DY"]
 
 systematicsToPlot = []
 systematicsForDC = systematicsToPlot
