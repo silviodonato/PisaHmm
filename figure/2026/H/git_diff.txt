@@ -1,0 +1,1338 @@
+diff --git a/.giosaveadCFpJ b/.giosaveadCFpJ
+index d8aad2e..8c370f7 100644
+--- a/.giosaveadCFpJ
++++ b/.giosaveadCFpJ
+@@ -10,12 +10,12 @@ histosPerSelection={
+ #"SRplusSBDNNWeighted" : ["Higgs_m","Higgs_m38"],
+ #"TightMassRegion" : ["DNN18AtanNoMass"],
+ "SignalRegionPhase1": ["MET_met", "QJetPhase1_0_pt", "qqPhase1_pt", "qqDeltaEtaPhase1", "qqDeltaPhiPhase1"]+genericHistos,
+-#"SignalRegionPhase2": ["METPhase1_met", "QJetPhase1_0_pt", "qq_ptPhase1", "qqDeltaEtaPhase1", "qqDeltaPhiPhase1"]+genericHistos,
+-"InclusiveRegion_Phase1": ["METPhase1_met"],
+-"VBFRegion_Phase1": ["METPhase1_met"],
+-"MassWindowZ_Phase1": ["METPhase1_met"],
+-"PreSel_Phase1": ["METPhase1_met"],
+-"SelectionTest1Phase1": ["LeadMuonPhase1_pt"],
++#"SignalRegionPhase2": ["MET_met", "QJetPhase1_0_pt", "qqPhase1_pt", "qqDeltaEtaPhase1", "qqDeltaPhiPhase1"]+genericHistos,
++"InclusiveRegionPhase1": ["MET_met"],
++"VBFRegionPhase1": ["MET_met"],
++"MassWindowZPhase1": ["MET_met"],
++"PreSelPhase1": ["MET_met"],
++#"SelectionTest1Phase1": ["LeadMuonPhase1_pt"],
+ #"SelectionTest2": ["MET_met"],
+ #"SelectionTest3": ["MET_met"],
+ #"SelectionTest4": ["MET_met"],
+@@ -67,7 +67,7 @@ if False:
+ #    histosPerSelectionFullJecs={
+  # }
+     histosPerSelection={
+-      "SignalRegionPhase1":      ["METPhase1_pt"],
++      "SignalRegionPhase1":      ["MET_pt"],
+   }    
+       #ericHistos+bdtInputHistos,
+ #      "SideBand":      ["Higgs_m_noGF","Mqq_over400_log","DNN18Atan"],#ericHistos+bdtInputHistos,
+diff --git a/eventprocessing.py b/eventprocessing.py
+index 7d71408..31fbf8d 100644
+--- a/eventprocessing.py
++++ b/eventprocessing.py
+@@ -109,22 +109,22 @@ def getFlow(year):
+ 
+     flow.DefaultConfig(higgsMassWindowWidth=10,mQQcut=400,nominalHMass=125.03) #,btagCut=0.8)
+     ## no b-tag discriminant in delphes, just 0 or 1
+-    flow.Define("SelectedJetPhase1_btagDeepB","Jet_btag") ##FIXME: use actual b-tagging
++    flow.Define("SelectedJetPhase1btagDeepB","SelectedJetPhase1_btag") ##FIXME: use actual b-tagging
+     flow.Define("btagCut","0.5")
+     flow.Define("btagCutL","0.5")
+     #adding for sync
+-    flow.Define("nbtaggedPhase1","int(Nonzero(SelectedJetPhase1_btagDeepB > btagCut && abs(SelectedJetPhase1_eta)< 2.5).size())")
+-    flow.Define("nbtaggedLPhase1","int(Nonzero(SelectedJetPhase1_btagDeepB > btagCutL && abs(SelectedJetPhase1_eta)< 2.5).size())")
++    flow.Define("nbtaggedPhase1","int(Nonzero(SelectedJetPhase1btagDeepB > btagCut && abs(SelectedJetPhase1_eta)< 2.5).size())")
++    flow.Define("nbtaggedLPhase1","int(Nonzero(SelectedJetPhase1btagDeepB > btagCutL && abs(SelectedJetPhase1_eta)< 2.5).size())")
+     flow.Define("nelectronsPhase1","int(Nonzero(Electron_pt > 20 && abs(Electron_eta) < 2.5 ).size())")
+ 
+ 
+     #flow.Selection("MassWindow","Higgs.M()")
+-    flow.Selection("MassWindowZ_Phase1","abs(Higgs_Phase1.M()-91)<15")
+-    flow.Selection("VBFRegion_Phase1","MqqPhase1 > mQQcut && QJetPhase1_0_pt> 35 && QJetPhase1_1_pt > 25")
+-    flow.Selection("PreSel_Phase1","nelectronsPhase1==0 && nbtaggedLPhase1 < 2 && VBFRegion_Phase1 && twoOppositeSignMuonsPhase1 && nbtaggedPhase1 < 1 && (( year == 2016 && LeadMuonPhase1_pt > 26 ) || ( year == 2017 && LeadMuonPhase1_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuonPhase1_pt > 26 )) && SubMuonPhase1_pt > 20 && TriggerSel && abs(SubMuonPhase1_eta) <2.4 && abs(LeadMuonPhase1_eta) < 2.4",requires=["VBFRegion_Phase1","twoOppositeSignMuonsPhase1"])
++    flow.Selection("MassWindowZPhase1","abs(Higgs_Phase1.M()-91)<15")
++    flow.Selection("VBFRegionPhase1","MqqPhase1 > mQQcut && QJetPhase1_0_pt> 35 && QJetPhase1_1_pt > 25")
++    flow.Selection("PreSelPhase1","nelectronsPhase1==0 && nbtaggedLPhase1 < 2 && VBFRegionPhase1 && twoOppositeSignMuonsPhase1 && nbtaggedPhase1 < 1 && (( year == 2016 && LeadMuonPhase1_pt > 26 ) || ( year == 2017 && LeadMuonPhase1_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuonPhase1_pt > 26 )) && SubMuonPhase1_pt > 20 && TriggerSel && abs(SubMuonPhase1_eta) <2.4 && abs(LeadMuonPhase1_eta) < 2.4",requires=["VBFRegionPhase1","twoOppositeSignMuonsPhase1"])
+     #flow.Selection("SideBand","Higgs_m < 150 && Higgs_m > 110 && ! MassWindow && VBFRegion &&  qqDeltaEta > 2.5",requires=["VBFRegion","PreSel"])
+-    flow.Selection("SignalRegionPhase1","VBFRegion_Phase1 && qqDeltaEtaPhase1 > 2.5", requires=["VBFRegion_Phase1","PreSel_Phase1"]) ##FIXME qqDeltaEta > 2.5
+-    flow.Selection("InclusiveRegion_Phase1","1")    #flow.Selection("ZRegion","VBFRegion && MassWindowZ  && qqDeltaEta > 2.5", requires=["VBFRegion","MassWindowZ","PreSel"])
++    flow.Selection("SignalRegionPhase1","VBFRegionPhase1 && qqDeltaEtaPhase1 > 2.5", requires=["VBFRegionPhase1","PreSelPhase1"]) ##FIXME qqDeltaEta > 2.5
++    flow.Selection("InclusiveRegionPhase1","1")    #flow.Selection("ZRegion","VBFRegion && MassWindowZ  && qqDeltaEta > 2.5", requires=["VBFRegion","MassWindowZ","PreSel"])
+ 
+     #flow.Define("Muonsum_ptHT", "LeadMuon_pt + SubMuon_pt")
+     #flow.Selection("SelectionTest1", "LeadMuon_pt > 50")
+@@ -144,5 +144,124 @@ def getFlow(year):
+     #flow.Define("HT","Sum(qq_pt)")
+ 
+ ############################################################################ Phase2 ################################################################################
++   
++    ##Jet Selection. FIXME: Missing Muon ID, Muon Isolation
++    flow.SubCollection("SelectedMuonPhase2","Muon",sel="abs(Muon_eta) < 2.8") ### I've put a simple selection as example
++    flow.Selection("twoUnpreselMuonsPhase2","nMuon>=2")
++    flow.Selection("twoMuonsPhase2","nSelectedMuonPhase2==2")
++
++    ## Get the pair of opposite side muons, 
++    flow.Distinct("MuMuPhase2","SelectedMuonPhase2")
++    flow.Define("OppositeSignMuMuPhase2","Nonzero(MuMuPhase20_charge != MuMuPhase21_charge)",requires=["twoMuonsPhase2"])
++    flow.Selection("twoOppositeSignMuonsPhase2","OppositeSignMuMuPhase2.size() > 0")
++    flow.TakePair("MuPhase2","SelectedMuonPhase2","MuMuPhase2","At(OppositeSignMuMuPhase2,0,-200)",requires=["twoOppositeSignMuonsPhase2"])
++             
++    flow.Define("Higgs_Phase2","MuPhase20_p4+MuPhase21_p4")
++          
++    #VBF Jets kinematics
++    #flow.DefaultConfig(jetPtCut=25)
++    
++    ##Jet Selection. FIXME: Missing Jet ID, JetPU ID
++    flow.SubCollection("SelectedJetPhase2","Jet",'''
++    Jet_pt > jetPtCut && abs(Jet_eta) < 4.7
++    ''')
++    
++    flow.Selection("twoJetsPhase2","nSelectedJetPhase2>=2")
++    
++    flow.Distinct("JetPairPhase2","SelectedJetPhase2")
++    flow.Define("SortedSelectedJetPhase2Indices","Argsort(-SelectedJetPhase2_pt)")
++    flow.ObjectAt("QJetPhase2_0","SelectedJetPhase2",'At(SortedSelectedJetPhase2Indices,0)',requires=["twoJetsPhase2"])
++    flow.ObjectAt("QJetPhase2_1","SelectedJetPhase2",'At(SortedSelectedJetPhase2Indices,1)',requires=["twoJetsPhase2"])
++
++    #compute number of softjets removing signal footprint
++    #flow.Define("SoftActivityJet_mass","SoftActivityJet_pt*0")
++    #flow.Define("SoftActivityJet_p4","@p4v(SoftActivityJet)")
++    #flow.Match("SelectedJetPhase2","SoftActivityJet") #associate signal jets
++    #flow.Match("SelectedMuonPhase2","SoftActivityJet") #associate signal muons
++    
++    flow.Define("qqPhase2","QJetPhase2_0_p4+QJetPhase2_1_p4")
++    flow.Define("MqqPhase2","qqPhase2.M()")
++    flow.Define("qqPhase2_pt","qqPhase2.Pt()")
++    flow.Define("qqDeltaEtaPhase2","abs(QJetPhase2_0_eta-QJetPhase2_1_eta)")
++    flow.Define("qqDeltaPhiPhase2","abs(ROOT::Math::VectorUtil::DeltaPhi(QJetPhase2_0_p4,QJetPhase2_1_p4))")
++
++    #QQ vs ll kinematic
++    flow.Define("ll_ystarPhase2","Higgs_Phase2.Rapidity() - (QJetPhase2_0_p4.Rapidity() + QJetPhase2_1_p4.Rapidity())/2.f")
++    flow.Define("ll_zstarPhase2"," abs( ll_ystar/ (QJetPhase2_0_p4.Rapidity()-QJetPhase2_1_p4.Rapidity() )) ")
++    flow.Define("ll_zstarPhase2_log"," log(ll_zstarPhase2) ")
++    flow.Define("ll_zstarbugPhase2_log","log(abs( (  Higgs_Phase2.Rapidity() - (QJetPhase2_0_p4.Rapidity() + QJetPhase2_1_p4.Rapidity())  )/ (QJetPhase2_0_p4.Rapidity()-QJetPhase2_1_p4.Rapidity() )))")
++    flow.Define("DeltaEtaQQSumPhase2","abs(QJetPhase2_0_eta) +  abs(QJetPhase2_1_eta)")
++    flow.Define("PhiHQ1Phase2","abs(ROOT::Math::VectorUtil::DeltaPhi(Higgs_Phase2,QJetPhase2_0_p4))")
++    flow.Define("PhiHQ2Phase2","abs(ROOT::Math::VectorUtil::DeltaPhi(Higgs_Phase2,QJetPhase2_1_p4))")
++    flow.Define("EtaHQ1Phase2","abs(Higgs_Phase2.Eta() - QJetPhase2_0_eta)")
++    flow.Define("EtaHQ2Phase2","abs(Higgs_Phase2.Eta() - QJetPhase2_1_eta)")
++    flow.Define("DeltaRelQQPhase2","(QJetPhase2_0_p4+QJetPhase2_1_p4).Pt()/( QJetPhase2_0_p4.Pt()+QJetPhase2_1_p4.Pt())")
++    flow.Define("RptPhase2","(QJetPhase2_0_p4+QJetPhase2_1_p4+ Higgs).Pt()/( QJetPhase2_0_p4.Pt()+QJetPhase2_1_p4.Pt() + Higgs_Phase2.Pt())")
++    #flow.Define("mmjj","Higgs+qq")
++    flow.Define("theta2Phase2","Higgs_Phase2.Vect().Dot(QJetPhase2_1_p4.Vect())/QJetPhase2_1_p4.Vect().R()/HiggsPhase2.Vect().R()")
++    flow.ObjectAt("LeadMuonPhase2","SelectedMuonPhase2","0",requires=["twoMuonsPhase2"])
++    flow.ObjectAt("SubMuonPhase2","SelectedMuonPhase2","1",requires=["twoMuonsPhase2"])
++    flow.Define("Higgs_Phase2_pt","Higgs_Phase2.Pt()")
++    flow.Define("Higgs_Phase2_rapidity","Higgs_Phase2.Rapidity()")
++
++    flow.Define("pTbalanceLeadPhase2","QJetPhase2_0_pt/Higgs_Phase2_pt")
++    #flow.Define("pTbalance","qq.Pt()/Higgs_pt")
++    flow.Define("pTbalanceAllPhase2","SumDef(SelectedJetPhase2_p4).pt()/Higgs_Phase2_pt")
++    flow.Define("pTbalanceAllPhase2Log","log(pTbalanceAllPhase2)")
++    flow.Define("pTbalancePhase2Log","log(pTbalancePhase2)")
++    flow.Define("pTbalanceLeadPhase2Log","log(pTbalanceLeadPhase2)")
++    flow.Define("Higgs_Phase2_m","Higgs_Phase2.M()")
++    flow.Define("Higgs_Phase2_eta","Higgs_Phase2.Eta()")
++    flow.Define("Higgs_Phase2_m_uncalib","Higgs_Phase2_Uncalib.M()")
++    flow.Define("MqqPhase2_log","log(MqqPhase2)")
++    flow.Define("MqqPhase2_over400_log","log(MqqPhase2/400)")
++    flow.Define("mmjj_Phase2_pt","mmjj_Phase2.Pt()")
++    flow.Define("mmjj_Phase2_pt_log","log(mmjj_Phase2_pt)")
++    flow.Define("mmjj_Phase2_pz","mmjj_Phase2.Pz()")
++    flow.Define("mmjj_Phase2_pz_logabs","log(abs(mmjj_Phase2_pz))")
++    flow.Define("MaxJetAbsEta_Phase2","std::max(std::abs(QJetPhase2_0_eta), std::abs(QJetPhase2_1_eta))")
++    flow.Define("minEtaHQPhase2","std::min(abs(EtaHQ1Phase2),(EtaHQ2Phase2))")
++    flow.Define("minPhiHQPhase2","std::min(abs(PhiHQ1Phase2),abs(PhiHQ2Phase2))")
++
++
++    flow.AddCppCode('\n#include "boost_to_CS.h"\n')
++    flow.Define("CS_Phase2_theta","boost_to_CS(LeadMuonPhase2_p4, SubMuonPhase2_p4,  SubMuonPhase2_charge).first",requires=["twoOppositeSignMuonsPhase2"])
++    flow.Define("CS_Phase2_phi","boost_to_CS(LeadMuonPhase2_p4, SubMuonPhase2_p4, SubMuonPhase2_charge).second",requires=["twoOppositeSignMuonsPhase2"])
++
++    #flow.DefaultConfig(higgsMassWindowWidth=10,mQQcut=400,nominalHMass=125.03) #,btagCut=0.8)
++    ## no b-tag discriminant in delphes, just 0 or 1
++    flow.Define("SelectedJetPhase2btagDeepB","SelectedJetPhase2_btag") ##FIXME: use actual b-tagging
++    #flow.Define("btagCut","0.5")
++    #flow.Define("btagCutL","0.5")
++    #adding for sync
++    flow.Define("nbtaggedPhase2","int(Nonzero(SelectedJetPhase2btagDeepB > btagCut && abs(SelectedJetPhase2_eta)< 2.5).size())")
++    flow.Define("nbtaggedLPhase2","int(Nonzero(SelectedJetPhase2btagDeepB > btagCutL && abs(SelectedJetPhase2_eta)< 2.5).size())")
++    flow.Define("nelectronsPhase2","int(Nonzero(Electron_pt > 20 && abs(Electron_eta) < 2.5 ).size())")
++
++
++    #flow.Selection("MassWindow","Higgs.M()")
++    flow.Selection("MassWindowZPhase2","abs(Higgs_Phase2.M()-91)<15")
++    flow.Selection("VBFRegionPhase2","MqqPhase2 > mQQcut && QJetPhase2_0_pt> 35 && QJetPhase2_1_pt > 25")
++    flow.Selection("PreSelPhase2","nelectronsPhase2==0 && nbtaggedLPhase2 < 2 && VBFRegionPhase2 && twoOppositeSignMuonsPhase2 && nbtaggedPhase2 < 1 && (( year == 2016 && LeadMuonPhase2_pt > 26 ) || ( year == 2017 && LeadMuonPhase2_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuonPhase2_pt > 26 )) && SubMuonPhase2_pt > 20 && TriggerSel && abs(SubMuonPhase2_eta) <2.4 && abs(LeadMuonPhase2_eta) < 2.4",requires=["VBFRegionPhase2","twoOppositeSignMuonsPhase2"])
++    #flow.Selection("SideBand","Higgs_m < 150 && Higgs_m > 110 && ! MassWindow && VBFRegion &&  qqDeltaEta > 2.5",requires=["VBFRegion","PreSel"])
++    flow.Selection("SignalRegionPhase2","VBFRegionPhase2 && qqDeltaEtaPhase2 > 2.5", requires=["VBFRegionPhase2","PreSelPhase2"]) ##FIXME qqDeltaEta > 2.5
++    flow.Selection("InclusiveRegionPhase2","1")    #flow.Selection("ZRegion","VBFRegion && MassWindowZ  && qqDeltaEta > 2.5", requires=["VBFRegion","MassWindowZ","PreSel"])
++
++    #flow.Define("Muonsum_ptHT", "LeadMuon_pt + SubMuon_pt")
++    #flow.Selection("SelectionTest1", "LeadMuon_pt > 50")
+     
++#    flow.Selection("SelectionTest2","VBFRegion ", requires=["VBFRegion","PreSel"])
++#    flow.Selection("SelectionTest3","qqDeltaEta > 2.5", requires=["VBFRegion","PreSel"])
++#    flow.Selection("SelectionTest4","1", requires=["VBFRegion","PreSel"])
++#    flow.Selection("SelectionTest5","VBFRegion &&  qqDeltaEta > 2.5")
++#    flow.Selection("SelectionTest6","qqDeltaEta > 2.5", requires=["PreSel"])
++
++    #flow.Selection("ZRegionSMP","Mqq > 250 && MassWindowZ && QJet0_pt> 50 && QJet1_pt > 30 && twoOppositeSignMuons && twoJets && TriggerSel&& abs(SubMuon_eta) <2.4 && abs(LeadMuon_eta) < 2.4 ", requires=["twoOppositeSignMuons","twoJets"])
++    flow.Selection("TwoJetsTwoMuPhase2","twoJetsPhase2 && twoOppositeSignMuonsPhase2", requires=["twoJetsPhase2","twoOppositeSignMuonsPhase2"])
++    #flow.Selection("SignalRegionPhase2T","SignalRegionPhase2 && QJet0_pt>45 && QJet1_pt > 27",requires=["SignalRegionPhase2"])
++    flow.Selection("ZRegionTPhase2","ZRegionPhase2 && QJetPhase2_0_pt>45 && QJetPhase2_1_pt > 27",requires=["ZRegionPhase2"])
++    flow.Selection("SideBandTPhase2","SideBandPhase2 && QJetPhase2_0_pt>45 && QJetPhase2_1_pt > 27",requires=["SideBandPhase2"])
++        #with bug
++    #flow.Define("HT","Sum(qq_pt)")
++
+     return flow
+diff --git a/histograms.py b/histograms.py
+index cf0f452..e7ed226 100644
+--- a/histograms.py
++++ b/histograms.py
+@@ -10,11 +10,17 @@ histosPerSelection={
+ #"SRplusSBDNNWeighted" : ["Higgs_m","Higgs_m38"],
+ #"TightMassRegion" : ["DNN18AtanNoMass"],
+ "SignalRegionPhase1": ["MET_met", "QJetPhase1_0_pt", "qqPhase1_pt", "qqDeltaEtaPhase1", "qqDeltaPhiPhase1"]+genericHistos,
+-#"SignalRegionPhase2": ["METPhase1_met", "QJetPhase1_0_pt", "qq_ptPhase1", "qqDeltaEtaPhase1", "qqDeltaPhiPhase1"]+genericHistos,
+-"InclusiveRegion_Phase1": ["MET_met"],
+-"VBFRegion_Phase1": ["MET_met"],
+-"MassWindowZ_Phase1": ["MET_met"],
+-"PreSel_Phase1": ["MET_met"],
++"InclusiveRegionPhase1": ["MET_met"],
++"VBFRegionPhase1": ["MET_met"],
++"MassWindowZPhase1": ["MET_met"],
++"PreSelPhase1": ["MET_met"],
++
++"SignalRegionPhase2": ["Higgs_Phase2_m","pTbalanceAllPhase2","LeadMuonPhase2_pt","LeadMuonPhase2_eta","SubMuonPhase2_pt","SubMuonPhase2_eta","QJetPhase2_0_eta","QJetPhase2_1_eta","QJetPhase2_0_pt","QJetPhase2_1_pt", "CS_Phase2_theta", "CS_Phase2_phi","MET_met", "QJetPhase2_0_pt", "qqPhase2_pt", "qqDeltaEtaPhase2", "qqDeltaPhiPhase2"],
++#"InclusiveRegionPhase2": ["MET_met"],
++#"VBFRegionPhase2": ["MET_met"],
++#"MassWindowZPhase2": ["MET_met"],
++#"PreSelPhase2": ["MET_met"],
++
+ #"SelectionTest1Phase1": ["LeadMuonPhase1_pt"],
+ #"SelectionTest2": ["MET_met"],
+ #"SelectionTest3": ["MET_met"],
+@@ -68,6 +74,7 @@ if False:
+  # }
+     histosPerSelection={
+       "SignalRegionPhase1":      ["MET_pt"],
++      #"SignalRegionPhase2":      ["MET_pt"],
+   }    
+       #ericHistos+bdtInputHistos,
+ #      "SideBand":      ["Higgs_m_noGF","Mqq_over400_log","DNN18Atan"],#ericHistos+bdtInputHistos,
+diff --git a/out/.dummy b/out/.dummy
+deleted file mode 100644
+index 564e0d6..0000000
+--- a/out/.dummy
++++ /dev/null
+@@ -1 +0,0 @@
+-#just to commit a folder
+diff --git a/out/4data2018.txt b/out/4data2018.txt
+deleted file mode 100644
+index ed22abd..0000000
+--- a/out/4data2018.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0 1.0 1.0 4data2018 
+diff --git a/out/DY0J_2018AMCPY.txt b/out/DY0J_2018AMCPY.txt
+deleted file mode 100644
+index e84ca6f..0000000
+--- a/out/DY0J_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.1572206801855458 1.1572206801855458 1.1572206801855458 DY0J_2018AMCPY 
+diff --git a/out/DY105J01_2018AMCPY.txt b/out/DY105J01_2018AMCPY.txt
+deleted file mode 100644
+index 81cbba8..0000000
+--- a/out/DY105J01_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0638313108130717 1.0638313108130717 1.0638313108130717 DY105J01_2018AMCPY 
+diff --git a/out/DY105J2_2018AMCPY.txt b/out/DY105J2_2018AMCPY.txt
+deleted file mode 100644
+index 34b0bfc..0000000
+--- a/out/DY105J2_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0477344430857856 1.0477344430857856 1.0477344430857856 DY105J2_2018AMCPY 
+diff --git a/out/DY105VBFJ01_2018AMCPY.txt b/out/DY105VBFJ01_2018AMCPY.txt
+deleted file mode 100644
+index 4dba689..0000000
+--- a/out/DY105VBFJ01_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0425239410447737 1.0425239410447737 1.0425239410447737 DY105VBFJ01_2018AMCPY 
+diff --git a/out/DY105VBFJ2_2018AMCPY.txt b/out/DY105VBFJ2_2018AMCPY.txt
+deleted file mode 100644
+index 44d40d2..0000000
+--- a/out/DY105VBFJ2_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0099496012542435 1.0099496012542435 1.0099496012542435 DY105VBFJ2_2018AMCPY 
+diff --git a/out/DY105VBF_2018AMCPY.txt b/out/DY105VBF_2018AMCPY.txt
+deleted file mode 100644
+index 04e7b18..0000000
+--- a/out/DY105VBF_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0107819232419724 1.0107819232419724 1.0107819232419724 DY105VBF_2018AMCPY 
+diff --git a/out/DY105VBF_2018MGPY.txt b/out/DY105VBF_2018MGPY.txt
+deleted file mode 100644
+index 8d32de4..0000000
+--- a/out/DY105VBF_2018MGPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0015136699522293 1.0015136699522293 1.0015136699522293 DY105VBF_2018MGPY 
+diff --git a/out/DY105_2018AMCPY.txt b/out/DY105_2018AMCPY.txt
+deleted file mode 100644
+index 51140c1..0000000
+--- a/out/DY105_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.052112593263281 1.052112593263281 1.052112593263281 DY105_2018AMCPY 
+diff --git a/out/DY105_2018MGPY.txt b/out/DY105_2018MGPY.txt
+deleted file mode 100644
+index 63a044b..0000000
+--- a/out/DY105_2018MGPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.066682740331133 1.066682740331133 1.066682740331133 DY105_2018MGPY 
+diff --git a/out/DY1J_2018AMCPY.txt b/out/DY1J_2018AMCPY.txt
+deleted file mode 100644
+index 14b9cd4..0000000
+--- a/out/DY1J_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0618753784348844 1.0618753784348844 1.0618753784348844 DY1J_2018AMCPY 
+diff --git a/out/DY2J_2018AMCPY.txt b/out/DY2J_2018AMCPY.txt
+deleted file mode 100644
+index 7eb14a0..0000000
+--- a/out/DY2J_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.022189804935817 1.022189804935817 1.022189804935817 DY2J_2018AMCPY 
+diff --git a/out/EWKZ105CORR_2018MGHERWIG.txt b/out/EWKZ105CORR_2018MGHERWIG.txt
+deleted file mode 100644
+index 9a4bf13..0000000
+--- a/out/EWKZ105CORR_2018MGHERWIG.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0 1.0 1.0 EWKZ105CORR_2018MGHERWIG 
+diff --git a/out/EWKZ105FIX2_2018MGHERWIG.txt b/out/EWKZ105FIX2_2018MGHERWIG.txt
+deleted file mode 100644
+index 1571772..0000000
+--- a/out/EWKZ105FIX2_2018MGHERWIG.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0 1.0 1.0 EWKZ105FIX2_2018MGHERWIG 
+diff --git a/out/EWKZ105_2018MGHERWIG.txt b/out/EWKZ105_2018MGHERWIG.txt
+deleted file mode 100644
+index 3d7ff95..0000000
+--- a/out/EWKZ105_2018MGHERWIG.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0 1.0 1.0 EWKZ105_2018MGHERWIG 
+diff --git a/out/EWKZ105_2018MGPY.txt b/out/EWKZ105_2018MGPY.txt
+deleted file mode 100644
+index 9e8fd1f..0000000
+--- a/out/EWKZ105_2018MGPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0112092467676674 1.0112092467676674 1.0112092467676674 EWKZ105_2018MGPY 
+diff --git a/out/EWKZ105_2018MGPYDIPOLE.txt b/out/EWKZ105_2018MGPYDIPOLE.txt
+deleted file mode 100644
+index 2181809..0000000
+--- a/out/EWKZ105_2018MGPYDIPOLE.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0219116430356032 1.0219116430356032 1.0219116430356032 EWKZ105_2018MGPYDIPOLE 
+diff --git a/out/EWKZ_2018MGHERWIG.txt b/out/EWKZ_2018MGHERWIG.txt
+deleted file mode 100644
+index 572c0eb..0000000
+--- a/out/EWKZ_2018MGHERWIG.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0 1.0 1.0 EWKZ_2018MGHERWIG 
+diff --git a/out/EWKZ_2018MGPY.txt b/out/EWKZ_2018MGPY.txt
+deleted file mode 100644
+index dec1b0e..0000000
+--- a/out/EWKZ_2018MGPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0072362334165363 1.0072362334165363 1.0072362334165363 EWKZ_2018MGPY 
+diff --git a/out/EWKZint_2018MGPY.txt b/out/EWKZint_2018MGPY.txt
+deleted file mode 100644
+index 6ea4183..0000000
+--- a/out/EWKZint_2018MGPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0031099441740432 1.0031099441740432 1.0031099441740432 EWKZint_2018MGPY 
+diff --git a/out/STs_2018AMCPY.txt b/out/STs_2018AMCPY.txt
+deleted file mode 100644
+index f42c303..0000000
+--- a/out/STs_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0129978237396182 1.0129978237396182 1.0129978237396182 STs_2018AMCPY 
+diff --git a/out/STt_2018POWPY.txt b/out/STt_2018POWPY.txt
+deleted file mode 100644
+index cad769a..0000000
+--- a/out/STt_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.005794917249257 1.005794917249257 1.005794917249257 STt_2018POWPY 
+diff --git a/out/STtbar_2018POWPY.txt b/out/STtbar_2018POWPY.txt
+deleted file mode 100644
+index d2c2825..0000000
+--- a/out/STtbar_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0060259166211658 1.0060259166211658 1.0060259166211658 STtbar_2018POWPY 
+diff --git a/out/STwt_2018POWPY.txt b/out/STwt_2018POWPY.txt
+deleted file mode 100644
+index fea5def..0000000
+--- a/out/STwt_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0241236790913495 1.0241236790913495 1.0241236790913495 STwt_2018POWPY 
+diff --git a/out/STwtbar_2018POWPY.txt b/out/STwtbar_2018POWPY.txt
+deleted file mode 100644
+index 988f9c5..0000000
+--- a/out/STwtbar_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0250941172801495 1.0250941172801495 1.0250941172801495 STwtbar_2018POWPY 
+diff --git a/out/TT_2018AMCPY.txt b/out/TT_2018AMCPY.txt
+deleted file mode 100644
+index 0226379..0000000
+--- a/out/TT_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0150954381061281 1.0150954381061281 1.0150954381061281 TT_2018AMCPY 
+diff --git a/out/TT_2018MGPY.txt b/out/TT_2018MGPY.txt
+deleted file mode 100644
+index 265a38f..0000000
+--- a/out/TT_2018MGPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0130888639546864 1.0130888639546864 1.0130888639546864 TT_2018MGPY 
+diff --git a/out/TThad_2018POWPY.txt b/out/TThad_2018POWPY.txt
+deleted file mode 100644
+index 4b71d70..0000000
+--- a/out/TThad_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 0.9935400649428612 0.9935400649428612 0.9935400649428612 TThad_2018POWPY 
+diff --git a/out/TTlep_2018POWPY.txt b/out/TTlep_2018POWPY.txt
+deleted file mode 100644
+index 54dd071..0000000
+--- a/out/TTlep_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0407661726941702 1.0407661726941702 1.0407661726941702 TTlep_2018POWPY 
+diff --git a/out/TTsemi_2018POWPY.txt b/out/TTsemi_2018POWPY.txt
+deleted file mode 100644
+index fe96e0c..0000000
+--- a/out/TTsemi_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.01143484713693 1.01143484713693 1.01143484713693 TTsemi_2018POWPY 
+diff --git a/out/W0J_2018AMCPY.txt b/out/W0J_2018AMCPY.txt
+deleted file mode 100644
+index 4e3c51b..0000000
+--- a/out/W0J_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.156741363296641 1.156741363296641 1.156741363296641 W0J_2018AMCPY 
+diff --git a/out/W1J_2018AMCPY.txt b/out/W1J_2018AMCPY.txt
+deleted file mode 100644
+index bfd2883..0000000
+--- a/out/W1J_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0898186548704345 1.0898186548704345 1.0898186548704345 W1J_2018AMCPY 
+diff --git a/out/W2J_2018AMCPY.txt b/out/W2J_2018AMCPY.txt
+deleted file mode 100644
+index 0ae571b..0000000
+--- a/out/W2J_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0202658724964657 1.0202658724964657 1.0202658724964657 W2J_2018AMCPY 
+diff --git a/out/WLLJJln_2018MG_MADSPIN_PY.txt b/out/WLLJJln_2018MG_MADSPIN_PY.txt
+deleted file mode 100644
+index d4b4c23..0000000
+--- a/out/WLLJJln_2018MG_MADSPIN_PY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0565265463926943 1.0565265463926943 1.0565265463926943 WLLJJln_2018MG_MADSPIN_PY 
+diff --git a/out/WW2l2n_2018POWPY.txt b/out/WW2l2n_2018POWPY.txt
+deleted file mode 100644
+index 948f885..0000000
+--- a/out/WW2l2n_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.078150716950857 1.078150716950857 1.078150716950857 WW2l2n_2018POWPY 
+diff --git a/out/WWJJlnln_2018MGPY.txt b/out/WWJJlnln_2018MGPY.txt
+deleted file mode 100644
+index 5554c6e..0000000
+--- a/out/WWJJlnln_2018MGPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0304055061024133 1.0304055061024133 1.0304055061024133 WWJJlnln_2018MGPY 
+diff --git a/out/WWdps_2018MGPY.txt b/out/WWdps_2018MGPY.txt
+deleted file mode 100644
+index b5ce1df..0000000
+--- a/out/WWdps_2018MGPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.108972246978472 1.108972246978472 1.108972246978472 WWdps_2018MGPY 
+diff --git a/out/WWlnqq_2018POWPY.txt b/out/WWlnqq_2018POWPY.txt
+deleted file mode 100644
+index c48e0b9..0000000
+--- a/out/WWlnqq_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.025072650819151 1.025072650819151 1.025072650819151 WWlnqq_2018POWPY 
+diff --git a/out/WZ1l3n_2018AMCPY.txt b/out/WZ1l3n_2018AMCPY.txt
+deleted file mode 100644
+index b15822d..0000000
+--- a/out/WZ1l3n_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.049840931701933 1.049840931701933 1.049840931701933 WZ1l3n_2018AMCPY 
+diff --git a/out/WZ2l2q_2018AMC_MADSPIN_PY.txt b/out/WZ2l2q_2018AMC_MADSPIN_PY.txt
+deleted file mode 100644
+index 0570856..0000000
+--- a/out/WZ2l2q_2018AMC_MADSPIN_PY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0192619197550936 1.0192619197550936 1.0192619197550936 WZ2l2q_2018AMC_MADSPIN_PY 
+diff --git a/out/WZ3l1n_2018POWPY.txt b/out/WZ3l1n_2018POWPY.txt
+deleted file mode 100644
+index 2c920e4..0000000
+--- a/out/WZ3l1n_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.1385405586826354 1.1385405586826354 1.1385405586826354 WZ3l1n_2018POWPY 
+diff --git a/out/WminusHmm_2018POWPY.txt b/out/WminusHmm_2018POWPY.txt
+deleted file mode 100644
+index d2e30b6..0000000
+--- a/out/WminusHmm_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0607886840567458 1.0607886840567458 1.0607886840567458 WminusHmm_2018POWPY 
+diff --git a/out/WplusHmm_2018POWPY.txt b/out/WplusHmm_2018POWPY.txt
+deleted file mode 100644
+index c424414..0000000
+--- a/out/WplusHmm_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0570736731659718 1.0570736731659718 1.0570736731659718 WplusHmm_2018POWPY 
+diff --git a/out/ZZ2l2q_2018POWPY.txt b/out/ZZ2l2q_2018POWPY.txt
+deleted file mode 100644
+index 08beeaf..0000000
+--- a/out/ZZ2l2q_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0252389835808176 1.0252389835808176 1.0252389835808176 ZZ2l2q_2018POWPY 
+diff --git a/out/ZZ4l_2018POWPY.txt b/out/ZZ4l_2018POWPY.txt
+deleted file mode 100644
+index a013ad1..0000000
+--- a/out/ZZ4l_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.1879147924422846 1.1879147924422846 1.1879147924422846 ZZ4l_2018POWPY 
+diff --git a/out/data2018.txt b/out/data2018.txt
+deleted file mode 100644
+index dbc6ce4..0000000
+--- a/out/data2018.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0 1.0 1.0 data2018 
+diff --git a/out/description.txt b/out/description.txt
+index e69de29..dc6284a 100644
+--- a/out/description.txt
++++ b/out/description.txt
+@@ -0,0 +1,278 @@
++## Description of variables: ['QJetPhase2_0_eta', 'QJetPhase1_1_eta', 'QJetPhase1_0_eta', 'pTbalanceAllPhase2', 'LeadMuonPhase1_pt', 'MassWindowZPhase1', 'SubMuonPhase1_eta', 'qqDeltaPhiPhase2', 'qqPhase1_pt', 'qqDeltaEtaPhase2', 'LeadMuonPhase2_eta', 'Higgs_Phase2_m', 'pTbalanceAllPhase1', 'InclusiveRegionPhase1', 'LeadMuonPhase2_pt', 'SignalRegionPhase2', 'SubMuonPhase2_pt', 'Higgs_Phase1_m', 'CS_Phase1_phi', 'qqDeltaEtaPhase1', 'CS_Phase1_theta', 'qqDeltaPhiPhase1', 'LeadMuonPhase1_eta', 'QJetPhase2_0_pt', 'QJetPhase2_1_pt', 'qqPhase2_pt', 'SubMuonPhase2_eta', 'SignalRegionPhase1', 'VBFRegionPhase1', 'CS_Phase2_theta', 'SubMuonPhase1_pt', 'QJetPhase1_1_pt', 'PreSelPhase1', 'QJetPhase2_1_eta', 'MET_met', 'CS_Phase2_phi', 'QJetPhase1_0_pt']
++##########
++Muon_mass := 0.f*Muon_pt # 7e1b79f5ec65cde2393958a0dcd764b6
++##########
++Muon_p4 := vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Muon_pt , Muon_eta, Muon_phi, Muon_mass) # 2d1eeb5f1feadaa0a931b516f890f7cb
++##########
++SelectedMuonPhase1 := abs(Muon_eta) < 2.4 # ee5501b16804052533afbe33d92f8521
++##########
++SelectedMuonPhase1_charge := At(Muon_charge,SelectedMuonPhase1) # a4dde0b3215064da03494eb75bb190e1
++##########
++SelectedMuonPhase1_eta := At(Muon_eta,SelectedMuonPhase1) # 208a1e35b043f2ebd510d444573de484
++##########
++SelectedMuonPhase1_pt := At(Muon_pt,SelectedMuonPhase1) # aacb4209cb4cc28a0d90677561eacb11
++##########
++SelectedMuonPhase1_p4 := At(Muon_p4,SelectedMuonPhase1) # fe5843ce997e2ba8997416b009b11374
++##########
++nSelectedMuonPhase1 := Sum(SelectedMuonPhase1) # 8a208bf8878f1ceef59b177d6e24d5b7
++##########
++twoMuonsPhase1 := nSelectedMuonPhase1==2 # 6f89ba660ca459981acb9ec9525848e0
++##########
++MuMuPhase1_allpairs := Combinations(Nonzero(SelectedMuonPhase1),Nonzero(SelectedMuonPhase1)) # 1442251cc6bf28c6e7ca4ab1662dc6cd
++##########
++MuMuPhase1 := At(MuMuPhase1_allpairs,0) < At(MuMuPhase1_allpairs,1) # 16cd963e7ccae561bcb08d623119f79b
++##########
++MuMuPhase10 := At(At(MuMuPhase1_allpairs,0),MuMuPhase1) # 2d020ac6d1d00f556cb5f37df7b6d30f
++##########
++MuMuPhase11 := At(At(MuMuPhase1_allpairs,1),MuMuPhase1) # 2e250534d16ab1fb1d53f196069c7107
++##########
++MuMuPhase10_charge := Take(SelectedMuonPhase1_charge,MuMuPhase10) # 5f8b8515fe3bc49f074dece5cecc76d6
++##########
++MuMuPhase11_charge := Take(SelectedMuonPhase1_charge,MuMuPhase11) # 4d4e0f17aa8740f93536f8099ca472e8
++##########
++OppositeSignMuMuPhase1 := Nonzero(MuMuPhase10_charge != MuMuPhase11_charge) # 937b88b680452416049357f6978777f4
++##########
++twoOppositeSignMuonsPhase1 := OppositeSignMuMuPhase1.size() > 0 # 9d72feecbac7e5dfd8ab1553dd14a535
++##########
++MuPhase1_index := At(OppositeSignMuMuPhase1,0,-200) # 0e61c63e2424c245893fcd5805925494
++##########
++MuPhase10 := int(At(MuMuPhase10,MuPhase1_index)) # 2c3209752cb3192a7fb447252fdad013
++##########
++MuPhase10_p4 := At(SelectedMuonPhase1_p4,MuPhase10) # 1a2d5e59d93d03b0f02557f29431a40c
++##########
++MuPhase11 := int(At(MuMuPhase11,MuPhase1_index)) # 3095be85547669002ce86d4ad193c0eb
++##########
++MuPhase11_p4 := At(SelectedMuonPhase1_p4,MuPhase11) # 3d4b974913e9ee34f1974204ba96c337
++##########
++Higgs_Phase1 := MuPhase10_p4+MuPhase11_p4 # f63dda4e778ea456dfc400cf1d146de5
++##########
++Jet_p4 := vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Jet_pt , Jet_eta, Jet_phi, Jet_mass) # 25fd51fa89f9b5a3f9ddb44736ac3d24
++##########
++jetPtCut := 25 # 96b3827b31969859f95f654844ee8011
++##########
++SelectedJetPhase1 := 
++    Jet_pt > jetPtCut && abs(Jet_eta) < 4.7
++     # 4c919f8b7b5cf9b68d9d6a47ffd20785
++##########
++SelectedJetPhase1_btag := At(Jet_btag,SelectedJetPhase1) # 5ec8cbd19fc010687b27024c74a5a277
++##########
++SelectedJetPhase1_eta := At(Jet_eta,SelectedJetPhase1) # 960474c805aec4410f18efd1db9a1d1a
++##########
++SelectedJetPhase1_pt := At(Jet_pt,SelectedJetPhase1) # 01b27709d00458ac3245b98e02f2f5f8
++##########
++SelectedJetPhase1_p4 := At(Jet_p4,SelectedJetPhase1) # 6aa540af337f3570642b5661421275ac
++##########
++nSelectedJetPhase1 := Sum(SelectedJetPhase1) # 3455d155149562afa47ed6b806b8e405
++##########
++twoJetsPhase1 := nSelectedJetPhase1>=2 # 88ad5d40e3a76c3129ccd60eba12b465
++##########
++SortedSelectedJetPhase1Indices := Argsort(-SelectedJetPhase1_pt) # 61b511e894c139a59237d5b85c948c19
++##########
++QJetPhase1_0 := At(SortedSelectedJetPhase1Indices,0) # 44ed8486c572f016a4c5802a6cdfb320
++##########
++QJetPhase1_0_eta := At(SelectedJetPhase1_eta,QJetPhase1_0) # 10167f261c945e70b4e086cb021ba3cd
++##########
++QJetPhase1_0_pt := At(SelectedJetPhase1_pt,QJetPhase1_0) # 8c8e22c0d754359a783ebd0a2b7d00fb
++##########
++QJetPhase1_0_p4 := At(SelectedJetPhase1_p4,QJetPhase1_0) # 21bfe4aeb391181756a601d18a2005b6
++##########
++QJetPhase1_1 := At(SortedSelectedJetPhase1Indices,1) # 12e4a700a7f639aee5ede61c5981448c
++##########
++QJetPhase1_1_eta := At(SelectedJetPhase1_eta,QJetPhase1_1) # 423c7f1e17ff0b21a460f4fb4d8998ea
++##########
++QJetPhase1_1_pt := At(SelectedJetPhase1_pt,QJetPhase1_1) # 39ab27a8771e33030a804bd32694c301
++##########
++QJetPhase1_1_p4 := At(SelectedJetPhase1_p4,QJetPhase1_1) # 8f768d7b3569bbe5b4c2d3e64ddab460
++##########
++qqPhase1 := QJetPhase1_0_p4+QJetPhase1_1_p4 # 3b5766ba95ff6227f056febdfe83fa1b
++##########
++MqqPhase1 := qqPhase1.M() # d72021bb8889d8ed2206394021870ac1
++##########
++qqPhase1_pt := qqPhase1.Pt() # 47c10e7b49ece4da1e4db208b003d6ef
++##########
++qqDeltaEtaPhase1 := abs(QJetPhase1_0_eta-QJetPhase1_1_eta) # 17f63ffcb50c9a1e53b0a4927ae1a644
++##########
++qqDeltaPhiPhase1 := abs(ROOT::Math::VectorUtil::DeltaPhi(QJetPhase1_0_p4,QJetPhase1_1_p4)) # c2020b062fc11ae32c1910d8fb590b45
++##########
++LeadMuonPhase1 := 0 # b092e0c9c1308513e5044c23becd53ec
++##########
++LeadMuonPhase1_eta := At(SelectedMuonPhase1_eta,LeadMuonPhase1) # e2a657b6b34be71e297af5db2ddd60d4
++##########
++LeadMuonPhase1_pt := At(SelectedMuonPhase1_pt,LeadMuonPhase1) # 5541b8b030d731fe9654035f6b1e5764
++##########
++LeadMuonPhase1_p4 := At(SelectedMuonPhase1_p4,LeadMuonPhase1) # 1ee891492d62e405a681bd10d892c206
++##########
++SubMuonPhase1 := 1 # cdc274b183ca3954d7378dbee28f2e76
++##########
++SubMuonPhase1_charge := At(SelectedMuonPhase1_charge,SubMuonPhase1) # a953bb210741e24a2ad4012414266c32
++##########
++SubMuonPhase1_eta := At(SelectedMuonPhase1_eta,SubMuonPhase1) # 17b4c57960d1af1f473478baf0458cd3
++##########
++SubMuonPhase1_pt := At(SelectedMuonPhase1_pt,SubMuonPhase1) # eb6cf66db2ea5bbe7d6a04761a66c955
++##########
++SubMuonPhase1_p4 := At(SelectedMuonPhase1_p4,SubMuonPhase1) # f3f951276461bcd0c275b44d98a788d9
++##########
++Higgs_Phase1_pt := Higgs_Phase1.Pt() # b679ae4cfc06631a4b1ad5323740161d
++##########
++pTbalanceAllPhase1 := SumDef(SelectedJetPhase1_p4).pt()/Higgs_Phase1_pt # 39546a98baf061343538a3c78e7339c9
++##########
++Higgs_Phase1_m := Higgs_Phase1.M() # 0c892203b53dc83e9115696717e77a17
++##########
++CS_Phase1_theta := boost_to_CS(LeadMuonPhase1_p4, SubMuonPhase1_p4,  SubMuonPhase1_charge).first # a243cec6189f2a30e23523fcddc2df8f
++##########
++CS_Phase1_phi := boost_to_CS(LeadMuonPhase1_p4, SubMuonPhase1_p4, SubMuonPhase1_charge).second # 3226ff6f620d3261305d30bb473955ac
++##########
++mQQcut := 400 # d8089bd1b792b630f88152117b167e5e
++##########
++SelectedJetPhase1btagDeepB := SelectedJetPhase1_btag # 442ec9e7f892db9ce80ee042144b4b82
++##########
++btagCut := 0.5 # 3516274e0a1b2005f3d940b259686238
++##########
++btagCutL := 0.5 # ce85b322b5ea03e0dedce7f84d442b18
++##########
++nbtaggedPhase1 := int(Nonzero(SelectedJetPhase1btagDeepB > btagCut && abs(SelectedJetPhase1_eta)< 2.5).size()) # 8987ea9bbee310189247c07bfa572d01
++##########
++nbtaggedLPhase1 := int(Nonzero(SelectedJetPhase1btagDeepB > btagCutL && abs(SelectedJetPhase1_eta)< 2.5).size()) # ae5faf7d16ed1f41a0e237182b28c291
++##########
++nelectronsPhase1 := int(Nonzero(Electron_pt > 20 && abs(Electron_eta) < 2.5 ).size()) # e7fb1849ab56ff2ca954dc9e351ce083
++##########
++MassWindowZPhase1 := abs(Higgs_Phase1.M()-91)<15 # 58302ebbefc81d6692b5966cf5f1cee6
++##########
++VBFRegionPhase1 := MqqPhase1 > mQQcut && QJetPhase1_0_pt> 35 && QJetPhase1_1_pt > 25 # 35448217dd5680dbcdf54908b0777bd2
++##########
++PreSelPhase1 := nelectronsPhase1==0 && nbtaggedLPhase1 < 2 && VBFRegionPhase1 && twoOppositeSignMuonsPhase1 && nbtaggedPhase1 < 1 && (( year == 2016 && LeadMuonPhase1_pt > 26 ) || ( year == 2017 && LeadMuonPhase1_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuonPhase1_pt > 26 )) && SubMuonPhase1_pt > 20 && TriggerSel && abs(SubMuonPhase1_eta) <2.4 && abs(LeadMuonPhase1_eta) < 2.4 # 6d9141945c6992822a6a50f067b8d2f3
++##########
++SignalRegionPhase1 := VBFRegionPhase1 && qqDeltaEtaPhase1 > 2.5 # 0909563402f1f57a49a31aeed53e9352
++##########
++InclusiveRegionPhase1 := 1 # dd72cc6e9210adeffdfc4f97c1a91749
++##########
++SelectedMuonPhase2 := abs(Muon_eta) < 2.8 # c15d43618c7df1cbe00c56da5e80dec4
++##########
++SelectedMuonPhase2_charge := At(Muon_charge,SelectedMuonPhase2) # 5f5ab158d80e385fc2f66f859a4d84e1
++##########
++SelectedMuonPhase2_eta := At(Muon_eta,SelectedMuonPhase2) # afd96bc2458f03c91932eec5c7339548
++##########
++SelectedMuonPhase2_pt := At(Muon_pt,SelectedMuonPhase2) # f4e11fe8235b163efc12239e413db20d
++##########
++SelectedMuonPhase2_p4 := At(Muon_p4,SelectedMuonPhase2) # f65ad0b48cb24dcf2ec40d6157fdf7ed
++##########
++nSelectedMuonPhase2 := Sum(SelectedMuonPhase2) # 3a556ecb20c36f0855124619993370c9
++##########
++twoMuonsPhase2 := nSelectedMuonPhase2==2 # bf189dde3d09582ef3f4c99acdb3700e
++##########
++MuMuPhase2_allpairs := Combinations(Nonzero(SelectedMuonPhase2),Nonzero(SelectedMuonPhase2)) # 7ef0ad7e7731ca7fde53a7b4cc817ee8
++##########
++MuMuPhase2 := At(MuMuPhase2_allpairs,0) < At(MuMuPhase2_allpairs,1) # e75853efcdf792f38021eb3c08327f08
++##########
++MuMuPhase20 := At(At(MuMuPhase2_allpairs,0),MuMuPhase2) # 4921f3726b6a5d705f89a8f52676d8aa
++##########
++MuMuPhase21 := At(At(MuMuPhase2_allpairs,1),MuMuPhase2) # 60d0d9a53d28f3d5ffd40818dd312008
++##########
++MuMuPhase20_charge := Take(SelectedMuonPhase2_charge,MuMuPhase20) # d59062196b8484963d31389f1a12ba74
++##########
++MuMuPhase21_charge := Take(SelectedMuonPhase2_charge,MuMuPhase21) # cabd541bc11d17d2ddfd3fe2267b3340
++##########
++OppositeSignMuMuPhase2 := Nonzero(MuMuPhase20_charge != MuMuPhase21_charge) # c47528f658e6f8db97198b061584c3c0
++##########
++twoOppositeSignMuonsPhase2 := OppositeSignMuMuPhase2.size() > 0 # dc07e94324e24bccc0594214f4411241
++##########
++MuPhase2_index := At(OppositeSignMuMuPhase2,0,-200) # 702560540f79e67094a2fd28ff3376db
++##########
++MuPhase20 := int(At(MuMuPhase20,MuPhase2_index)) # 2f2d69acec6efe4562a9e82c6881dba6
++##########
++MuPhase20_p4 := At(SelectedMuonPhase2_p4,MuPhase20) # ac1a68f637e3605eaeec923128ec1d28
++##########
++MuPhase21 := int(At(MuMuPhase21,MuPhase2_index)) # 8b6f6535377080d145ddf8d49010aae0
++##########
++MuPhase21_p4 := At(SelectedMuonPhase2_p4,MuPhase21) # b0a895828c31941e3604496f3cbe738d
++##########
++Higgs_Phase2 := MuPhase20_p4+MuPhase21_p4 # c227c9b3cb07a4e607cefa32c3e3f0cf
++##########
++SelectedJetPhase2 := 
++    Jet_pt > jetPtCut && abs(Jet_eta) < 4.7
++     # f3437b9c9a1f8c34ba7c8051d27a9ffb
++##########
++SelectedJetPhase2_btag := At(Jet_btag,SelectedJetPhase2) # 133869828f445ed43590faf0814cc542
++##########
++SelectedJetPhase2_eta := At(Jet_eta,SelectedJetPhase2) # 8b2e0ef6c9b7f03f98ab65f255c2a662
++##########
++SelectedJetPhase2_pt := At(Jet_pt,SelectedJetPhase2) # a4425a64383881eeadc46f954b2fc26d
++##########
++SelectedJetPhase2_p4 := At(Jet_p4,SelectedJetPhase2) # d43e53e5082b26aa40486b4d3dfb9d37
++##########
++nSelectedJetPhase2 := Sum(SelectedJetPhase2) # 4994112f681ee120774a768aa0060e08
++##########
++twoJetsPhase2 := nSelectedJetPhase2>=2 # c5022478a62a3816dae49a4db0f28587
++##########
++SortedSelectedJetPhase2Indices := Argsort(-SelectedJetPhase2_pt) # 7ec1b720077369f4f4d80750f09e78cc
++##########
++QJetPhase2_0 := At(SortedSelectedJetPhase2Indices,0) # a36804cdd5f01a53eb5b9be5cade4aec
++##########
++QJetPhase2_0_eta := At(SelectedJetPhase2_eta,QJetPhase2_0) # 88d1a010e53be96f349c972bba63c60e
++##########
++QJetPhase2_0_pt := At(SelectedJetPhase2_pt,QJetPhase2_0) # 5d21532ee32bb4823267d96dd3248d02
++##########
++QJetPhase2_0_p4 := At(SelectedJetPhase2_p4,QJetPhase2_0) # cdf799a9d2f75a5a04b6a4721d54369d
++##########
++QJetPhase2_1 := At(SortedSelectedJetPhase2Indices,1) # 37d39e82076c6b61c11c5d87789c2201
++##########
++QJetPhase2_1_eta := At(SelectedJetPhase2_eta,QJetPhase2_1) # fd2f8c57e2166a8429d2900a0281c559
++##########
++QJetPhase2_1_pt := At(SelectedJetPhase2_pt,QJetPhase2_1) # 3abb1902a848d5040c32e564378c875a
++##########
++QJetPhase2_1_p4 := At(SelectedJetPhase2_p4,QJetPhase2_1) # a601d8c8ee4533cae4bc60e49dcaccf7
++##########
++qqPhase2 := QJetPhase2_0_p4+QJetPhase2_1_p4 # 2dfc0d50d9312ea25a2953c88f31b4a1
++##########
++MqqPhase2 := qqPhase2.M() # 9653efe926b8986ca084aa769a39f30d
++##########
++qqPhase2_pt := qqPhase2.Pt() # 24b16d8b76b6f59d0ad532050f5f4fc8
++##########
++qqDeltaEtaPhase2 := abs(QJetPhase2_0_eta-QJetPhase2_1_eta) # e1c050e187c9e069953b2b0b09aaaf5a
++##########
++qqDeltaPhiPhase2 := abs(ROOT::Math::VectorUtil::DeltaPhi(QJetPhase2_0_p4,QJetPhase2_1_p4)) # ed96d9afb7a1cf85c1397d0989c396b3
++##########
++LeadMuonPhase2 := 0 # fce5290554ea114863ac5fe53e806775
++##########
++LeadMuonPhase2_eta := At(SelectedMuonPhase2_eta,LeadMuonPhase2) # ef684c43e95241fa306118d5dab7361b
++##########
++LeadMuonPhase2_pt := At(SelectedMuonPhase2_pt,LeadMuonPhase2) # 3ca2f192083bc89706e508b0d2ac724f
++##########
++LeadMuonPhase2_p4 := At(SelectedMuonPhase2_p4,LeadMuonPhase2) # 14cca635bc68b4bd8b3301648c44d991
++##########
++SubMuonPhase2 := 1 # f552c31fa696ce5c02ed57409437a201
++##########
++SubMuonPhase2_charge := At(SelectedMuonPhase2_charge,SubMuonPhase2) # ab8df1703c785c5b11be136e95094f8a
++##########
++SubMuonPhase2_eta := At(SelectedMuonPhase2_eta,SubMuonPhase2) # 32be8f401a01bad2aaa46e9a5bdf2b01
++##########
++SubMuonPhase2_pt := At(SelectedMuonPhase2_pt,SubMuonPhase2) # ed63e2e88dd34c343b3697f2305113b9
++##########
++SubMuonPhase2_p4 := At(SelectedMuonPhase2_p4,SubMuonPhase2) # c85f49057b03af42033d9bacc73850e2
++##########
++Higgs_Phase2_pt := Higgs_Phase2.Pt() # a1513491bb4375553183a71a6da5e9eb
++##########
++pTbalanceAllPhase2 := SumDef(SelectedJetPhase2_p4).pt()/Higgs_Phase2_pt # 7ad23f85121b22e8b096153ec849838d
++##########
++Higgs_Phase2_m := Higgs_Phase2.M() # 4b59ac82744a79c1733008e1f683751c
++##########
++CS_Phase2_theta := boost_to_CS(LeadMuonPhase2_p4, SubMuonPhase2_p4,  SubMuonPhase2_charge).first # 24fd0f6dcbce077748f4972bb820d378
++##########
++CS_Phase2_phi := boost_to_CS(LeadMuonPhase2_p4, SubMuonPhase2_p4, SubMuonPhase2_charge).second # d95bf65f2cc64cce5cdca74a4988e152
++##########
++SelectedJetPhase2btagDeepB := SelectedJetPhase2_btag # 3c694463f57b7e144ebddcd5c50d7b44
++##########
++nbtaggedPhase2 := int(Nonzero(SelectedJetPhase2btagDeepB > btagCut && abs(SelectedJetPhase2_eta)< 2.5).size()) # 4ed47d2f9ecc16625237ca42ef1e9ca3
++##########
++nbtaggedLPhase2 := int(Nonzero(SelectedJetPhase2btagDeepB > btagCutL && abs(SelectedJetPhase2_eta)< 2.5).size()) # 288a189f4526f9a51a197462a7a419b2
++##########
++nelectronsPhase2 := int(Nonzero(Electron_pt > 20 && abs(Electron_eta) < 2.5 ).size()) # 0c0eee104101ebef6d5a8b6d29d17488
++##########
++VBFRegionPhase2 := MqqPhase2 > mQQcut && QJetPhase2_0_pt> 35 && QJetPhase2_1_pt > 25 # 92b4fd22652348a752dd1738e657738a
++##########
++PreSelPhase2 := nelectronsPhase2==0 && nbtaggedLPhase2 < 2 && VBFRegionPhase2 && twoOppositeSignMuonsPhase2 && nbtaggedPhase2 < 1 && (( year == 2016 && LeadMuonPhase2_pt > 26 ) || ( year == 2017 && LeadMuonPhase2_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuonPhase2_pt > 26 )) && SubMuonPhase2_pt > 20 && TriggerSel && abs(SubMuonPhase2_eta) <2.4 && abs(LeadMuonPhase2_eta) < 2.4 # d6df71651505eda25d18dc3254d714ec
++##########
++SignalRegionPhase2 := VBFRegionPhase2 && qqDeltaEtaPhase2 > 2.5 # 7930763ce33b6a991243f9daa06c5ed7
++
++
++#Used inputs: {'TriggerSel', 'Jet_pt', 'year', 'Jet_eta', 'Jet_mass', 'Jet_phi', 'Electron_pt', 'Muon_eta', 'Muon_pt', 'Muon_charge', 'MET_met', 'Jet_btag', 'Electron_eta', 'Muon_phi'}
+\ No newline at end of file
+diff --git a/out/ggH120mm_2018AMCPY.txt b/out/ggH120mm_2018AMCPY.txt
+deleted file mode 100644
+index e97ff0f..0000000
+--- a/out/ggH120mm_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0546154686625908 1.0546154686625908 1.0546154686625908 ggH120mm_2018AMCPY 
+diff --git a/out/ggH130mm_2018AMCPY.txt b/out/ggH130mm_2018AMCPY.txt
+deleted file mode 100644
+index 7994731..0000000
+--- a/out/ggH130mm_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0541379763651313 1.0541379763651313 1.0541379763651313 ggH130mm_2018AMCPY 
+diff --git a/out/ggHmm_2018AMCPY.txt b/out/ggHmm_2018AMCPY.txt
+deleted file mode 100644
+index 5cbf9b4..0000000
+--- a/out/ggHmm_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0539237701238773 1.0539237701238773 1.0539237701238773 ggHmm_2018AMCPY 
+diff --git a/out/ggHmm_2018POWPY.txt b/out/ggHmm_2018POWPY.txt
+deleted file mode 100644
+index c168ba7..0000000
+--- a/out/ggHmm_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0695330038232531 1.0695330038232531 1.0695330038232531 ggHmm_2018POWPY 
+diff --git a/out/ttHmm_2018POWPY.txt b/out/ttHmm_2018POWPY.txt
+deleted file mode 100644
+index eccba66..0000000
+--- a/out/ttHmm_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0349041846166973 1.0349041846166973 1.0349041846166973 ttHmm_2018POWPY 
+diff --git a/out/vbfH120mm_2018AMCPY.txt b/out/vbfH120mm_2018AMCPY.txt
+deleted file mode 100644
+index 5da3858..0000000
+--- a/out/vbfH120mm_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0142321942025352 1.0142321942025352 1.0142321942025352 vbfH120mm_2018AMCPY 
+diff --git a/out/vbfH130mm_2018AMCPY.txt b/out/vbfH130mm_2018AMCPY.txt
+deleted file mode 100644
+index 6013b8f..0000000
+--- a/out/vbfH130mm_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.014716906634744 1.014716906634744 1.014716906634744 vbfH130mm_2018AMCPY 
+diff --git a/out/vbfHmm_2018AMCPY.txt b/out/vbfHmm_2018AMCPY.txt
+deleted file mode 100644
+index 673f6cc..0000000
+--- a/out/vbfHmm_2018AMCPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0144523289325647 1.0144523289325647 1.0144523289325647 vbfHmm_2018AMCPY 
+diff --git a/out/vbfHmm_2018POWHERWIG7.txt b/out/vbfHmm_2018POWHERWIG7.txt
+deleted file mode 100644
+index bbb6a06..0000000
+--- a/out/vbfHmm_2018POWHERWIG7.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0114831525335448 1.0114831525335448 1.0114831525335448 vbfHmm_2018POWHERWIG7 
+diff --git a/out/vbfHmm_2018POWPY.txt b/out/vbfHmm_2018POWPY.txt
+deleted file mode 100644
+index 041571c..0000000
+--- a/out/vbfHmm_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0153743774223307 1.0153743774223307 1.0153743774223307 vbfHmm_2018POWPY 
+diff --git a/out/vbfHmm_2018POWPYDIPOLE.txt b/out/vbfHmm_2018POWPYDIPOLE.txt
+deleted file mode 100644
+index 5b576cd..0000000
+--- a/out/vbfHmm_2018POWPYDIPOLE.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0159874579200938 1.0159874579200938 1.0159874579200938 vbfHmm_2018POWPYDIPOLE 
+diff --git a/out/zHmm_2018POWPY.txt b/out/zHmm_2018POWPY.txt
+deleted file mode 100644
+index 53b840c..0000000
+--- a/out/zHmm_2018POWPY.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-Normalization = 1.0436075070318158 1.0436075070318158 1.0436075070318158 zHmm_2018POWPY 
+diff --git a/tmp-data.txt b/tmp-data.txt
+index e66b4bf..cdb200c 100644
+--- a/tmp-data.txt
++++ b/tmp-data.txt
+@@ -15,7 +15,24 @@ selection_SignalRegionPhase1,QJetPhase1_0_pt,QJetPhase1_0_pt,2000,0,2000,QJetPha
+ selection_SignalRegionPhase1,QJetPhase1_1_pt,QJetPhase1_1_pt,2000,0,2000,QJetPhase1_1_pt,SignalRegionPhase1Weight__Central
+ selection_SignalRegionPhase1,CS_Phase1_theta,CS_Phase1_theta,2000,0,2000,CS_Phase1_theta,SignalRegionPhase1Weight__Central
+ selection_SignalRegionPhase1,CS_Phase1_phi,CS_Phase1_phi,2000,0,2000,CS_Phase1_phi,SignalRegionPhase1Weight__Central
+-selection_InclusiveRegion_Phase1,MET_met,MET_met,2000,0,2000,MET_met,InclusiveRegion_Phase1Weight__Central
+-selection_VBFRegion_Phase1,MET_met,MET_met,2000,0,2000,MET_met,VBFRegion_Phase1Weight__Central
+-selection_MassWindowZ_Phase1,MET_met,MET_met,2000,0,2000,MET_met,MassWindowZ_Phase1Weight__Central
+-selection_PreSel_Phase1,MET_met,MET_met,2000,0,2000,MET_met,PreSel_Phase1Weight__Central
++selection_InclusiveRegionPhase1,MET_met,MET_met,2000,0,2000,MET_met,InclusiveRegionPhase1Weight__Central
++selection_VBFRegionPhase1,MET_met,MET_met,2000,0,2000,MET_met,VBFRegionPhase1Weight__Central
++selection_MassWindowZPhase1,MET_met,MET_met,2000,0,2000,MET_met,MassWindowZPhase1Weight__Central
++selection_PreSelPhase1,MET_met,MET_met,2000,0,2000,MET_met,PreSelPhase1Weight__Central
++selection_SignalRegionPhase2,Higgs_Phase2_m,Higgs_Phase2_m,2000,0,2000,Higgs_Phase2_m,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,pTbalanceAllPhase2,pTbalanceAllPhase2,2000,0,2000,pTbalanceAllPhase2,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,LeadMuonPhase2_pt,LeadMuonPhase2_pt,2000,0,2000,LeadMuonPhase2_pt,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,LeadMuonPhase2_eta,LeadMuonPhase2_eta,2000,0,2000,LeadMuonPhase2_eta,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,SubMuonPhase2_pt,SubMuonPhase2_pt,2000,0,2000,SubMuonPhase2_pt,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,SubMuonPhase2_eta,SubMuonPhase2_eta,2000,0,2000,SubMuonPhase2_eta,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,QJetPhase2_0_eta,QJetPhase2_0_eta,2000,0,2000,QJetPhase2_0_eta,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,QJetPhase2_1_eta,QJetPhase2_1_eta,2000,0,2000,QJetPhase2_1_eta,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,QJetPhase2_0_pt,QJetPhase2_0_pt,2000,0,2000,QJetPhase2_0_pt,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,QJetPhase2_1_pt,QJetPhase2_1_pt,2000,0,2000,QJetPhase2_1_pt,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,CS_Phase2_theta,CS_Phase2_theta,2000,0,2000,CS_Phase2_theta,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,CS_Phase2_phi,CS_Phase2_phi,2000,0,2000,CS_Phase2_phi,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,MET_met,MET_met,2000,0,2000,MET_met,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,QJetPhase2_0_pt,QJetPhase2_0_pt,2000,0,2000,QJetPhase2_0_pt,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,qqPhase2_pt,qqPhase2_pt,2000,0,2000,qqPhase2_pt,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,qqDeltaEtaPhase2,qqDeltaEtaPhase2,2000,0,2000,qqDeltaEtaPhase2,SignalRegionPhase2Weight__Central
++selection_SignalRegionPhase2,qqDeltaPhiPhase2,qqDeltaPhiPhase2,2000,0,2000,qqDeltaPhiPhase2,SignalRegionPhase2Weight__Central
+diff --git a/tmp.C b/tmp.C
+index 923f36b..18c7865 100644
+--- a/tmp.C
++++ b/tmp.C
+@@ -32,6 +32,8 @@ class NodeCaster {
+ #endif
+ 
+ #include "boost_to_CS.h"
++
++#include "boost_to_CS.h"
+ ROOT::VecOps::RVec<float> func__Muon_mass(unsigned int __slot , const ROOT::VecOps::RVec<float> & Muon_pt) {  return 0.f*Muon_pt; }
+ ROOT::VecOps::RVec<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > > func__Muon_p4(unsigned int __slot , const ROOT::VecOps::RVec<float> & Muon_eta, const ROOT::VecOps::RVec<float> & Muon_mass, const ROOT::VecOps::RVec<float> & Muon_phi, const ROOT::VecOps::RVec<float> & Muon_pt) {  return vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Muon_pt , Muon_eta, Muon_phi, Muon_mass); }
+ ROOT::VecOps::RVec<int> func__SelectedMuonPhase1(unsigned int __slot , const ROOT::VecOps::RVec<float> & Muon_eta) {  return abs(Muon_eta) < 2.4; }
+@@ -60,6 +62,7 @@ int func__jetPtCut(unsigned int __slot ) {  return 25; }
+ ROOT::VecOps::RVec<int> func__SelectedJetPhase1(unsigned int __slot , const ROOT::VecOps::RVec<float> & Jet_eta, const ROOT::VecOps::RVec<float> & Jet_pt, const int & jetPtCut) {  return 
+     Jet_pt > jetPtCut && abs(Jet_eta) < 4.7
+     ; }
++ROOT::VecOps::RVec<unsigned int> func__SelectedJetPhase1_btag(unsigned int __slot , const ROOT::VecOps::RVec<unsigned int> & Jet_btag, const ROOT::VecOps::RVec<int> & SelectedJetPhase1) {  return At(Jet_btag,SelectedJetPhase1); }
+ ROOT::VecOps::RVec<float> func__SelectedJetPhase1_eta(unsigned int __slot , const ROOT::VecOps::RVec<float> & Jet_eta, const ROOT::VecOps::RVec<int> & SelectedJetPhase1) {  return At(Jet_eta,SelectedJetPhase1); }
+ ROOT::VecOps::RVec<float> func__SelectedJetPhase1_pt(unsigned int __slot , const ROOT::VecOps::RVec<float> & Jet_pt, const ROOT::VecOps::RVec<int> & SelectedJetPhase1) {  return At(Jet_pt,SelectedJetPhase1); }
+ ROOT::VecOps::RVec<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > > func__SelectedJetPhase1_p4(unsigned int __slot , const ROOT::VecOps::RVec<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > > & Jet_p4, const ROOT::VecOps::RVec<int> & SelectedJetPhase1) {  return At(Jet_p4,SelectedJetPhase1); }
+@@ -94,28 +97,98 @@ float func__Higgs_Phase1_m(unsigned int __slot , const ROOT::Math::LorentzVector
+ float func__CS_Phase1_theta(unsigned int __slot , const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & LeadMuonPhase1_p4, const int & SubMuonPhase1_charge, const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & SubMuonPhase1_p4) {  return boost_to_CS(LeadMuonPhase1_p4, SubMuonPhase1_p4,  SubMuonPhase1_charge).first; }
+ float func__CS_Phase1_phi(unsigned int __slot , const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & LeadMuonPhase1_p4, const int & SubMuonPhase1_charge, const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & SubMuonPhase1_p4) {  return boost_to_CS(LeadMuonPhase1_p4, SubMuonPhase1_p4, SubMuonPhase1_charge).second; }
+ int func__mQQcut(unsigned int __slot ) {  return 400; }
+-ROOT::VecOps::RVec<unsigned int> func__SelectedJetPhase1_btagDeepB(unsigned int __slot , const ROOT::VecOps::RVec<unsigned int> & Jet_btag) {  return Jet_btag; }
++ROOT::VecOps::RVec<unsigned int> func__SelectedJetPhase1btagDeepB(unsigned int __slot , const ROOT::VecOps::RVec<unsigned int> & SelectedJetPhase1_btag) {  return SelectedJetPhase1_btag; }
+ double func__btagCut(unsigned int __slot ) {  return 0.5; }
+ double func__btagCutL(unsigned int __slot ) {  return 0.5; }
+-int func__nbtaggedPhase1(unsigned int __slot , const ROOT::VecOps::RVec<unsigned int> & SelectedJetPhase1_btagDeepB, const ROOT::VecOps::RVec<float> & SelectedJetPhase1_eta, const double & btagCut) {  return int(Nonzero(SelectedJetPhase1_btagDeepB > btagCut && abs(SelectedJetPhase1_eta)< 2.5).size()); }
+-int func__nbtaggedLPhase1(unsigned int __slot , const ROOT::VecOps::RVec<unsigned int> & SelectedJetPhase1_btagDeepB, const ROOT::VecOps::RVec<float> & SelectedJetPhase1_eta, const double & btagCutL) {  return int(Nonzero(SelectedJetPhase1_btagDeepB > btagCutL && abs(SelectedJetPhase1_eta)< 2.5).size()); }
++int func__nbtaggedPhase1(unsigned int __slot , const ROOT::VecOps::RVec<float> & SelectedJetPhase1_eta, const ROOT::VecOps::RVec<unsigned int> & SelectedJetPhase1btagDeepB, const double & btagCut) {  return int(Nonzero(SelectedJetPhase1btagDeepB > btagCut && abs(SelectedJetPhase1_eta)< 2.5).size()); }
++int func__nbtaggedLPhase1(unsigned int __slot , const ROOT::VecOps::RVec<float> & SelectedJetPhase1_eta, const ROOT::VecOps::RVec<unsigned int> & SelectedJetPhase1btagDeepB, const double & btagCutL) {  return int(Nonzero(SelectedJetPhase1btagDeepB > btagCutL && abs(SelectedJetPhase1_eta)< 2.5).size()); }
+ int func__nelectronsPhase1(unsigned int __slot , const ROOT::VecOps::RVec<float> & Electron_eta, const ROOT::VecOps::RVec<float> & Electron_pt) {  return int(Nonzero(Electron_pt > 20 && abs(Electron_eta) < 2.5 ).size()); }
+-bool func__MassWindowZ_Phase1(unsigned int __slot , const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & Higgs_Phase1) {  return abs(Higgs_Phase1.M()-91)<15; }
+-bool func__VBFRegion_Phase1(unsigned int __slot , const float & MqqPhase1, const float & QJetPhase1_0_pt, const float & QJetPhase1_1_pt, const int & mQQcut) {  return MqqPhase1 > mQQcut && QJetPhase1_0_pt> 35 && QJetPhase1_1_pt > 25; }
+-bool func__PreSel_Phase1(unsigned int __slot , const float & LeadMuonPhase1_eta, const float & LeadMuonPhase1_pt, const float & SubMuonPhase1_eta, const float & SubMuonPhase1_pt, const bool & TriggerSel, const bool & VBFRegion_Phase1, const int & nbtaggedLPhase1, const int & nbtaggedPhase1, const int & nelectronsPhase1, const bool & twoOppositeSignMuonsPhase1, const int & year) {  return nelectronsPhase1==0 && nbtaggedLPhase1 < 2 && VBFRegion_Phase1 && twoOppositeSignMuonsPhase1 && nbtaggedPhase1 < 1 && (( year == 2016 && LeadMuonPhase1_pt > 26 ) || ( year == 2017 && LeadMuonPhase1_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuonPhase1_pt > 26 )) && SubMuonPhase1_pt > 20 && TriggerSel && abs(SubMuonPhase1_eta) <2.4 && abs(LeadMuonPhase1_eta) < 2.4; }
+-bool func__SignalRegionPhase1(unsigned int __slot , const bool & VBFRegion_Phase1, const float & qqDeltaEtaPhase1) {  return VBFRegion_Phase1 && qqDeltaEtaPhase1 > 2.5; }
+-int func__InclusiveRegion_Phase1(unsigned int __slot ) {  return 1; }
++bool func__MassWindowZPhase1(unsigned int __slot , const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & Higgs_Phase1) {  return abs(Higgs_Phase1.M()-91)<15; }
++bool func__VBFRegionPhase1(unsigned int __slot , const float & MqqPhase1, const float & QJetPhase1_0_pt, const float & QJetPhase1_1_pt, const int & mQQcut) {  return MqqPhase1 > mQQcut && QJetPhase1_0_pt> 35 && QJetPhase1_1_pt > 25; }
++bool func__PreSelPhase1(unsigned int __slot , const float & LeadMuonPhase1_eta, const float & LeadMuonPhase1_pt, const float & SubMuonPhase1_eta, const float & SubMuonPhase1_pt, const bool & TriggerSel, const bool & VBFRegionPhase1, const int & nbtaggedLPhase1, const int & nbtaggedPhase1, const int & nelectronsPhase1, const bool & twoOppositeSignMuonsPhase1, const int & year) {  return nelectronsPhase1==0 && nbtaggedLPhase1 < 2 && VBFRegionPhase1 && twoOppositeSignMuonsPhase1 && nbtaggedPhase1 < 1 && (( year == 2016 && LeadMuonPhase1_pt > 26 ) || ( year == 2017 && LeadMuonPhase1_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuonPhase1_pt > 26 )) && SubMuonPhase1_pt > 20 && TriggerSel && abs(SubMuonPhase1_eta) <2.4 && abs(LeadMuonPhase1_eta) < 2.4; }
++bool func__SignalRegionPhase1(unsigned int __slot , const bool & VBFRegionPhase1, const float & qqDeltaEtaPhase1) {  return VBFRegionPhase1 && qqDeltaEtaPhase1 > 2.5; }
++int func__InclusiveRegionPhase1(unsigned int __slot ) {  return 1; }
++ROOT::VecOps::RVec<int> func__SelectedMuonPhase2(unsigned int __slot , const ROOT::VecOps::RVec<float> & Muon_eta) {  return abs(Muon_eta) < 2.8; }
++ROOT::VecOps::RVec<int> func__SelectedMuonPhase2_charge(unsigned int __slot , const ROOT::VecOps::RVec<int> & Muon_charge, const ROOT::VecOps::RVec<int> & SelectedMuonPhase2) {  return At(Muon_charge,SelectedMuonPhase2); }
++ROOT::VecOps::RVec<float> func__SelectedMuonPhase2_eta(unsigned int __slot , const ROOT::VecOps::RVec<float> & Muon_eta, const ROOT::VecOps::RVec<int> & SelectedMuonPhase2) {  return At(Muon_eta,SelectedMuonPhase2); }
++ROOT::VecOps::RVec<float> func__SelectedMuonPhase2_pt(unsigned int __slot , const ROOT::VecOps::RVec<float> & Muon_pt, const ROOT::VecOps::RVec<int> & SelectedMuonPhase2) {  return At(Muon_pt,SelectedMuonPhase2); }
++ROOT::VecOps::RVec<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > > func__SelectedMuonPhase2_p4(unsigned int __slot , const ROOT::VecOps::RVec<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > > & Muon_p4, const ROOT::VecOps::RVec<int> & SelectedMuonPhase2) {  return At(Muon_p4,SelectedMuonPhase2); }
++int func__nSelectedMuonPhase2(unsigned int __slot , const ROOT::VecOps::RVec<int> & SelectedMuonPhase2) {  return Sum(SelectedMuonPhase2); }
++bool func__twoMuonsPhase2(unsigned int __slot , const int & nSelectedMuonPhase2) {  return nSelectedMuonPhase2==2; }
++ROOT::VecOps::RVec<ROOT::VecOps::RVec<unsigned long> > func__MuMuPhase2_allpairs(unsigned int __slot , const ROOT::VecOps::RVec<int> & SelectedMuonPhase2) {  return Combinations(Nonzero(SelectedMuonPhase2),Nonzero(SelectedMuonPhase2)); }
++ROOT::VecOps::RVec<int> func__MuMuPhase2(unsigned int __slot , const ROOT::VecOps::RVec<ROOT::VecOps::RVec<unsigned long> > & MuMuPhase2_allpairs) {  return At(MuMuPhase2_allpairs,0) < At(MuMuPhase2_allpairs,1); }
++ROOT::VecOps::RVec<unsigned long> func__MuMuPhase20(unsigned int __slot , const ROOT::VecOps::RVec<int> & MuMuPhase2, const ROOT::VecOps::RVec<ROOT::VecOps::RVec<unsigned long> > & MuMuPhase2_allpairs) {  return At(At(MuMuPhase2_allpairs,0),MuMuPhase2); }
++ROOT::VecOps::RVec<unsigned long> func__MuMuPhase21(unsigned int __slot , const ROOT::VecOps::RVec<int> & MuMuPhase2, const ROOT::VecOps::RVec<ROOT::VecOps::RVec<unsigned long> > & MuMuPhase2_allpairs) {  return At(At(MuMuPhase2_allpairs,1),MuMuPhase2); }
++ROOT::VecOps::RVec<int> func__MuMuPhase20_charge(unsigned int __slot , const ROOT::VecOps::RVec<unsigned long> & MuMuPhase20, const ROOT::VecOps::RVec<int> & SelectedMuonPhase2_charge) {  return Take(SelectedMuonPhase2_charge,MuMuPhase20); }
++ROOT::VecOps::RVec<int> func__MuMuPhase21_charge(unsigned int __slot , const ROOT::VecOps::RVec<unsigned long> & MuMuPhase21, const ROOT::VecOps::RVec<int> & SelectedMuonPhase2_charge) {  return Take(SelectedMuonPhase2_charge,MuMuPhase21); }
++ROOT::VecOps::RVec<unsigned long> func__OppositeSignMuMuPhase2(unsigned int __slot , const ROOT::VecOps::RVec<int> & MuMuPhase20_charge, const ROOT::VecOps::RVec<int> & MuMuPhase21_charge) {  return Nonzero(MuMuPhase20_charge != MuMuPhase21_charge); }
++bool func__twoOppositeSignMuonsPhase2(unsigned int __slot , const ROOT::VecOps::RVec<unsigned long> & OppositeSignMuMuPhase2) {  return OppositeSignMuMuPhase2.size() > 0; }
++unsigned long func__MuPhase2_index(unsigned int __slot , const ROOT::VecOps::RVec<unsigned long> & OppositeSignMuMuPhase2) {  return At(OppositeSignMuMuPhase2,0,-200); }
++int func__MuPhase20(unsigned int __slot , const ROOT::VecOps::RVec<unsigned long> & MuMuPhase20, const unsigned long & MuPhase2_index) {  return int(At(MuMuPhase20,MuPhase2_index)); }
++ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > func__MuPhase20_p4(unsigned int __slot , const int & MuPhase20, const ROOT::VecOps::RVec<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > > & SelectedMuonPhase2_p4) {  return At(SelectedMuonPhase2_p4,MuPhase20); }
++int func__MuPhase21(unsigned int __slot , const ROOT::VecOps::RVec<unsigned long> & MuMuPhase21, const unsigned long & MuPhase2_index) {  return int(At(MuMuPhase21,MuPhase2_index)); }
++ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > func__MuPhase21_p4(unsigned int __slot , const int & MuPhase21, const ROOT::VecOps::RVec<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > > & SelectedMuonPhase2_p4) {  return At(SelectedMuonPhase2_p4,MuPhase21); }
++ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > func__Higgs_Phase2(unsigned int __slot , const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & MuPhase20_p4, const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & MuPhase21_p4) {  return MuPhase20_p4+MuPhase21_p4; }
++ROOT::VecOps::RVec<int> func__SelectedJetPhase2(unsigned int __slot , const ROOT::VecOps::RVec<float> & Jet_eta, const ROOT::VecOps::RVec<float> & Jet_pt, const int & jetPtCut) {  return 
++    Jet_pt > jetPtCut && abs(Jet_eta) < 4.7
++    ; }
++ROOT::VecOps::RVec<unsigned int> func__SelectedJetPhase2_btag(unsigned int __slot , const ROOT::VecOps::RVec<unsigned int> & Jet_btag, const ROOT::VecOps::RVec<int> & SelectedJetPhase2) {  return At(Jet_btag,SelectedJetPhase2); }
++ROOT::VecOps::RVec<float> func__SelectedJetPhase2_eta(unsigned int __slot , const ROOT::VecOps::RVec<float> & Jet_eta, const ROOT::VecOps::RVec<int> & SelectedJetPhase2) {  return At(Jet_eta,SelectedJetPhase2); }
++ROOT::VecOps::RVec<float> func__SelectedJetPhase2_pt(unsigned int __slot , const ROOT::VecOps::RVec<float> & Jet_pt, const ROOT::VecOps::RVec<int> & SelectedJetPhase2) {  return At(Jet_pt,SelectedJetPhase2); }
++ROOT::VecOps::RVec<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > > func__SelectedJetPhase2_p4(unsigned int __slot , const ROOT::VecOps::RVec<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > > & Jet_p4, const ROOT::VecOps::RVec<int> & SelectedJetPhase2) {  return At(Jet_p4,SelectedJetPhase2); }
++int func__nSelectedJetPhase2(unsigned int __slot , const ROOT::VecOps::RVec<int> & SelectedJetPhase2) {  return Sum(SelectedJetPhase2); }
++bool func__twoJetsPhase2(unsigned int __slot , const int & nSelectedJetPhase2) {  return nSelectedJetPhase2>=2; }
++ROOT::VecOps::RVec<unsigned long> func__SortedSelectedJetPhase2Indices(unsigned int __slot , const ROOT::VecOps::RVec<float> & SelectedJetPhase2_pt) {  return Argsort(-SelectedJetPhase2_pt); }
++unsigned long func__QJetPhase2_0(unsigned int __slot , const ROOT::VecOps::RVec<unsigned long> & SortedSelectedJetPhase2Indices) {  return At(SortedSelectedJetPhase2Indices,0); }
++float func__QJetPhase2_0_eta(unsigned int __slot , const unsigned long & QJetPhase2_0, const ROOT::VecOps::RVec<float> & SelectedJetPhase2_eta) {  return At(SelectedJetPhase2_eta,QJetPhase2_0); }
++float func__QJetPhase2_0_pt(unsigned int __slot , const unsigned long & QJetPhase2_0, const ROOT::VecOps::RVec<float> & SelectedJetPhase2_pt) {  return At(SelectedJetPhase2_pt,QJetPhase2_0); }
++ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > func__QJetPhase2_0_p4(unsigned int __slot , const unsigned long & QJetPhase2_0, const ROOT::VecOps::RVec<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > > & SelectedJetPhase2_p4) {  return At(SelectedJetPhase2_p4,QJetPhase2_0); }
++unsigned long func__QJetPhase2_1(unsigned int __slot , const ROOT::VecOps::RVec<unsigned long> & SortedSelectedJetPhase2Indices) {  return At(SortedSelectedJetPhase2Indices,1); }
++float func__QJetPhase2_1_eta(unsigned int __slot , const unsigned long & QJetPhase2_1, const ROOT::VecOps::RVec<float> & SelectedJetPhase2_eta) {  return At(SelectedJetPhase2_eta,QJetPhase2_1); }
++float func__QJetPhase2_1_pt(unsigned int __slot , const unsigned long & QJetPhase2_1, const ROOT::VecOps::RVec<float> & SelectedJetPhase2_pt) {  return At(SelectedJetPhase2_pt,QJetPhase2_1); }
++ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > func__QJetPhase2_1_p4(unsigned int __slot , const unsigned long & QJetPhase2_1, const ROOT::VecOps::RVec<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > > & SelectedJetPhase2_p4) {  return At(SelectedJetPhase2_p4,QJetPhase2_1); }
++ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > func__qqPhase2(unsigned int __slot , const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & QJetPhase2_0_p4, const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & QJetPhase2_1_p4) {  return QJetPhase2_0_p4+QJetPhase2_1_p4; }
++float func__MqqPhase2(unsigned int __slot , const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & qqPhase2) {  return qqPhase2.M(); }
++float func__qqPhase2_pt(unsigned int __slot , const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & qqPhase2) {  return qqPhase2.Pt(); }
++float func__qqDeltaEtaPhase2(unsigned int __slot , const float & QJetPhase2_0_eta, const float & QJetPhase2_1_eta) {  return abs(QJetPhase2_0_eta-QJetPhase2_1_eta); }
++float func__qqDeltaPhiPhase2(unsigned int __slot , const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & QJetPhase2_0_p4, const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & QJetPhase2_1_p4) {  return abs(ROOT::Math::VectorUtil::DeltaPhi(QJetPhase2_0_p4,QJetPhase2_1_p4)); }
++int func__LeadMuonPhase2(unsigned int __slot ) {  return 0; }
++float func__LeadMuonPhase2_eta(unsigned int __slot , const int & LeadMuonPhase2, const ROOT::VecOps::RVec<float> & SelectedMuonPhase2_eta) {  return At(SelectedMuonPhase2_eta,LeadMuonPhase2); }
++float func__LeadMuonPhase2_pt(unsigned int __slot , const int & LeadMuonPhase2, const ROOT::VecOps::RVec<float> & SelectedMuonPhase2_pt) {  return At(SelectedMuonPhase2_pt,LeadMuonPhase2); }
++ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > func__LeadMuonPhase2_p4(unsigned int __slot , const int & LeadMuonPhase2, const ROOT::VecOps::RVec<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > > & SelectedMuonPhase2_p4) {  return At(SelectedMuonPhase2_p4,LeadMuonPhase2); }
++int func__SubMuonPhase2(unsigned int __slot ) {  return 1; }
++int func__SubMuonPhase2_charge(unsigned int __slot , const ROOT::VecOps::RVec<int> & SelectedMuonPhase2_charge, const int & SubMuonPhase2) {  return At(SelectedMuonPhase2_charge,SubMuonPhase2); }
++float func__SubMuonPhase2_eta(unsigned int __slot , const ROOT::VecOps::RVec<float> & SelectedMuonPhase2_eta, const int & SubMuonPhase2) {  return At(SelectedMuonPhase2_eta,SubMuonPhase2); }
++float func__SubMuonPhase2_pt(unsigned int __slot , const ROOT::VecOps::RVec<float> & SelectedMuonPhase2_pt, const int & SubMuonPhase2) {  return At(SelectedMuonPhase2_pt,SubMuonPhase2); }
++ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > func__SubMuonPhase2_p4(unsigned int __slot , const ROOT::VecOps::RVec<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > > & SelectedMuonPhase2_p4, const int & SubMuonPhase2) {  return At(SelectedMuonPhase2_p4,SubMuonPhase2); }
++float func__Higgs_Phase2_pt(unsigned int __slot , const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & Higgs_Phase2) {  return Higgs_Phase2.Pt(); }
++float func__pTbalanceAllPhase2(unsigned int __slot , const float & Higgs_Phase2_pt, const ROOT::VecOps::RVec<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > > & SelectedJetPhase2_p4) {  return SumDef(SelectedJetPhase2_p4).pt()/Higgs_Phase2_pt; }
++float func__Higgs_Phase2_m(unsigned int __slot , const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & Higgs_Phase2) {  return Higgs_Phase2.M(); }
++float func__CS_Phase2_theta(unsigned int __slot , const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & LeadMuonPhase2_p4, const int & SubMuonPhase2_charge, const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & SubMuonPhase2_p4) {  return boost_to_CS(LeadMuonPhase2_p4, SubMuonPhase2_p4,  SubMuonPhase2_charge).first; }
++float func__CS_Phase2_phi(unsigned int __slot , const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & LeadMuonPhase2_p4, const int & SubMuonPhase2_charge, const ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> > & SubMuonPhase2_p4) {  return boost_to_CS(LeadMuonPhase2_p4, SubMuonPhase2_p4, SubMuonPhase2_charge).second; }
++ROOT::VecOps::RVec<unsigned int> func__SelectedJetPhase2btagDeepB(unsigned int __slot , const ROOT::VecOps::RVec<unsigned int> & SelectedJetPhase2_btag) {  return SelectedJetPhase2_btag; }
++int func__nbtaggedPhase2(unsigned int __slot , const ROOT::VecOps::RVec<float> & SelectedJetPhase2_eta, const ROOT::VecOps::RVec<unsigned int> & SelectedJetPhase2btagDeepB, const double & btagCut) {  return int(Nonzero(SelectedJetPhase2btagDeepB > btagCut && abs(SelectedJetPhase2_eta)< 2.5).size()); }
++int func__nbtaggedLPhase2(unsigned int __slot , const ROOT::VecOps::RVec<float> & SelectedJetPhase2_eta, const ROOT::VecOps::RVec<unsigned int> & SelectedJetPhase2btagDeepB, const double & btagCutL) {  return int(Nonzero(SelectedJetPhase2btagDeepB > btagCutL && abs(SelectedJetPhase2_eta)< 2.5).size()); }
++int func__nelectronsPhase2(unsigned int __slot , const ROOT::VecOps::RVec<float> & Electron_eta, const ROOT::VecOps::RVec<float> & Electron_pt) {  return int(Nonzero(Electron_pt > 20 && abs(Electron_eta) < 2.5 ).size()); }
++bool func__VBFRegionPhase2(unsigned int __slot , const float & MqqPhase2, const float & QJetPhase2_0_pt, const float & QJetPhase2_1_pt, const int & mQQcut) {  return MqqPhase2 > mQQcut && QJetPhase2_0_pt> 35 && QJetPhase2_1_pt > 25; }
++bool func__PreSelPhase2(unsigned int __slot , const float & LeadMuonPhase2_eta, const float & LeadMuonPhase2_pt, const float & SubMuonPhase2_eta, const float & SubMuonPhase2_pt, const bool & TriggerSel, const bool & VBFRegionPhase2, const int & nbtaggedLPhase2, const int & nbtaggedPhase2, const int & nelectronsPhase2, const bool & twoOppositeSignMuonsPhase2, const int & year) {  return nelectronsPhase2==0 && nbtaggedLPhase2 < 2 && VBFRegionPhase2 && twoOppositeSignMuonsPhase2 && nbtaggedPhase2 < 1 && (( year == 2016 && LeadMuonPhase2_pt > 26 ) || ( year == 2017 && LeadMuonPhase2_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuonPhase2_pt > 26 )) && SubMuonPhase2_pt > 20 && TriggerSel && abs(SubMuonPhase2_eta) <2.4 && abs(LeadMuonPhase2_eta) < 2.4; }
++bool func__SignalRegionPhase2(unsigned int __slot , const bool & VBFRegionPhase2, const float & qqDeltaEtaPhase2) {  return VBFRegionPhase2 && qqDeltaEtaPhase2 > 2.5; }
++double func__twoJetsPhase2Weight__Central(unsigned int __slot ) {  return 1.; }
+ double func__twoJetsPhase1Weight__Central(unsigned int __slot ) {  return 1.; }
++double func__twoMuonsPhase2_twoOppositeSignMuonsPhase2Weight__Central(unsigned int __slot ) {  return 1.; }
+ double func__twoMuonsPhase1Weight__Central(unsigned int __slot ) {  return 1.; }
+-double func__Weight__Central(unsigned int __slot ) {  return 1.; }
+ double func__twoMuonsPhase1_twoOppositeSignMuonsPhase1Weight__Central(unsigned int __slot ) {  return 1.; }
+-double func__twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1_PreSel_Phase1Weight__Central(unsigned int __slot ) {  return 1.; }
+-double func__twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1Weight__Central(unsigned int __slot ) {  return 1.; }
++double func__twoMuonsPhase2Weight__Central(unsigned int __slot ) {  return 1.; }
++double func__Weight__Central(unsigned int __slot ) {  return 1.; }
++double func__twoMuonsPhase2_twoOppositeSignMuonsPhase2_twoJetsPhase2_VBFRegionPhase2_PreSelPhase2Weight__Central(unsigned int __slot ) {  return 1.; }
++double func__twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegionPhase1_PreSelPhase1Weight__Central(unsigned int __slot ) {  return 1.; }
++double func__twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegionPhase1Weight__Central(unsigned int __slot ) {  return 1.; }
+ double func__SignalRegionPhase1Weight__Central(unsigned int __slot ) {  return 1.; }
+-double func__InclusiveRegion_Phase1Weight__Central(unsigned int __slot ) {  return 1.; }
+-double func__VBFRegion_Phase1Weight__Central(unsigned int __slot ) {  return 1.; }
+-double func__MassWindowZ_Phase1Weight__Central(unsigned int __slot ) {  return 1.; }
+-double func__PreSel_Phase1Weight__Central(unsigned int __slot ) {  return 1.; }
++double func__InclusiveRegionPhase1Weight__Central(unsigned int __slot ) {  return 1.; }
++double func__VBFRegionPhase1Weight__Central(unsigned int __slot ) {  return 1.; }
++double func__MassWindowZPhase1Weight__Central(unsigned int __slot ) {  return 1.; }
++double func__PreSelPhase1Weight__Central(unsigned int __slot ) {  return 1.; }
++double func__SignalRegionPhase2Weight__Central(unsigned int __slot ) {  return 1.; }
+ 
+ Result eventProcessor2026_nail(RNode rdf,int nThreads) {
+      Result r;
+@@ -148,65 +221,134 @@ auto rdf22 =rdf21.DefineSlot("Higgs_Phase1",func__Higgs_Phase1,{"MuPhase10_p4","
+ auto rdf23 =rdf22.DefineSlot("Jet_p4",func__Jet_p4,{"Jet_eta","Jet_mass","Jet_phi","Jet_pt"});
+ auto rdf24 =rdf23.DefineSlot("jetPtCut",func__jetPtCut,{});
+ auto rdf25 =rdf24.DefineSlot("SelectedJetPhase1",func__SelectedJetPhase1,{"Jet_eta","Jet_pt","jetPtCut"});
+-auto rdf26 =rdf25.DefineSlot("SelectedJetPhase1_eta",func__SelectedJetPhase1_eta,{"Jet_eta","SelectedJetPhase1"});
+-auto rdf27 =rdf26.DefineSlot("SelectedJetPhase1_pt",func__SelectedJetPhase1_pt,{"Jet_pt","SelectedJetPhase1"});
+-auto rdf28 =rdf27.DefineSlot("SelectedJetPhase1_p4",func__SelectedJetPhase1_p4,{"Jet_p4","SelectedJetPhase1"});
+-auto rdf29 =rdf28.DefineSlot("nSelectedJetPhase1",func__nSelectedJetPhase1,{"SelectedJetPhase1"});
+-auto rdf30 =rdf29.DefineSlot("twoJetsPhase1",func__twoJetsPhase1,{"nSelectedJetPhase1"});
+-auto rdf31 =rdf30.DefineSlot("SortedSelectedJetPhase1Indices",func__SortedSelectedJetPhase1Indices,{"SelectedJetPhase1_pt"});
+-auto rdf32 =rdf31.DefineSlot("QJetPhase1_0",func__QJetPhase1_0,{"SortedSelectedJetPhase1Indices"});
+-auto rdf33 =rdf32.DefineSlot("QJetPhase1_0_eta",func__QJetPhase1_0_eta,{"QJetPhase1_0","SelectedJetPhase1_eta"});
+-auto rdf34 =rdf33.DefineSlot("QJetPhase1_0_pt",func__QJetPhase1_0_pt,{"QJetPhase1_0","SelectedJetPhase1_pt"});
+-auto rdf35 =rdf34.DefineSlot("QJetPhase1_0_p4",func__QJetPhase1_0_p4,{"QJetPhase1_0","SelectedJetPhase1_p4"});
+-auto rdf36 =rdf35.DefineSlot("QJetPhase1_1",func__QJetPhase1_1,{"SortedSelectedJetPhase1Indices"});
+-auto rdf37 =rdf36.DefineSlot("QJetPhase1_1_eta",func__QJetPhase1_1_eta,{"QJetPhase1_1","SelectedJetPhase1_eta"});
+-auto rdf38 =rdf37.DefineSlot("QJetPhase1_1_pt",func__QJetPhase1_1_pt,{"QJetPhase1_1","SelectedJetPhase1_pt"});
+-auto rdf39 =rdf38.DefineSlot("QJetPhase1_1_p4",func__QJetPhase1_1_p4,{"QJetPhase1_1","SelectedJetPhase1_p4"});
+-auto rdf40 =rdf39.DefineSlot("qqPhase1",func__qqPhase1,{"QJetPhase1_0_p4","QJetPhase1_1_p4"});
+-auto rdf41 =rdf40.DefineSlot("MqqPhase1",func__MqqPhase1,{"qqPhase1"});
+-auto rdf42 =rdf41.DefineSlot("qqPhase1_pt",func__qqPhase1_pt,{"qqPhase1"});
+-auto rdf43 =rdf42.DefineSlot("qqDeltaEtaPhase1",func__qqDeltaEtaPhase1,{"QJetPhase1_0_eta","QJetPhase1_1_eta"});
+-auto rdf44 =rdf43.DefineSlot("qqDeltaPhiPhase1",func__qqDeltaPhiPhase1,{"QJetPhase1_0_p4","QJetPhase1_1_p4"});
+-auto rdf45 =rdf44.DefineSlot("LeadMuonPhase1",func__LeadMuonPhase1,{});
+-auto rdf46 =rdf45.DefineSlot("LeadMuonPhase1_eta",func__LeadMuonPhase1_eta,{"LeadMuonPhase1","SelectedMuonPhase1_eta"});
+-auto rdf47 =rdf46.DefineSlot("LeadMuonPhase1_pt",func__LeadMuonPhase1_pt,{"LeadMuonPhase1","SelectedMuonPhase1_pt"});
+-auto rdf48 =rdf47.DefineSlot("LeadMuonPhase1_p4",func__LeadMuonPhase1_p4,{"LeadMuonPhase1","SelectedMuonPhase1_p4"});
+-auto rdf49 =rdf48.DefineSlot("SubMuonPhase1",func__SubMuonPhase1,{});
+-auto rdf50 =rdf49.DefineSlot("SubMuonPhase1_charge",func__SubMuonPhase1_charge,{"SelectedMuonPhase1_charge","SubMuonPhase1"});
+-auto rdf51 =rdf50.DefineSlot("SubMuonPhase1_eta",func__SubMuonPhase1_eta,{"SelectedMuonPhase1_eta","SubMuonPhase1"});
+-auto rdf52 =rdf51.DefineSlot("SubMuonPhase1_pt",func__SubMuonPhase1_pt,{"SelectedMuonPhase1_pt","SubMuonPhase1"});
+-auto rdf53 =rdf52.DefineSlot("SubMuonPhase1_p4",func__SubMuonPhase1_p4,{"SelectedMuonPhase1_p4","SubMuonPhase1"});
+-auto rdf54 =rdf53.DefineSlot("Higgs_Phase1_pt",func__Higgs_Phase1_pt,{"Higgs_Phase1"});
+-auto rdf55 =rdf54.DefineSlot("pTbalanceAllPhase1",func__pTbalanceAllPhase1,{"Higgs_Phase1_pt","SelectedJetPhase1_p4"});
+-auto rdf56 =rdf55.DefineSlot("Higgs_Phase1_m",func__Higgs_Phase1_m,{"Higgs_Phase1"});
+-auto rdf57 =rdf56.DefineSlot("CS_Phase1_theta",func__CS_Phase1_theta,{"LeadMuonPhase1_p4","SubMuonPhase1_charge","SubMuonPhase1_p4"});
+-auto rdf58 =rdf57.DefineSlot("CS_Phase1_phi",func__CS_Phase1_phi,{"LeadMuonPhase1_p4","SubMuonPhase1_charge","SubMuonPhase1_p4"});
+-auto rdf59 =rdf58.DefineSlot("mQQcut",func__mQQcut,{});
+-auto rdf60 =rdf59.DefineSlot("SelectedJetPhase1_btagDeepB",func__SelectedJetPhase1_btagDeepB,{"Jet_btag"});
+-auto rdf61 =rdf60.DefineSlot("btagCut",func__btagCut,{});
+-auto rdf62 =rdf61.DefineSlot("btagCutL",func__btagCutL,{});
+-auto rdf63 =rdf62.DefineSlot("nbtaggedPhase1",func__nbtaggedPhase1,{"SelectedJetPhase1_btagDeepB","SelectedJetPhase1_eta","btagCut"});
+-auto rdf64 =rdf63.DefineSlot("nbtaggedLPhase1",func__nbtaggedLPhase1,{"SelectedJetPhase1_btagDeepB","SelectedJetPhase1_eta","btagCutL"});
+-auto rdf65 =rdf64.DefineSlot("nelectronsPhase1",func__nelectronsPhase1,{"Electron_eta","Electron_pt"});
+-auto rdf66 =rdf65.DefineSlot("MassWindowZ_Phase1",func__MassWindowZ_Phase1,{"Higgs_Phase1"});
+-auto rdf67 =rdf66.DefineSlot("VBFRegion_Phase1",func__VBFRegion_Phase1,{"MqqPhase1","QJetPhase1_0_pt","QJetPhase1_1_pt","mQQcut"});
+-auto rdf68 =rdf67.DefineSlot("PreSel_Phase1",func__PreSel_Phase1,{"LeadMuonPhase1_eta","LeadMuonPhase1_pt","SubMuonPhase1_eta","SubMuonPhase1_pt","TriggerSel","VBFRegion_Phase1","nbtaggedLPhase1","nbtaggedPhase1","nelectronsPhase1","twoOppositeSignMuonsPhase1","year"});
+-auto rdf69 =rdf68.DefineSlot("SignalRegionPhase1",func__SignalRegionPhase1,{"VBFRegion_Phase1","qqDeltaEtaPhase1"});
+-auto rdf70 =rdf69.DefineSlot("InclusiveRegion_Phase1",func__InclusiveRegion_Phase1,{});
+-auto rdf71 =rdf70.DefineSlot("twoJetsPhase1Weight__Central",func__twoJetsPhase1Weight__Central,{});
+-auto rdf72 =rdf71.DefineSlot("twoMuonsPhase1Weight__Central",func__twoMuonsPhase1Weight__Central,{});
+-auto rdf73 =rdf72.DefineSlot("Weight__Central",func__Weight__Central,{});
+-auto rdf74 =rdf73.DefineSlot("twoMuonsPhase1_twoOppositeSignMuonsPhase1Weight__Central",func__twoMuonsPhase1_twoOppositeSignMuonsPhase1Weight__Central,{});
+-auto rdf75 =rdf74.DefineSlot("twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1_PreSel_Phase1Weight__Central",func__twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1_PreSel_Phase1Weight__Central,{});
+-auto rdf76 =rdf75.DefineSlot("twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1Weight__Central",func__twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1Weight__Central,{});
+-auto rdf77 =rdf76.DefineSlot("SignalRegionPhase1Weight__Central",func__SignalRegionPhase1Weight__Central,{});
+-auto rdf78 =rdf77.DefineSlot("InclusiveRegion_Phase1Weight__Central",func__InclusiveRegion_Phase1Weight__Central,{});
+-auto rdf79 =rdf78.DefineSlot("VBFRegion_Phase1Weight__Central",func__VBFRegion_Phase1Weight__Central,{});
+-auto rdf80 =rdf79.DefineSlot("MassWindowZ_Phase1Weight__Central",func__MassWindowZ_Phase1Weight__Central,{});
+-auto rdf81 =rdf80.DefineSlot("PreSel_Phase1Weight__Central",func__PreSel_Phase1Weight__Central,{});
+-auto toplevel=rdf81;
++auto rdf26 =rdf25.DefineSlot("SelectedJetPhase1_btag",func__SelectedJetPhase1_btag,{"Jet_btag","SelectedJetPhase1"});
++auto rdf27 =rdf26.DefineSlot("SelectedJetPhase1_eta",func__SelectedJetPhase1_eta,{"Jet_eta","SelectedJetPhase1"});
++auto rdf28 =rdf27.DefineSlot("SelectedJetPhase1_pt",func__SelectedJetPhase1_pt,{"Jet_pt","SelectedJetPhase1"});
++auto rdf29 =rdf28.DefineSlot("SelectedJetPhase1_p4",func__SelectedJetPhase1_p4,{"Jet_p4","SelectedJetPhase1"});
++auto rdf30 =rdf29.DefineSlot("nSelectedJetPhase1",func__nSelectedJetPhase1,{"SelectedJetPhase1"});
++auto rdf31 =rdf30.DefineSlot("twoJetsPhase1",func__twoJetsPhase1,{"nSelectedJetPhase1"});
++auto rdf32 =rdf31.DefineSlot("SortedSelectedJetPhase1Indices",func__SortedSelectedJetPhase1Indices,{"SelectedJetPhase1_pt"});
++auto rdf33 =rdf32.DefineSlot("QJetPhase1_0",func__QJetPhase1_0,{"SortedSelectedJetPhase1Indices"});
++auto rdf34 =rdf33.DefineSlot("QJetPhase1_0_eta",func__QJetPhase1_0_eta,{"QJetPhase1_0","SelectedJetPhase1_eta"});
++auto rdf35 =rdf34.DefineSlot("QJetPhase1_0_pt",func__QJetPhase1_0_pt,{"QJetPhase1_0","SelectedJetPhase1_pt"});
++auto rdf36 =rdf35.DefineSlot("QJetPhase1_0_p4",func__QJetPhase1_0_p4,{"QJetPhase1_0","SelectedJetPhase1_p4"});
++auto rdf37 =rdf36.DefineSlot("QJetPhase1_1",func__QJetPhase1_1,{"SortedSelectedJetPhase1Indices"});
++auto rdf38 =rdf37.DefineSlot("QJetPhase1_1_eta",func__QJetPhase1_1_eta,{"QJetPhase1_1","SelectedJetPhase1_eta"});
++auto rdf39 =rdf38.DefineSlot("QJetPhase1_1_pt",func__QJetPhase1_1_pt,{"QJetPhase1_1","SelectedJetPhase1_pt"});
++auto rdf40 =rdf39.DefineSlot("QJetPhase1_1_p4",func__QJetPhase1_1_p4,{"QJetPhase1_1","SelectedJetPhase1_p4"});
++auto rdf41 =rdf40.DefineSlot("qqPhase1",func__qqPhase1,{"QJetPhase1_0_p4","QJetPhase1_1_p4"});
++auto rdf42 =rdf41.DefineSlot("MqqPhase1",func__MqqPhase1,{"qqPhase1"});
++auto rdf43 =rdf42.DefineSlot("qqPhase1_pt",func__qqPhase1_pt,{"qqPhase1"});
++auto rdf44 =rdf43.DefineSlot("qqDeltaEtaPhase1",func__qqDeltaEtaPhase1,{"QJetPhase1_0_eta","QJetPhase1_1_eta"});
++auto rdf45 =rdf44.DefineSlot("qqDeltaPhiPhase1",func__qqDeltaPhiPhase1,{"QJetPhase1_0_p4","QJetPhase1_1_p4"});
++auto rdf46 =rdf45.DefineSlot("LeadMuonPhase1",func__LeadMuonPhase1,{});
++auto rdf47 =rdf46.DefineSlot("LeadMuonPhase1_eta",func__LeadMuonPhase1_eta,{"LeadMuonPhase1","SelectedMuonPhase1_eta"});
++auto rdf48 =rdf47.DefineSlot("LeadMuonPhase1_pt",func__LeadMuonPhase1_pt,{"LeadMuonPhase1","SelectedMuonPhase1_pt"});
++auto rdf49 =rdf48.DefineSlot("LeadMuonPhase1_p4",func__LeadMuonPhase1_p4,{"LeadMuonPhase1","SelectedMuonPhase1_p4"});
++auto rdf50 =rdf49.DefineSlot("SubMuonPhase1",func__SubMuonPhase1,{});
++auto rdf51 =rdf50.DefineSlot("SubMuonPhase1_charge",func__SubMuonPhase1_charge,{"SelectedMuonPhase1_charge","SubMuonPhase1"});
++auto rdf52 =rdf51.DefineSlot("SubMuonPhase1_eta",func__SubMuonPhase1_eta,{"SelectedMuonPhase1_eta","SubMuonPhase1"});
++auto rdf53 =rdf52.DefineSlot("SubMuonPhase1_pt",func__SubMuonPhase1_pt,{"SelectedMuonPhase1_pt","SubMuonPhase1"});
++auto rdf54 =rdf53.DefineSlot("SubMuonPhase1_p4",func__SubMuonPhase1_p4,{"SelectedMuonPhase1_p4","SubMuonPhase1"});
++auto rdf55 =rdf54.DefineSlot("Higgs_Phase1_pt",func__Higgs_Phase1_pt,{"Higgs_Phase1"});
++auto rdf56 =rdf55.DefineSlot("pTbalanceAllPhase1",func__pTbalanceAllPhase1,{"Higgs_Phase1_pt","SelectedJetPhase1_p4"});
++auto rdf57 =rdf56.DefineSlot("Higgs_Phase1_m",func__Higgs_Phase1_m,{"Higgs_Phase1"});
++auto rdf58 =rdf57.DefineSlot("CS_Phase1_theta",func__CS_Phase1_theta,{"LeadMuonPhase1_p4","SubMuonPhase1_charge","SubMuonPhase1_p4"});
++auto rdf59 =rdf58.DefineSlot("CS_Phase1_phi",func__CS_Phase1_phi,{"LeadMuonPhase1_p4","SubMuonPhase1_charge","SubMuonPhase1_p4"});
++auto rdf60 =rdf59.DefineSlot("mQQcut",func__mQQcut,{});
++auto rdf61 =rdf60.DefineSlot("SelectedJetPhase1btagDeepB",func__SelectedJetPhase1btagDeepB,{"SelectedJetPhase1_btag"});
++auto rdf62 =rdf61.DefineSlot("btagCut",func__btagCut,{});
++auto rdf63 =rdf62.DefineSlot("btagCutL",func__btagCutL,{});
++auto rdf64 =rdf63.DefineSlot("nbtaggedPhase1",func__nbtaggedPhase1,{"SelectedJetPhase1_eta","SelectedJetPhase1btagDeepB","btagCut"});
++auto rdf65 =rdf64.DefineSlot("nbtaggedLPhase1",func__nbtaggedLPhase1,{"SelectedJetPhase1_eta","SelectedJetPhase1btagDeepB","btagCutL"});
++auto rdf66 =rdf65.DefineSlot("nelectronsPhase1",func__nelectronsPhase1,{"Electron_eta","Electron_pt"});
++auto rdf67 =rdf66.DefineSlot("MassWindowZPhase1",func__MassWindowZPhase1,{"Higgs_Phase1"});
++auto rdf68 =rdf67.DefineSlot("VBFRegionPhase1",func__VBFRegionPhase1,{"MqqPhase1","QJetPhase1_0_pt","QJetPhase1_1_pt","mQQcut"});
++auto rdf69 =rdf68.DefineSlot("PreSelPhase1",func__PreSelPhase1,{"LeadMuonPhase1_eta","LeadMuonPhase1_pt","SubMuonPhase1_eta","SubMuonPhase1_pt","TriggerSel","VBFRegionPhase1","nbtaggedLPhase1","nbtaggedPhase1","nelectronsPhase1","twoOppositeSignMuonsPhase1","year"});
++auto rdf70 =rdf69.DefineSlot("SignalRegionPhase1",func__SignalRegionPhase1,{"VBFRegionPhase1","qqDeltaEtaPhase1"});
++auto rdf71 =rdf70.DefineSlot("InclusiveRegionPhase1",func__InclusiveRegionPhase1,{});
++auto rdf72 =rdf71.DefineSlot("SelectedMuonPhase2",func__SelectedMuonPhase2,{"Muon_eta"});
++auto rdf73 =rdf72.DefineSlot("SelectedMuonPhase2_charge",func__SelectedMuonPhase2_charge,{"Muon_charge","SelectedMuonPhase2"});
++auto rdf74 =rdf73.DefineSlot("SelectedMuonPhase2_eta",func__SelectedMuonPhase2_eta,{"Muon_eta","SelectedMuonPhase2"});
++auto rdf75 =rdf74.DefineSlot("SelectedMuonPhase2_pt",func__SelectedMuonPhase2_pt,{"Muon_pt","SelectedMuonPhase2"});
++auto rdf76 =rdf75.DefineSlot("SelectedMuonPhase2_p4",func__SelectedMuonPhase2_p4,{"Muon_p4","SelectedMuonPhase2"});
++auto rdf77 =rdf76.DefineSlot("nSelectedMuonPhase2",func__nSelectedMuonPhase2,{"SelectedMuonPhase2"});
++auto rdf78 =rdf77.DefineSlot("twoMuonsPhase2",func__twoMuonsPhase2,{"nSelectedMuonPhase2"});
++auto rdf79 =rdf78.DefineSlot("MuMuPhase2_allpairs",func__MuMuPhase2_allpairs,{"SelectedMuonPhase2"});
++auto rdf80 =rdf79.DefineSlot("MuMuPhase2",func__MuMuPhase2,{"MuMuPhase2_allpairs"});
++auto rdf81 =rdf80.DefineSlot("MuMuPhase20",func__MuMuPhase20,{"MuMuPhase2","MuMuPhase2_allpairs"});
++auto rdf82 =rdf81.DefineSlot("MuMuPhase21",func__MuMuPhase21,{"MuMuPhase2","MuMuPhase2_allpairs"});
++auto rdf83 =rdf82.DefineSlot("MuMuPhase20_charge",func__MuMuPhase20_charge,{"MuMuPhase20","SelectedMuonPhase2_charge"});
++auto rdf84 =rdf83.DefineSlot("MuMuPhase21_charge",func__MuMuPhase21_charge,{"MuMuPhase21","SelectedMuonPhase2_charge"});
++auto rdf85 =rdf84.DefineSlot("OppositeSignMuMuPhase2",func__OppositeSignMuMuPhase2,{"MuMuPhase20_charge","MuMuPhase21_charge"});
++auto rdf86 =rdf85.DefineSlot("twoOppositeSignMuonsPhase2",func__twoOppositeSignMuonsPhase2,{"OppositeSignMuMuPhase2"});
++auto rdf87 =rdf86.DefineSlot("MuPhase2_index",func__MuPhase2_index,{"OppositeSignMuMuPhase2"});
++auto rdf88 =rdf87.DefineSlot("MuPhase20",func__MuPhase20,{"MuMuPhase20","MuPhase2_index"});
++auto rdf89 =rdf88.DefineSlot("MuPhase20_p4",func__MuPhase20_p4,{"MuPhase20","SelectedMuonPhase2_p4"});
++auto rdf90 =rdf89.DefineSlot("MuPhase21",func__MuPhase21,{"MuMuPhase21","MuPhase2_index"});
++auto rdf91 =rdf90.DefineSlot("MuPhase21_p4",func__MuPhase21_p4,{"MuPhase21","SelectedMuonPhase2_p4"});
++auto rdf92 =rdf91.DefineSlot("Higgs_Phase2",func__Higgs_Phase2,{"MuPhase20_p4","MuPhase21_p4"});
++auto rdf93 =rdf92.DefineSlot("SelectedJetPhase2",func__SelectedJetPhase2,{"Jet_eta","Jet_pt","jetPtCut"});
++auto rdf94 =rdf93.DefineSlot("SelectedJetPhase2_btag",func__SelectedJetPhase2_btag,{"Jet_btag","SelectedJetPhase2"});
++auto rdf95 =rdf94.DefineSlot("SelectedJetPhase2_eta",func__SelectedJetPhase2_eta,{"Jet_eta","SelectedJetPhase2"});
++auto rdf96 =rdf95.DefineSlot("SelectedJetPhase2_pt",func__SelectedJetPhase2_pt,{"Jet_pt","SelectedJetPhase2"});
++auto rdf97 =rdf96.DefineSlot("SelectedJetPhase2_p4",func__SelectedJetPhase2_p4,{"Jet_p4","SelectedJetPhase2"});
++auto rdf98 =rdf97.DefineSlot("nSelectedJetPhase2",func__nSelectedJetPhase2,{"SelectedJetPhase2"});
++auto rdf99 =rdf98.DefineSlot("twoJetsPhase2",func__twoJetsPhase2,{"nSelectedJetPhase2"});
++auto rdf100 =rdf99.DefineSlot("SortedSelectedJetPhase2Indices",func__SortedSelectedJetPhase2Indices,{"SelectedJetPhase2_pt"});
++auto rdf101 =rdf100.DefineSlot("QJetPhase2_0",func__QJetPhase2_0,{"SortedSelectedJetPhase2Indices"});
++auto rdf102 =rdf101.DefineSlot("QJetPhase2_0_eta",func__QJetPhase2_0_eta,{"QJetPhase2_0","SelectedJetPhase2_eta"});
++auto rdf103 =rdf102.DefineSlot("QJetPhase2_0_pt",func__QJetPhase2_0_pt,{"QJetPhase2_0","SelectedJetPhase2_pt"});
++auto rdf104 =rdf103.DefineSlot("QJetPhase2_0_p4",func__QJetPhase2_0_p4,{"QJetPhase2_0","SelectedJetPhase2_p4"});
++auto rdf105 =rdf104.DefineSlot("QJetPhase2_1",func__QJetPhase2_1,{"SortedSelectedJetPhase2Indices"});
++auto rdf106 =rdf105.DefineSlot("QJetPhase2_1_eta",func__QJetPhase2_1_eta,{"QJetPhase2_1","SelectedJetPhase2_eta"});
++auto rdf107 =rdf106.DefineSlot("QJetPhase2_1_pt",func__QJetPhase2_1_pt,{"QJetPhase2_1","SelectedJetPhase2_pt"});
++auto rdf108 =rdf107.DefineSlot("QJetPhase2_1_p4",func__QJetPhase2_1_p4,{"QJetPhase2_1","SelectedJetPhase2_p4"});
++auto rdf109 =rdf108.DefineSlot("qqPhase2",func__qqPhase2,{"QJetPhase2_0_p4","QJetPhase2_1_p4"});
++auto rdf110 =rdf109.DefineSlot("MqqPhase2",func__MqqPhase2,{"qqPhase2"});
++auto rdf111 =rdf110.DefineSlot("qqPhase2_pt",func__qqPhase2_pt,{"qqPhase2"});
++auto rdf112 =rdf111.DefineSlot("qqDeltaEtaPhase2",func__qqDeltaEtaPhase2,{"QJetPhase2_0_eta","QJetPhase2_1_eta"});
++auto rdf113 =rdf112.DefineSlot("qqDeltaPhiPhase2",func__qqDeltaPhiPhase2,{"QJetPhase2_0_p4","QJetPhase2_1_p4"});
++auto rdf114 =rdf113.DefineSlot("LeadMuonPhase2",func__LeadMuonPhase2,{});
++auto rdf115 =rdf114.DefineSlot("LeadMuonPhase2_eta",func__LeadMuonPhase2_eta,{"LeadMuonPhase2","SelectedMuonPhase2_eta"});
++auto rdf116 =rdf115.DefineSlot("LeadMuonPhase2_pt",func__LeadMuonPhase2_pt,{"LeadMuonPhase2","SelectedMuonPhase2_pt"});
++auto rdf117 =rdf116.DefineSlot("LeadMuonPhase2_p4",func__LeadMuonPhase2_p4,{"LeadMuonPhase2","SelectedMuonPhase2_p4"});
++auto rdf118 =rdf117.DefineSlot("SubMuonPhase2",func__SubMuonPhase2,{});
++auto rdf119 =rdf118.DefineSlot("SubMuonPhase2_charge",func__SubMuonPhase2_charge,{"SelectedMuonPhase2_charge","SubMuonPhase2"});
++auto rdf120 =rdf119.DefineSlot("SubMuonPhase2_eta",func__SubMuonPhase2_eta,{"SelectedMuonPhase2_eta","SubMuonPhase2"});
++auto rdf121 =rdf120.DefineSlot("SubMuonPhase2_pt",func__SubMuonPhase2_pt,{"SelectedMuonPhase2_pt","SubMuonPhase2"});
++auto rdf122 =rdf121.DefineSlot("SubMuonPhase2_p4",func__SubMuonPhase2_p4,{"SelectedMuonPhase2_p4","SubMuonPhase2"});
++auto rdf123 =rdf122.DefineSlot("Higgs_Phase2_pt",func__Higgs_Phase2_pt,{"Higgs_Phase2"});
++auto rdf124 =rdf123.DefineSlot("pTbalanceAllPhase2",func__pTbalanceAllPhase2,{"Higgs_Phase2_pt","SelectedJetPhase2_p4"});
++auto rdf125 =rdf124.DefineSlot("Higgs_Phase2_m",func__Higgs_Phase2_m,{"Higgs_Phase2"});
++auto rdf126 =rdf125.DefineSlot("CS_Phase2_theta",func__CS_Phase2_theta,{"LeadMuonPhase2_p4","SubMuonPhase2_charge","SubMuonPhase2_p4"});
++auto rdf127 =rdf126.DefineSlot("CS_Phase2_phi",func__CS_Phase2_phi,{"LeadMuonPhase2_p4","SubMuonPhase2_charge","SubMuonPhase2_p4"});
++auto rdf128 =rdf127.DefineSlot("SelectedJetPhase2btagDeepB",func__SelectedJetPhase2btagDeepB,{"SelectedJetPhase2_btag"});
++auto rdf129 =rdf128.DefineSlot("nbtaggedPhase2",func__nbtaggedPhase2,{"SelectedJetPhase2_eta","SelectedJetPhase2btagDeepB","btagCut"});
++auto rdf130 =rdf129.DefineSlot("nbtaggedLPhase2",func__nbtaggedLPhase2,{"SelectedJetPhase2_eta","SelectedJetPhase2btagDeepB","btagCutL"});
++auto rdf131 =rdf130.DefineSlot("nelectronsPhase2",func__nelectronsPhase2,{"Electron_eta","Electron_pt"});
++auto rdf132 =rdf131.DefineSlot("VBFRegionPhase2",func__VBFRegionPhase2,{"MqqPhase2","QJetPhase2_0_pt","QJetPhase2_1_pt","mQQcut"});
++auto rdf133 =rdf132.DefineSlot("PreSelPhase2",func__PreSelPhase2,{"LeadMuonPhase2_eta","LeadMuonPhase2_pt","SubMuonPhase2_eta","SubMuonPhase2_pt","TriggerSel","VBFRegionPhase2","nbtaggedLPhase2","nbtaggedPhase2","nelectronsPhase2","twoOppositeSignMuonsPhase2","year"});
++auto rdf134 =rdf133.DefineSlot("SignalRegionPhase2",func__SignalRegionPhase2,{"VBFRegionPhase2","qqDeltaEtaPhase2"});
++auto rdf135 =rdf134.DefineSlot("twoJetsPhase2Weight__Central",func__twoJetsPhase2Weight__Central,{});
++auto rdf136 =rdf135.DefineSlot("twoJetsPhase1Weight__Central",func__twoJetsPhase1Weight__Central,{});
++auto rdf137 =rdf136.DefineSlot("twoMuonsPhase2_twoOppositeSignMuonsPhase2Weight__Central",func__twoMuonsPhase2_twoOppositeSignMuonsPhase2Weight__Central,{});
++auto rdf138 =rdf137.DefineSlot("twoMuonsPhase1Weight__Central",func__twoMuonsPhase1Weight__Central,{});
++auto rdf139 =rdf138.DefineSlot("twoMuonsPhase1_twoOppositeSignMuonsPhase1Weight__Central",func__twoMuonsPhase1_twoOppositeSignMuonsPhase1Weight__Central,{});
++auto rdf140 =rdf139.DefineSlot("twoMuonsPhase2Weight__Central",func__twoMuonsPhase2Weight__Central,{});
++auto rdf141 =rdf140.DefineSlot("Weight__Central",func__Weight__Central,{});
++auto rdf142 =rdf141.DefineSlot("twoMuonsPhase2_twoOppositeSignMuonsPhase2_twoJetsPhase2_VBFRegionPhase2_PreSelPhase2Weight__Central",func__twoMuonsPhase2_twoOppositeSignMuonsPhase2_twoJetsPhase2_VBFRegionPhase2_PreSelPhase2Weight__Central,{});
++auto rdf143 =rdf142.DefineSlot("twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegionPhase1_PreSelPhase1Weight__Central",func__twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegionPhase1_PreSelPhase1Weight__Central,{});
++auto rdf144 =rdf143.DefineSlot("twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegionPhase1Weight__Central",func__twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegionPhase1Weight__Central,{});
++auto rdf145 =rdf144.DefineSlot("SignalRegionPhase1Weight__Central",func__SignalRegionPhase1Weight__Central,{});
++auto rdf146 =rdf145.DefineSlot("InclusiveRegionPhase1Weight__Central",func__InclusiveRegionPhase1Weight__Central,{});
++auto rdf147 =rdf146.DefineSlot("VBFRegionPhase1Weight__Central",func__VBFRegionPhase1Weight__Central,{});
++auto rdf148 =rdf147.DefineSlot("MassWindowZPhase1Weight__Central",func__MassWindowZPhase1Weight__Central,{});
++auto rdf149 =rdf148.DefineSlot("PreSelPhase1Weight__Central",func__PreSelPhase1Weight__Central,{});
++auto rdf150 =rdf149.DefineSlot("SignalRegionPhase2Weight__Central",func__SignalRegionPhase2Weight__Central,{});
++auto toplevel=rdf150;
+ std::vector<ROOT::RDF::RResultPtr<TH1D>> histos;
+-{}auto selection_SignalRegionPhase1=rdf81.Filter("twoMuonsPhase1","twoMuonsPhase1").Filter("twoOppositeSignMuonsPhase1","twoOppositeSignMuonsPhase1").Filter("twoJetsPhase1","twoJetsPhase1").Filter("VBFRegion_Phase1","VBFRegion_Phase1").Filter("PreSel_Phase1","PreSel_Phase1").Filter("SignalRegionPhase1","SignalRegionPhase1");
++{}auto selection_SignalRegionPhase1=rdf150.Filter("twoMuonsPhase1","twoMuonsPhase1").Filter("twoOppositeSignMuonsPhase1","twoOppositeSignMuonsPhase1").Filter("twoJetsPhase1","twoJetsPhase1").Filter("VBFRegionPhase1","VBFRegionPhase1").Filter("PreSelPhase1","PreSelPhase1").Filter("SignalRegionPhase1","SignalRegionPhase1");
+ r.rdf.emplace("SignalRegionPhase1",selection_SignalRegionPhase1);
+ {histos.emplace_back(selection_SignalRegionPhase1.Histo1D({"MET_met___SignalRegionPhase1", "MET_met {SignalRegionPhase1}", 1000,0,1000},"MET_met","SignalRegionPhase1Weight__Central"));
+ histos.emplace_back(selection_SignalRegionPhase1.Histo1D({"QJetPhase1_0_pt___SignalRegionPhase1", "QJetPhase1_0_pt {SignalRegionPhase1}", 30 , 0 , 300},"QJetPhase1_0_pt","SignalRegionPhase1Weight__Central"));
+@@ -225,19 +367,38 @@ histos.emplace_back(selection_SignalRegionPhase1.Histo1D({"QJetPhase1_0_pt___Sig
+ histos.emplace_back(selection_SignalRegionPhase1.Histo1D({"QJetPhase1_1_pt___SignalRegionPhase1", "QJetPhase1_1_pt {SignalRegionPhase1}", 30 , 0 , 300},"QJetPhase1_1_pt","SignalRegionPhase1Weight__Central"));
+ histos.emplace_back(selection_SignalRegionPhase1.Histo1D({"CS_Phase1_theta___SignalRegionPhase1", "CS_Phase1_theta {SignalRegionPhase1}", 30 , -3.2 , 3.2},"CS_Phase1_theta","SignalRegionPhase1Weight__Central"));
+ histos.emplace_back(selection_SignalRegionPhase1.Histo1D({"CS_Phase1_phi___SignalRegionPhase1", "CS_Phase1_phi {SignalRegionPhase1}", 30 , -3.2 , 3.2},"CS_Phase1_phi","SignalRegionPhase1Weight__Central"));
+-}auto selection_InclusiveRegion_Phase1=rdf81.Filter("InclusiveRegion_Phase1","InclusiveRegion_Phase1");
+-r.rdf.emplace("InclusiveRegion_Phase1",selection_InclusiveRegion_Phase1);
+-{histos.emplace_back(selection_InclusiveRegion_Phase1.Histo1D({"MET_met___InclusiveRegion_Phase1", "MET_met {InclusiveRegion_Phase1}", 1000,0,1000},"MET_met","InclusiveRegion_Phase1Weight__Central"));
+-}auto selection_VBFRegion_Phase1=rdf81.Filter("twoJetsPhase1","twoJetsPhase1").Filter("VBFRegion_Phase1","VBFRegion_Phase1");
+-r.rdf.emplace("VBFRegion_Phase1",selection_VBFRegion_Phase1);
+-{histos.emplace_back(selection_VBFRegion_Phase1.Histo1D({"MET_met___VBFRegion_Phase1", "MET_met {VBFRegion_Phase1}", 1000,0,1000},"MET_met","VBFRegion_Phase1Weight__Central"));
+-}auto selection_MassWindowZ_Phase1=rdf81.Filter("twoMuonsPhase1","twoMuonsPhase1").Filter("twoOppositeSignMuonsPhase1","twoOppositeSignMuonsPhase1").Filter("MassWindowZ_Phase1","MassWindowZ_Phase1");
+-r.rdf.emplace("MassWindowZ_Phase1",selection_MassWindowZ_Phase1);
+-{histos.emplace_back(selection_MassWindowZ_Phase1.Histo1D({"MET_met___MassWindowZ_Phase1", "MET_met {MassWindowZ_Phase1}", 1000,0,1000},"MET_met","MassWindowZ_Phase1Weight__Central"));
+-}auto selection_PreSel_Phase1=rdf81.Filter("twoMuonsPhase1","twoMuonsPhase1").Filter("twoOppositeSignMuonsPhase1","twoOppositeSignMuonsPhase1").Filter("twoJetsPhase1","twoJetsPhase1").Filter("VBFRegion_Phase1","VBFRegion_Phase1").Filter("PreSel_Phase1","PreSel_Phase1");
+-r.rdf.emplace("PreSel_Phase1",selection_PreSel_Phase1);
+-{histos.emplace_back(selection_PreSel_Phase1.Histo1D({"MET_met___PreSel_Phase1", "MET_met {PreSel_Phase1}", 1000,0,1000},"MET_met","PreSel_Phase1Weight__Central"));
++}auto selection_InclusiveRegionPhase1=rdf150.Filter("InclusiveRegionPhase1","InclusiveRegionPhase1");
++r.rdf.emplace("InclusiveRegionPhase1",selection_InclusiveRegionPhase1);
++{histos.emplace_back(selection_InclusiveRegionPhase1.Histo1D({"MET_met___InclusiveRegionPhase1", "MET_met {InclusiveRegionPhase1}", 1000,0,1000},"MET_met","InclusiveRegionPhase1Weight__Central"));
++}auto selection_VBFRegionPhase1=rdf150.Filter("twoJetsPhase1","twoJetsPhase1").Filter("VBFRegionPhase1","VBFRegionPhase1");
++r.rdf.emplace("VBFRegionPhase1",selection_VBFRegionPhase1);
++{histos.emplace_back(selection_VBFRegionPhase1.Histo1D({"MET_met___VBFRegionPhase1", "MET_met {VBFRegionPhase1}", 1000,0,1000},"MET_met","VBFRegionPhase1Weight__Central"));
++}auto selection_MassWindowZPhase1=rdf150.Filter("twoMuonsPhase1","twoMuonsPhase1").Filter("twoOppositeSignMuonsPhase1","twoOppositeSignMuonsPhase1").Filter("MassWindowZPhase1","MassWindowZPhase1");
++r.rdf.emplace("MassWindowZPhase1",selection_MassWindowZPhase1);
++{histos.emplace_back(selection_MassWindowZPhase1.Histo1D({"MET_met___MassWindowZPhase1", "MET_met {MassWindowZPhase1}", 1000,0,1000},"MET_met","MassWindowZPhase1Weight__Central"));
++}auto selection_PreSelPhase1=rdf150.Filter("twoMuonsPhase1","twoMuonsPhase1").Filter("twoOppositeSignMuonsPhase1","twoOppositeSignMuonsPhase1").Filter("twoJetsPhase1","twoJetsPhase1").Filter("VBFRegionPhase1","VBFRegionPhase1").Filter("PreSelPhase1","PreSelPhase1");
++r.rdf.emplace("PreSelPhase1",selection_PreSelPhase1);
++{histos.emplace_back(selection_PreSelPhase1.Histo1D({"MET_met___PreSelPhase1", "MET_met {PreSelPhase1}", 1000,0,1000},"MET_met","PreSelPhase1Weight__Central"));
++}auto selection_SignalRegionPhase2=rdf150.Filter("twoMuonsPhase2","twoMuonsPhase2").Filter("twoOppositeSignMuonsPhase2","twoOppositeSignMuonsPhase2").Filter("twoJetsPhase2","twoJetsPhase2").Filter("VBFRegionPhase2","VBFRegionPhase2").Filter("PreSelPhase2","PreSelPhase2").Filter("SignalRegionPhase2","SignalRegionPhase2");
++r.rdf.emplace("SignalRegionPhase2",selection_SignalRegionPhase2);
++{histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"Higgs_Phase2_m___SignalRegionPhase2", "Higgs_Phase2_m {SignalRegionPhase2}", 30 , 0,500},"Higgs_Phase2_m","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"pTbalanceAllPhase2___SignalRegionPhase2", "pTbalanceAllPhase2 {SignalRegionPhase2}", 30 , 0 , 4},"pTbalanceAllPhase2","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"LeadMuonPhase2_pt___SignalRegionPhase2", "LeadMuonPhase2_pt {SignalRegionPhase2}", 30 , 0 , 300},"LeadMuonPhase2_pt","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"LeadMuonPhase2_eta___SignalRegionPhase2", "LeadMuonPhase2_eta {SignalRegionPhase2}", 30 , -5 , 5},"LeadMuonPhase2_eta","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"SubMuonPhase2_pt___SignalRegionPhase2", "SubMuonPhase2_pt {SignalRegionPhase2}", 30 , 0 , 300},"SubMuonPhase2_pt","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"SubMuonPhase2_eta___SignalRegionPhase2", "SubMuonPhase2_eta {SignalRegionPhase2}", 30 , -5 , 5},"SubMuonPhase2_eta","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"QJetPhase2_0_eta___SignalRegionPhase2", "QJetPhase2_0_eta {SignalRegionPhase2}", 30 , -5 , 5},"QJetPhase2_0_eta","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"QJetPhase2_1_eta___SignalRegionPhase2", "QJetPhase2_1_eta {SignalRegionPhase2}", 30 , -5 , 5},"QJetPhase2_1_eta","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"QJetPhase2_0_pt___SignalRegionPhase2", "QJetPhase2_0_pt {SignalRegionPhase2}", 30 , 0 , 300},"QJetPhase2_0_pt","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"QJetPhase2_1_pt___SignalRegionPhase2", "QJetPhase2_1_pt {SignalRegionPhase2}", 30 , 0 , 300},"QJetPhase2_1_pt","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"CS_Phase2_theta___SignalRegionPhase2", "CS_Phase2_theta {SignalRegionPhase2}", 30 , -3.2 , 3.2},"CS_Phase2_theta","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"CS_Phase2_phi___SignalRegionPhase2", "CS_Phase2_phi {SignalRegionPhase2}", 30 , -3.2 , 3.2},"CS_Phase2_phi","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"MET_met___SignalRegionPhase2", "MET_met {SignalRegionPhase2}", 1000,0,1000},"MET_met","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"QJetPhase2_0_pt___SignalRegionPhase2", "QJetPhase2_0_pt {SignalRegionPhase2}", 30 , 0 , 300},"QJetPhase2_0_pt","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"qqPhase2_pt___SignalRegionPhase2", "qqPhase2_pt {SignalRegionPhase2}", 30 , 0 , 300},"qqPhase2_pt","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"qqDeltaEtaPhase2___SignalRegionPhase2", "qqDeltaEtaPhase2 {SignalRegionPhase2}", 30 , 0,10},"qqDeltaEtaPhase2","SignalRegionPhase2Weight__Central"));
++histos.emplace_back(selection_SignalRegionPhase2.Histo1D({"qqDeltaPhiPhase2___SignalRegionPhase2", "qqDeltaPhiPhase2 {SignalRegionPhase2}", 1000,0,1000},"qqDeltaPhiPhase2","SignalRegionPhase2Weight__Central"));
+ }
+ ;
+-r.rdf.emplace("",rdf81);
++r.rdf.emplace("",rdf150);
+ r.histos=histos; return r;}
+\ No newline at end of file
