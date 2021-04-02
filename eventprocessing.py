@@ -318,7 +318,7 @@ def getFlow(year):
     #flow.Selection("MassWindow","Higgs.M()")
     flow.Selection("MassWindowZPhase2","abs(Higgs_Phase2.M()-91)<15")
     flow.Selection("VBFRegionPhase2","MqqPhase2 > mQQcut && QJetPhase2_0_pt> 35 && QJetPhase2_1_pt > 25")
-    flow.Selection("PreSelPhase2","nelectronsPhase2==0 && nbtaggedLPhase2 < 2 && VBFRegionPhase2 && twoOppositeSignMuonsPhase2 && nbtaggedPhase2 < 1 && (( year == 2016 && LeadMuonPhase2_pt > 26 ) || ( year == 2017 && LeadMuonPhase2_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuonPhase2_pt > 26 )) && SubMuonPhase2_pt > 20 && TriggerSel && abs(SubMuonPhase2_eta) <2.4 && abs(LeadMuonPhase2_eta) < 2.4",requires=["VBFRegionPhase2","twoOppositeSignMuonsPhase2"])
+    flow.Selection("PreSelPhase2","nelectronsPhase2==0 && nbtaggedLPhase2 < 2 && VBFRegionPhase2 && twoOppositeSignMuonsPhase2 && nbtaggedPhase2 < 1 && (( year == 2016 && LeadMuonPhase2_pt > 26 ) || ( year == 2017 && LeadMuonPhase2_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuonPhase2_pt > 26 )) && SubMuonPhase2_pt > 20 &&  TriggerSel",requires=["VBFRegionPhase2","twoOppositeSignMuonsPhase2"])
     #flow.Selection("SideBand","Higgs_m < 150 && Higgs_m > 110 && ! MassWindow && VBFRegion &&  qqDeltaEta > 2.5",requires=["VBFRegion","PreSel"])
     flow.Selection("SignalRegionPhase2","VBFRegionPhase2 && qqDeltaEtaPhase2 > 2.5", requires=["VBFRegionPhase2","PreSelPhase2"]) ##FIXME qqDeltaEta > 2.5
     flow.Selection("InclusiveRegionPhase2","1")    #flow.Selection("ZRegion","VBFRegion && MassWindowZ  && qqDeltaEta > 2.5", requires=["VBFRegion","MassWindowZ","PreSel"])
