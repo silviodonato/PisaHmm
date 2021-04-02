@@ -1,0 +1,278 @@
+## Description of variables: ['QJetPhase2_0_eta', 'QJetPhase1_1_eta', 'QJetPhase1_0_eta', 'pTbalanceAllPhase2', 'LeadMuonPhase1_pt', 'MassWindowZPhase1', 'SubMuonPhase1_eta', 'qqDeltaPhiPhase2', 'qqPhase1_pt', 'qqDeltaEtaPhase2', 'LeadMuonPhase2_eta', 'Higgs_Phase2_m', 'pTbalanceAllPhase1', 'InclusiveRegionPhase1', 'LeadMuonPhase2_pt', 'SignalRegionPhase2', 'SubMuonPhase2_pt', 'Higgs_Phase1_m', 'CS_Phase1_phi', 'qqDeltaEtaPhase1', 'CS_Phase1_theta', 'qqDeltaPhiPhase1', 'LeadMuonPhase1_eta', 'QJetPhase2_0_pt', 'QJetPhase2_1_pt', 'qqPhase2_pt', 'SubMuonPhase2_eta', 'SignalRegionPhase1', 'VBFRegionPhase1', 'CS_Phase2_theta', 'SubMuonPhase1_pt', 'QJetPhase1_1_pt', 'PreSelPhase1', 'QJetPhase2_1_eta', 'MET_met', 'CS_Phase2_phi', 'QJetPhase1_0_pt']
+##########
+Muon_mass := 0.f*Muon_pt # 7e1b79f5ec65cde2393958a0dcd764b6
+##########
+Muon_p4 := vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Muon_pt , Muon_eta, Muon_phi, Muon_mass) # 2d1eeb5f1feadaa0a931b516f890f7cb
+##########
+SelectedMuonPhase1 := abs(Muon_eta) < 2.4 # ee5501b16804052533afbe33d92f8521
+##########
+SelectedMuonPhase1_charge := At(Muon_charge,SelectedMuonPhase1) # a4dde0b3215064da03494eb75bb190e1
+##########
+SelectedMuonPhase1_eta := At(Muon_eta,SelectedMuonPhase1) # 208a1e35b043f2ebd510d444573de484
+##########
+SelectedMuonPhase1_pt := At(Muon_pt,SelectedMuonPhase1) # aacb4209cb4cc28a0d90677561eacb11
+##########
+SelectedMuonPhase1_p4 := At(Muon_p4,SelectedMuonPhase1) # fe5843ce997e2ba8997416b009b11374
+##########
+nSelectedMuonPhase1 := Sum(SelectedMuonPhase1) # 8a208bf8878f1ceef59b177d6e24d5b7
+##########
+twoMuonsPhase1 := nSelectedMuonPhase1==2 # 6f89ba660ca459981acb9ec9525848e0
+##########
+MuMuPhase1_allpairs := Combinations(Nonzero(SelectedMuonPhase1),Nonzero(SelectedMuonPhase1)) # 1442251cc6bf28c6e7ca4ab1662dc6cd
+##########
+MuMuPhase1 := At(MuMuPhase1_allpairs,0) < At(MuMuPhase1_allpairs,1) # 16cd963e7ccae561bcb08d623119f79b
+##########
+MuMuPhase10 := At(At(MuMuPhase1_allpairs,0),MuMuPhase1) # 2d020ac6d1d00f556cb5f37df7b6d30f
+##########
+MuMuPhase11 := At(At(MuMuPhase1_allpairs,1),MuMuPhase1) # 2e250534d16ab1fb1d53f196069c7107
+##########
+MuMuPhase10_charge := Take(SelectedMuonPhase1_charge,MuMuPhase10) # 5f8b8515fe3bc49f074dece5cecc76d6
+##########
+MuMuPhase11_charge := Take(SelectedMuonPhase1_charge,MuMuPhase11) # 4d4e0f17aa8740f93536f8099ca472e8
+##########
+OppositeSignMuMuPhase1 := Nonzero(MuMuPhase10_charge != MuMuPhase11_charge) # 937b88b680452416049357f6978777f4
+##########
+twoOppositeSignMuonsPhase1 := OppositeSignMuMuPhase1.size() > 0 # 9d72feecbac7e5dfd8ab1553dd14a535
+##########
+MuPhase1_index := At(OppositeSignMuMuPhase1,0,-200) # 0e61c63e2424c245893fcd5805925494
+##########
+MuPhase10 := int(At(MuMuPhase10,MuPhase1_index)) # 2c3209752cb3192a7fb447252fdad013
+##########
+MuPhase10_p4 := At(SelectedMuonPhase1_p4,MuPhase10) # 1a2d5e59d93d03b0f02557f29431a40c
+##########
+MuPhase11 := int(At(MuMuPhase11,MuPhase1_index)) # 3095be85547669002ce86d4ad193c0eb
+##########
+MuPhase11_p4 := At(SelectedMuonPhase1_p4,MuPhase11) # 3d4b974913e9ee34f1974204ba96c337
+##########
+Higgs_Phase1 := MuPhase10_p4+MuPhase11_p4 # f63dda4e778ea456dfc400cf1d146de5
+##########
+Jet_p4 := vector_map_t<ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<float> >        >(Jet_pt , Jet_eta, Jet_phi, Jet_mass) # 25fd51fa89f9b5a3f9ddb44736ac3d24
+##########
+jetPtCut := 25 # 96b3827b31969859f95f654844ee8011
+##########
+SelectedJetPhase1 := 
+    Jet_pt > jetPtCut && abs(Jet_eta) < 4.7
+     # 4c919f8b7b5cf9b68d9d6a47ffd20785
+##########
+SelectedJetPhase1_btag := At(Jet_btag,SelectedJetPhase1) # 5ec8cbd19fc010687b27024c74a5a277
+##########
+SelectedJetPhase1_eta := At(Jet_eta,SelectedJetPhase1) # 960474c805aec4410f18efd1db9a1d1a
+##########
+SelectedJetPhase1_pt := At(Jet_pt,SelectedJetPhase1) # 01b27709d00458ac3245b98e02f2f5f8
+##########
+SelectedJetPhase1_p4 := At(Jet_p4,SelectedJetPhase1) # 6aa540af337f3570642b5661421275ac
+##########
+nSelectedJetPhase1 := Sum(SelectedJetPhase1) # 3455d155149562afa47ed6b806b8e405
+##########
+twoJetsPhase1 := nSelectedJetPhase1>=2 # 88ad5d40e3a76c3129ccd60eba12b465
+##########
+SortedSelectedJetPhase1Indices := Argsort(-SelectedJetPhase1_pt) # 61b511e894c139a59237d5b85c948c19
+##########
+QJetPhase1_0 := At(SortedSelectedJetPhase1Indices,0) # 44ed8486c572f016a4c5802a6cdfb320
+##########
+QJetPhase1_0_eta := At(SelectedJetPhase1_eta,QJetPhase1_0) # 10167f261c945e70b4e086cb021ba3cd
+##########
+QJetPhase1_0_pt := At(SelectedJetPhase1_pt,QJetPhase1_0) # 8c8e22c0d754359a783ebd0a2b7d00fb
+##########
+QJetPhase1_0_p4 := At(SelectedJetPhase1_p4,QJetPhase1_0) # 21bfe4aeb391181756a601d18a2005b6
+##########
+QJetPhase1_1 := At(SortedSelectedJetPhase1Indices,1) # 12e4a700a7f639aee5ede61c5981448c
+##########
+QJetPhase1_1_eta := At(SelectedJetPhase1_eta,QJetPhase1_1) # 423c7f1e17ff0b21a460f4fb4d8998ea
+##########
+QJetPhase1_1_pt := At(SelectedJetPhase1_pt,QJetPhase1_1) # 39ab27a8771e33030a804bd32694c301
+##########
+QJetPhase1_1_p4 := At(SelectedJetPhase1_p4,QJetPhase1_1) # 8f768d7b3569bbe5b4c2d3e64ddab460
+##########
+qqPhase1 := QJetPhase1_0_p4+QJetPhase1_1_p4 # 3b5766ba95ff6227f056febdfe83fa1b
+##########
+MqqPhase1 := qqPhase1.M() # d72021bb8889d8ed2206394021870ac1
+##########
+qqPhase1_pt := qqPhase1.Pt() # 47c10e7b49ece4da1e4db208b003d6ef
+##########
+qqDeltaEtaPhase1 := abs(QJetPhase1_0_eta-QJetPhase1_1_eta) # 17f63ffcb50c9a1e53b0a4927ae1a644
+##########
+qqDeltaPhiPhase1 := abs(ROOT::Math::VectorUtil::DeltaPhi(QJetPhase1_0_p4,QJetPhase1_1_p4)) # c2020b062fc11ae32c1910d8fb590b45
+##########
+LeadMuonPhase1 := 0 # b092e0c9c1308513e5044c23becd53ec
+##########
+LeadMuonPhase1_eta := At(SelectedMuonPhase1_eta,LeadMuonPhase1) # e2a657b6b34be71e297af5db2ddd60d4
+##########
+LeadMuonPhase1_pt := At(SelectedMuonPhase1_pt,LeadMuonPhase1) # 5541b8b030d731fe9654035f6b1e5764
+##########
+LeadMuonPhase1_p4 := At(SelectedMuonPhase1_p4,LeadMuonPhase1) # 1ee891492d62e405a681bd10d892c206
+##########
+SubMuonPhase1 := 1 # cdc274b183ca3954d7378dbee28f2e76
+##########
+SubMuonPhase1_charge := At(SelectedMuonPhase1_charge,SubMuonPhase1) # a953bb210741e24a2ad4012414266c32
+##########
+SubMuonPhase1_eta := At(SelectedMuonPhase1_eta,SubMuonPhase1) # 17b4c57960d1af1f473478baf0458cd3
+##########
+SubMuonPhase1_pt := At(SelectedMuonPhase1_pt,SubMuonPhase1) # eb6cf66db2ea5bbe7d6a04761a66c955
+##########
+SubMuonPhase1_p4 := At(SelectedMuonPhase1_p4,SubMuonPhase1) # f3f951276461bcd0c275b44d98a788d9
+##########
+Higgs_Phase1_pt := Higgs_Phase1.Pt() # b679ae4cfc06631a4b1ad5323740161d
+##########
+pTbalanceAllPhase1 := SumDef(SelectedJetPhase1_p4).pt()/Higgs_Phase1_pt # 39546a98baf061343538a3c78e7339c9
+##########
+Higgs_Phase1_m := Higgs_Phase1.M() # 0c892203b53dc83e9115696717e77a17
+##########
+CS_Phase1_theta := boost_to_CS(LeadMuonPhase1_p4, SubMuonPhase1_p4,  SubMuonPhase1_charge).first # a243cec6189f2a30e23523fcddc2df8f
+##########
+CS_Phase1_phi := boost_to_CS(LeadMuonPhase1_p4, SubMuonPhase1_p4, SubMuonPhase1_charge).second # 3226ff6f620d3261305d30bb473955ac
+##########
+mQQcut := 400 # d8089bd1b792b630f88152117b167e5e
+##########
+SelectedJetPhase1btagDeepB := SelectedJetPhase1_btag # 442ec9e7f892db9ce80ee042144b4b82
+##########
+btagCut := 0.5 # 3516274e0a1b2005f3d940b259686238
+##########
+btagCutL := 0.5 # ce85b322b5ea03e0dedce7f84d442b18
+##########
+nbtaggedPhase1 := int(Nonzero(SelectedJetPhase1btagDeepB > btagCut && abs(SelectedJetPhase1_eta)< 2.5).size()) # 8987ea9bbee310189247c07bfa572d01
+##########
+nbtaggedLPhase1 := int(Nonzero(SelectedJetPhase1btagDeepB > btagCutL && abs(SelectedJetPhase1_eta)< 2.5).size()) # ae5faf7d16ed1f41a0e237182b28c291
+##########
+nelectronsPhase1 := int(Nonzero(Electron_pt > 20 && abs(Electron_eta) < 2.5 ).size()) # e7fb1849ab56ff2ca954dc9e351ce083
+##########
+MassWindowZPhase1 := abs(Higgs_Phase1.M()-91)<15 # 58302ebbefc81d6692b5966cf5f1cee6
+##########
+VBFRegionPhase1 := MqqPhase1 > mQQcut && QJetPhase1_0_pt> 35 && QJetPhase1_1_pt > 25 # 35448217dd5680dbcdf54908b0777bd2
+##########
+PreSelPhase1 := nelectronsPhase1==0 && nbtaggedLPhase1 < 2 && VBFRegionPhase1 && twoOppositeSignMuonsPhase1 && nbtaggedPhase1 < 1 && (( year == 2016 && LeadMuonPhase1_pt > 26 ) || ( year == 2017 && LeadMuonPhase1_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuonPhase1_pt > 26 )) && SubMuonPhase1_pt > 20 && TriggerSel && abs(SubMuonPhase1_eta) <2.4 && abs(LeadMuonPhase1_eta) < 2.4 # 6d9141945c6992822a6a50f067b8d2f3
+##########
+SignalRegionPhase1 := VBFRegionPhase1 && qqDeltaEtaPhase1 > 2.5 # 0909563402f1f57a49a31aeed53e9352
+##########
+InclusiveRegionPhase1 := 1 # dd72cc6e9210adeffdfc4f97c1a91749
+##########
+SelectedMuonPhase2 := abs(Muon_eta) < 2.8 # c15d43618c7df1cbe00c56da5e80dec4
+##########
+SelectedMuonPhase2_charge := At(Muon_charge,SelectedMuonPhase2) # 5f5ab158d80e385fc2f66f859a4d84e1
+##########
+SelectedMuonPhase2_eta := At(Muon_eta,SelectedMuonPhase2) # afd96bc2458f03c91932eec5c7339548
+##########
+SelectedMuonPhase2_pt := At(Muon_pt,SelectedMuonPhase2) # f4e11fe8235b163efc12239e413db20d
+##########
+SelectedMuonPhase2_p4 := At(Muon_p4,SelectedMuonPhase2) # f65ad0b48cb24dcf2ec40d6157fdf7ed
+##########
+nSelectedMuonPhase2 := Sum(SelectedMuonPhase2) # 3a556ecb20c36f0855124619993370c9
+##########
+twoMuonsPhase2 := nSelectedMuonPhase2==2 # bf189dde3d09582ef3f4c99acdb3700e
+##########
+MuMuPhase2_allpairs := Combinations(Nonzero(SelectedMuonPhase2),Nonzero(SelectedMuonPhase2)) # 7ef0ad7e7731ca7fde53a7b4cc817ee8
+##########
+MuMuPhase2 := At(MuMuPhase2_allpairs,0) < At(MuMuPhase2_allpairs,1) # e75853efcdf792f38021eb3c08327f08
+##########
+MuMuPhase20 := At(At(MuMuPhase2_allpairs,0),MuMuPhase2) # 4921f3726b6a5d705f89a8f52676d8aa
+##########
+MuMuPhase21 := At(At(MuMuPhase2_allpairs,1),MuMuPhase2) # 60d0d9a53d28f3d5ffd40818dd312008
+##########
+MuMuPhase20_charge := Take(SelectedMuonPhase2_charge,MuMuPhase20) # d59062196b8484963d31389f1a12ba74
+##########
+MuMuPhase21_charge := Take(SelectedMuonPhase2_charge,MuMuPhase21) # cabd541bc11d17d2ddfd3fe2267b3340
+##########
+OppositeSignMuMuPhase2 := Nonzero(MuMuPhase20_charge != MuMuPhase21_charge) # c47528f658e6f8db97198b061584c3c0
+##########
+twoOppositeSignMuonsPhase2 := OppositeSignMuMuPhase2.size() > 0 # dc07e94324e24bccc0594214f4411241
+##########
+MuPhase2_index := At(OppositeSignMuMuPhase2,0,-200) # 702560540f79e67094a2fd28ff3376db
+##########
+MuPhase20 := int(At(MuMuPhase20,MuPhase2_index)) # 2f2d69acec6efe4562a9e82c6881dba6
+##########
+MuPhase20_p4 := At(SelectedMuonPhase2_p4,MuPhase20) # ac1a68f637e3605eaeec923128ec1d28
+##########
+MuPhase21 := int(At(MuMuPhase21,MuPhase2_index)) # 8b6f6535377080d145ddf8d49010aae0
+##########
+MuPhase21_p4 := At(SelectedMuonPhase2_p4,MuPhase21) # b0a895828c31941e3604496f3cbe738d
+##########
+Higgs_Phase2 := MuPhase20_p4+MuPhase21_p4 # c227c9b3cb07a4e607cefa32c3e3f0cf
+##########
+SelectedJetPhase2 := 
+    Jet_pt > jetPtCut && abs(Jet_eta) < 4.7
+     # f3437b9c9a1f8c34ba7c8051d27a9ffb
+##########
+SelectedJetPhase2_btag := At(Jet_btag,SelectedJetPhase2) # 133869828f445ed43590faf0814cc542
+##########
+SelectedJetPhase2_eta := At(Jet_eta,SelectedJetPhase2) # 8b2e0ef6c9b7f03f98ab65f255c2a662
+##########
+SelectedJetPhase2_pt := At(Jet_pt,SelectedJetPhase2) # a4425a64383881eeadc46f954b2fc26d
+##########
+SelectedJetPhase2_p4 := At(Jet_p4,SelectedJetPhase2) # d43e53e5082b26aa40486b4d3dfb9d37
+##########
+nSelectedJetPhase2 := Sum(SelectedJetPhase2) # 4994112f681ee120774a768aa0060e08
+##########
+twoJetsPhase2 := nSelectedJetPhase2>=2 # c5022478a62a3816dae49a4db0f28587
+##########
+SortedSelectedJetPhase2Indices := Argsort(-SelectedJetPhase2_pt) # 7ec1b720077369f4f4d80750f09e78cc
+##########
+QJetPhase2_0 := At(SortedSelectedJetPhase2Indices,0) # a36804cdd5f01a53eb5b9be5cade4aec
+##########
+QJetPhase2_0_eta := At(SelectedJetPhase2_eta,QJetPhase2_0) # 88d1a010e53be96f349c972bba63c60e
+##########
+QJetPhase2_0_pt := At(SelectedJetPhase2_pt,QJetPhase2_0) # 5d21532ee32bb4823267d96dd3248d02
+##########
+QJetPhase2_0_p4 := At(SelectedJetPhase2_p4,QJetPhase2_0) # cdf799a9d2f75a5a04b6a4721d54369d
+##########
+QJetPhase2_1 := At(SortedSelectedJetPhase2Indices,1) # 37d39e82076c6b61c11c5d87789c2201
+##########
+QJetPhase2_1_eta := At(SelectedJetPhase2_eta,QJetPhase2_1) # fd2f8c57e2166a8429d2900a0281c559
+##########
+QJetPhase2_1_pt := At(SelectedJetPhase2_pt,QJetPhase2_1) # 3abb1902a848d5040c32e564378c875a
+##########
+QJetPhase2_1_p4 := At(SelectedJetPhase2_p4,QJetPhase2_1) # a601d8c8ee4533cae4bc60e49dcaccf7
+##########
+qqPhase2 := QJetPhase2_0_p4+QJetPhase2_1_p4 # 2dfc0d50d9312ea25a2953c88f31b4a1
+##########
+MqqPhase2 := qqPhase2.M() # 9653efe926b8986ca084aa769a39f30d
+##########
+qqPhase2_pt := qqPhase2.Pt() # 24b16d8b76b6f59d0ad532050f5f4fc8
+##########
+qqDeltaEtaPhase2 := abs(QJetPhase2_0_eta-QJetPhase2_1_eta) # e1c050e187c9e069953b2b0b09aaaf5a
+##########
+qqDeltaPhiPhase2 := abs(ROOT::Math::VectorUtil::DeltaPhi(QJetPhase2_0_p4,QJetPhase2_1_p4)) # ed96d9afb7a1cf85c1397d0989c396b3
+##########
+LeadMuonPhase2 := 0 # fce5290554ea114863ac5fe53e806775
+##########
+LeadMuonPhase2_eta := At(SelectedMuonPhase2_eta,LeadMuonPhase2) # ef684c43e95241fa306118d5dab7361b
+##########
+LeadMuonPhase2_pt := At(SelectedMuonPhase2_pt,LeadMuonPhase2) # 3ca2f192083bc89706e508b0d2ac724f
+##########
+LeadMuonPhase2_p4 := At(SelectedMuonPhase2_p4,LeadMuonPhase2) # 14cca635bc68b4bd8b3301648c44d991
+##########
+SubMuonPhase2 := 1 # f552c31fa696ce5c02ed57409437a201
+##########
+SubMuonPhase2_charge := At(SelectedMuonPhase2_charge,SubMuonPhase2) # ab8df1703c785c5b11be136e95094f8a
+##########
+SubMuonPhase2_eta := At(SelectedMuonPhase2_eta,SubMuonPhase2) # 32be8f401a01bad2aaa46e9a5bdf2b01
+##########
+SubMuonPhase2_pt := At(SelectedMuonPhase2_pt,SubMuonPhase2) # ed63e2e88dd34c343b3697f2305113b9
+##########
+SubMuonPhase2_p4 := At(SelectedMuonPhase2_p4,SubMuonPhase2) # c85f49057b03af42033d9bacc73850e2
+##########
+Higgs_Phase2_pt := Higgs_Phase2.Pt() # a1513491bb4375553183a71a6da5e9eb
+##########
+pTbalanceAllPhase2 := SumDef(SelectedJetPhase2_p4).pt()/Higgs_Phase2_pt # 7ad23f85121b22e8b096153ec849838d
+##########
+Higgs_Phase2_m := Higgs_Phase2.M() # 4b59ac82744a79c1733008e1f683751c
+##########
+CS_Phase2_theta := boost_to_CS(LeadMuonPhase2_p4, SubMuonPhase2_p4,  SubMuonPhase2_charge).first # 24fd0f6dcbce077748f4972bb820d378
+##########
+CS_Phase2_phi := boost_to_CS(LeadMuonPhase2_p4, SubMuonPhase2_p4, SubMuonPhase2_charge).second # d95bf65f2cc64cce5cdca74a4988e152
+##########
+SelectedJetPhase2btagDeepB := SelectedJetPhase2_btag # 3c694463f57b7e144ebddcd5c50d7b44
+##########
+nbtaggedPhase2 := int(Nonzero(SelectedJetPhase2btagDeepB > btagCut && abs(SelectedJetPhase2_eta)< 2.5).size()) # 4ed47d2f9ecc16625237ca42ef1e9ca3
+##########
+nbtaggedLPhase2 := int(Nonzero(SelectedJetPhase2btagDeepB > btagCutL && abs(SelectedJetPhase2_eta)< 2.5).size()) # 288a189f4526f9a51a197462a7a419b2
+##########
+nelectronsPhase2 := int(Nonzero(Electron_pt > 20 && abs(Electron_eta) < 2.5 ).size()) # 0c0eee104101ebef6d5a8b6d29d17488
+##########
+VBFRegionPhase2 := MqqPhase2 > mQQcut && QJetPhase2_0_pt> 35 && QJetPhase2_1_pt > 25 # 92b4fd22652348a752dd1738e657738a
+##########
+PreSelPhase2 := nelectronsPhase2==0 && nbtaggedLPhase2 < 2 && VBFRegionPhase2 && twoOppositeSignMuonsPhase2 && nbtaggedPhase2 < 1 && (( year == 2016 && LeadMuonPhase2_pt > 26 ) || ( year == 2017 && LeadMuonPhase2_pt > 29 ) || ( (year == 2018||year==2026) && LeadMuonPhase2_pt > 26 )) && SubMuonPhase2_pt > 20 && TriggerSel && abs(SubMuonPhase2_eta) <2.4 && abs(LeadMuonPhase2_eta) < 2.4 # d6df71651505eda25d18dc3254d714ec
+##########
+SignalRegionPhase2 := VBFRegionPhase2 && qqDeltaEtaPhase2 > 2.5 # 7930763ce33b6a991243f9daa06c5ed7
+
+
+#Used inputs: {'TriggerSel', 'Jet_pt', 'year', 'Jet_eta', 'Jet_mass', 'Jet_phi', 'Electron_pt', 'Muon_eta', 'Muon_pt', 'Muon_charge', 'MET_met', 'Jet_btag', 'Electron_eta', 'Muon_phi'}

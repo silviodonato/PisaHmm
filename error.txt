@@ -1,0 +1,478 @@
+warning: cannot find function 'softactivity()'; falling back to .L
+Error in <TUnixSystem::FindDynamicLibrary>: /home/sdonato/Hmm/lwtnn/build/lib/liblwtnn.so does not exist in /cvmfs/sft.cern.ch/lcg/views/LCG_96python3/x86_64-centos7-gcc8-opt/lib/python3.6/site-packages/tensorflow:/cvmfs/sft.cern.ch/lcg/views/LCG_96python3/x86_64-centos7-gcc8-opt/lib/python3.6/site-packages/tensorflow/contrib/tensor_forest:/cvmfs/sft.cern.ch/lcg/views/LCG_96python3/x86_64-centos7-gcc8-opt/lib/python3.6/site-packages/tensorflow/python/framework:/cvmfs/sft.cern.ch/lcg/releases/java/8u91-ae32f/x86_64-centos7-gcc8-opt/jre/lib/amd64:/cvmfs/sft.cern.ch/lcg/views/LCG_96python3/x86_64-centos7-gcc8-opt/lib64:/cvmfs/sft.cern.ch/lcg/views/LCG_96python3/x86_64-centos7-gcc8-opt/lib:/cvmfs/sft.cern.ch/lcg/releases/gcc/8.3.0-cebb0/x86_64-centos7/lib:/cvmfs/sft.cern.ch/lcg/releases/gcc/8.3.0-cebb0/x86_64-centos7/lib64:/cvmfs/sft.cern.ch/lcg/releases/binutils/2.30-e5b21/x86_64-centos7/lib:/usr/local/lsf/10.1/linux3.10-glibc2.17-x86_64/lib:/cvmfs/sft.cern.ch/lcg/releases/R/3.5.3-883db/x86_64-centos7-gcc8-opt/lib64/R/library/readr/rcon:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/llvm/8.0.1/lib64/:.:.:/cvmfs/sft.cern.ch/lcg/releases/ROOT/6.18.00-885ca/x86_64-centos7-gcc8-opt/lib:/lib64/tls/x86_64:/lib64/tls:/lib64/x86_64:/lib64:/usr/lib64/tls/x86_64:/usr/lib64/tls:/usr/lib64/x86_64:/usr/lib64
+In file included from input_line_57:6:
+./helpers.h:115:1: warning: control may reach end of non-void function [-Wreturn-type]
+}
+^
+-rw-r--r-- 1 thakore piusers 32357 Mar 22 13:34 eventProcessorData2026_autogen.C
+-rw-r--r-- 1 thakore piusers 32357 Mar 22 13:38 tmp.C
+In file included from eventProcessorData2026_autogen.C:6:
+./helpers.h:115:1: warning: control may reach end of non-void function [-Wreturn-type]
+}
+^
+1 warning generated.
+-rw-r--r-- 1 thakore piusers 32330 Mar 22 13:34 eventProcessor2026_autogen.C
+-rw-r--r-- 1 thakore piusers 32330 Mar 22 13:38 tmp.C
+In file included from eventProcessor2026_autogen.C:6:
+./helpers.h:115:1: warning: control may reach end of non-void function [-Wreturn-type]
+}
+^
+1 warning generated.
+Warning in <TClass::Init>: no dictionary for class edm::ProcessHistory is available
+Warning in <TClass::Init>: no dictionary for class edm::ProcessConfiguration is available
+Warning in <TClass::Init>: no dictionary for class edm::ParameterSetBlob is available
+Warning in <TClass::Init>: no dictionary for class edm::Hash<1> is available
+Warning in <TClass::Init>: no dictionary for class pair<edm::Hash<1>,edm::ParameterSetBlob> is available
+Sels are {'twoJetsPhase1': ['twoJetsPhase1'], 'twoMuonsPhase1': ['twoMuonsPhase1'], '': [], 'twoMuonsPhase1_twoOppositeSignMuonsPhase1': ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1'], 'twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1_PreSel_Phase1': ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1', 'PreSel_Phase1'], 'twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1': ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1'], 'SignalRegionPhase1': ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1', 'PreSel_Phase1', 'SignalRegionPhase1'], 'InclusiveRegion_Phase1': ['InclusiveRegion_Phase1'], 'VBFRegion_Phase1': ['twoJetsPhase1', 'VBFRegion_Phase1'], 'MassWindowZ_Phase1': ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'MassWindowZ_Phase1'], 'PreSel_Phase1': ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1', 'PreSel_Phase1']}
+define weight twoJetsPhase1 ['twoJetsPhase1']
+set()
+define weight twoMuonsPhase1 ['twoMuonsPhase1']
+set()
+define weight  []
+set()
+define weight twoMuonsPhase1_twoOppositeSignMuonsPhase1 ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1']
+set()
+define weight twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1_PreSel_Phase1 ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1', 'PreSel_Phase1']
+set()
+define weight twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1 ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1']
+set()
+define weight SignalRegionPhase1 ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1', 'PreSel_Phase1', 'SignalRegionPhase1']
+set()
+define weight InclusiveRegion_Phase1 ['InclusiveRegion_Phase1']
+set()
+define weight VBFRegion_Phase1 ['twoJetsPhase1', 'VBFRegion_Phase1']
+set()
+define weight MassWindowZ_Phase1 ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'MassWindowZ_Phase1']
+set()
+define weight PreSel_Phase1 ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1', 'PreSel_Phase1']
+set()
+Weights to print ['twoJetsPhase1Weight__Central', 'twoMuonsPhase1Weight__Central', 'Weight__Central', 'twoMuonsPhase1_twoOppositeSignMuonsPhase1Weight__Central', 'twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1_PreSel_Phase1Weight__Central', 'twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1Weight__Central', 'SignalRegionPhase1Weight__Central', 'InclusiveRegion_Phase1Weight__Central', 'VBFRegion_Phase1Weight__Central', 'MassWindowZ_Phase1Weight__Central', 'PreSel_Phase1Weight__Central']
+Compiling with: g++ -fPIC -Wall -O0 eventProcessorData2026_autogen.C $(root-config --libs --cflags)  -o eventProcessorData2026_autogen.so --shared -I..  -L. -I.  -lNailExternals  
+Setting nthreads 32
+Loading  eventProcessorData2026_autogen.so
+Data processor created
+Systematics for all plots OrderedDict()
+######### full systematics #######
+The following histograms will be created in the following regions
+SignalRegionPhase1 : ['MET_met', 'QJetPhase1_0_pt', 'qqPhase1_pt', 'qqDeltaEtaPhase1', 'qqDeltaPhiPhase1', 'Higgs_Phase1_m', 'pTbalanceAllPhase1', 'LeadMuonPhase1_pt', 'LeadMuonPhase1_eta', 'SubMuonPhase1_pt', 'SubMuonPhase1_eta', 'QJetPhase1_0_eta', 'QJetPhase1_1_eta', 'QJetPhase1_0_pt', 'QJetPhase1_1_pt', 'CS_Phase1_theta', 'CS_Phase1_phi']
+InclusiveRegion_Phase1 : ['MET_met']
+VBFRegion_Phase1 : ['MET_met']
+MassWindowZ_Phase1 : ['MET_met']
+PreSel_Phase1 : ['MET_met']
+Sels are {'twoJetsPhase1': ['twoJetsPhase1'], 'twoMuonsPhase1': ['twoMuonsPhase1'], '': [], 'twoMuonsPhase1_twoOppositeSignMuonsPhase1': ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1'], 'twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1_PreSel_Phase1': ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1', 'PreSel_Phase1'], 'twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1': ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1'], 'SignalRegionPhase1': ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1', 'PreSel_Phase1', 'SignalRegionPhase1'], 'InclusiveRegion_Phase1': ['InclusiveRegion_Phase1'], 'VBFRegion_Phase1': ['twoJetsPhase1', 'VBFRegion_Phase1'], 'MassWindowZ_Phase1': ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'MassWindowZ_Phase1'], 'PreSel_Phase1': ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1', 'PreSel_Phase1']}
+define weight twoJetsPhase1 ['twoJetsPhase1']
+set()
+define weight twoMuonsPhase1 ['twoMuonsPhase1']
+set()
+define weight  []
+set()
+define weight twoMuonsPhase1_twoOppositeSignMuonsPhase1 ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1']
+set()
+define weight twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1_PreSel_Phase1 ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1', 'PreSel_Phase1']
+set()
+define weight twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1 ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1']
+set()
+define weight SignalRegionPhase1 ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1', 'PreSel_Phase1', 'SignalRegionPhase1']
+set()
+define weight InclusiveRegion_Phase1 ['InclusiveRegion_Phase1']
+set()
+define weight VBFRegion_Phase1 ['twoJetsPhase1', 'VBFRegion_Phase1']
+set()
+define weight MassWindowZ_Phase1 ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'MassWindowZ_Phase1']
+set()
+define weight PreSel_Phase1 ['twoMuonsPhase1', 'twoOppositeSignMuonsPhase1', 'twoJetsPhase1', 'VBFRegion_Phase1', 'PreSel_Phase1']
+set()
+Weights to print ['twoJetsPhase1Weight__Central', 'twoMuonsPhase1Weight__Central', 'Weight__Central', 'twoMuonsPhase1_twoOppositeSignMuonsPhase1Weight__Central', 'twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1_PreSel_Phase1Weight__Central', 'twoMuonsPhase1_twoOppositeSignMuonsPhase1_twoJetsPhase1_VBFRegion_Phase1Weight__Central', 'SignalRegionPhase1Weight__Central', 'InclusiveRegion_Phase1Weight__Central', 'VBFRegion_Phase1Weight__Central', 'MassWindowZ_Phase1Weight__Central', 'PreSel_Phase1Weight__Central']
+Compiling with: g++ -fPIC -Wall -O0 eventProcessor2026_autogen.C $(root-config --libs --cflags)  -o eventProcessor2026_autogen.so --shared -I..  -L. -I.  -lNailExternals  
+Setting nthreads 32
+Loading  eventProcessor2026_autogen.so
+Start
+Start
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY50_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/DY50_2026MGPY.root
+False
+Samples DY50_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY50_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY50_2026MGPY.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/ggHmm_2026POWPY.root']
+/scratchssd/thakore/PROD_2_2/ggHmm_2026POWPY.root
+Samples ggHmm_2026POWPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for ggHmm_2026POWPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/ggHmm_2026POWPY.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY50HT200_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/DY50HT200_2026MGPY.root
+Samples DY50HT200_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY50HT200_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY50HT200_2026MGPY.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY50HT800_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/DY50HT800_2026MGPY.root
+Samples DY50HT800_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY50HT800_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY50HT800_2026MGPY.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY50HT2500_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/DY50HT2500_2026MGPY.root
+Samples DY50HT2500_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY50HT2500_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY50HT2500_2026MGPY.root']['vbfHmm_2026POWPY', 'ggHmm_2026POWPY', 'EWKZ2JetsZToLL_2026MGPY', 'TT_2026POWPY', 'DY50HT70_2026MGPY', 'DY50HT100_2026MGPY', 'DY50HT200_2026MGPY', 'DY50HT400_2026MGPY', 'DY50HT600_2026MGPY', 'DY50HT800_2026MGPY', 'DY50HT1200_2026MGPY', 'DY50HT2500_2026MGPY', 'TTlep_2026MGPY', 'DY50_2026MGPY', 'DY100_2026MGPY', 'DY0J50_2026MGPY', 'DY0J50_2026MGPY_FNAL', 'DY1J50_2026MGPY', 'DY2J50_2026MGPY', 'DY3J50_2026MGPY', 'DY3J50_2026MGPY_FNAL']
+[('vbfHmm_2026POWPY', ['/scratchssd/thakore/PROD_2_2/vbfHmm_2026POWPY.root']), ('TT_2026POWPY', ['/scratchssd/thakore/PROD_2_2/TT_2026POWPY.root']), ('DY100_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY100_2026MGPY.root']), ('TTlep_2026MGPY', ['/scratchssd/thakore/PROD_2_2/TTlep_2026MGPY.root']), ('DY50_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50_2026MGPY.root']), ('ggHmm_2026POWPY', ['/scratchssd/thakore/PROD_2_2/ggHmm_2026POWPY.root']), ('EWKZ2JetsZToLL_2026MGPY', ['/scratchssd/thakore/PROD_2_2/EWKZ2JetsZToLL_2026MGPY.root']), ('DY3J50_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY3J50_2026MGPY.root']), ('DY2J50_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY2J50_2026MGPY.root']), ('DY1J50_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY1J50_2026MGPY.root']), ('DY50HT400_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT400_2026MGPY.root']), ('DY50HT600_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT600_2026MGPY.root']), ('DY50HT200_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT200_2026MGPY.root']), ('DY50HT800_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT800_2026MGPY.root']), ('DY0J50_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY0J50_2026MGPY.root']), ('DY50HT100_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT100_2026MGPY.root']), ('DY3J50_2026MGPY_FNAL', ['/scratchssd/thakore/PROD_2_2/DY3J50_2026MGPY_FNAL.root']), ('DY50HT70_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT70_2026MGPY.root']), ('DY50HT1200_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT1200_2026MGPY.root']), ('DY0J50_2026MGPY_FNAL', ['/scratchssd/thakore/PROD_2_2/DY0J50_2026MGPY_FNAL.root']), ('DY50HT2500_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT2500_2026MGPY.root'])]
+Will process [('vbfHmm_2026POWPY', ['/scratchssd/thakore/PROD_2_2/vbfHmm_2026POWPY.root']), ('TT_2026POWPY', ['/scratchssd/thakore/PROD_2_2/TT_2026POWPY.root']), ('DY100_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY100_2026MGPY.root']), ('TTlep_2026MGPY', ['/scratchssd/thakore/PROD_2_2/TTlep_2026MGPY.root']), ('DY50_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50_2026MGPY.root']), ('ggHmm_2026POWPY', ['/scratchssd/thakore/PROD_2_2/ggHmm_2026POWPY.root']), ('EWKZ2JetsZToLL_2026MGPY', ['/scratchssd/thakore/PROD_2_2/EWKZ2JetsZToLL_2026MGPY.root']), ('DY3J50_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY3J50_2026MGPY.root']), ('DY2J50_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY2J50_2026MGPY.root']), ('DY1J50_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY1J50_2026MGPY.root']), ('DY50HT400_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT400_2026MGPY.root']), ('DY50HT600_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT600_2026MGPY.root']), ('DY50HT200_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT200_2026MGPY.root']), ('DY50HT800_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT800_2026MGPY.root']), ('DY0J50_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY0J50_2026MGPY.root']), ('DY50HT100_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT100_2026MGPY.root']), ('DY3J50_2026MGPY_FNAL', ['/scratchssd/thakore/PROD_2_2/DY3J50_2026MGPY_FNAL.root']), ('DY50HT70_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT70_2026MGPY.root']), ('DY50HT1200_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT1200_2026MGPY.root']), ('DY0J50_2026MGPY_FNAL', ['/scratchssd/thakore/PROD_2_2/DY0J50_2026MGPY_FNAL.root']), ('DY50HT2500_2026MGPY', ['/scratchssd/thakore/PROD_2_2/DY50HT2500_2026MGPY.root'])]
+Results [(1, 'vbfHmm_2026POWPY'), (1, 'TT_2026POWPY'), (1, 'DY100_2026MGPY'), (1, 'TTlep_2026MGPY'), (1, 'DY50_2026MGPY'), (1, 'ggHmm_2026POWPY'), (1, 'EWKZ2JetsZToLL_2026MGPY'), (1, 'DY3J50_2026MGPY'), (1, 'DY2J50_2026MGPY'), (1, 'DY1J50_2026MGPY'), (1, 'DY50HT400_2026MGPY'), (1, 'DY50HT600_2026MGPY'), (1, 'DY50HT200_2026MGPY'), (1, 'DY50HT800_2026MGPY'), (1, 'DY0J50_2026MGPY'), (1, 'DY50HT100_2026MGPY'), (1, 'DY3J50_2026MGPY_FNAL'), (1, 'DY50HT70_2026MGPY'), (1, 'DY50HT1200_2026MGPY'), (1, 'DY0J50_2026MGPY_FNAL'), (1, 'DY50HT2500_2026MGPY')]
+To resubmit ['vbfHmm_2026POWPY', 'TT_2026POWPY', 'DY100_2026MGPY', 'TTlep_2026MGPY', 'DY50_2026MGPY', 'ggHmm_2026POWPY', 'EWKZ2JetsZToLL_2026MGPY', 'DY3J50_2026MGPY', 'DY2J50_2026MGPY', 'DY1J50_2026MGPY', 'DY50HT400_2026MGPY', 'DY50HT600_2026MGPY', 'DY50HT200_2026MGPY', 'DY50HT800_2026MGPY', 'DY0J50_2026MGPY', 'DY50HT100_2026MGPY', 'DY3J50_2026MGPY_FNAL', 'DY50HT70_2026MGPY', 'DY50HT1200_2026MGPY', 'DY0J50_2026MGPY_FNAL', 'DY50HT2500_2026MGPY']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/EWKZ2JetsZToLL_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/EWKZ2JetsZToLL_2026MGPY.root
+False
+Samples EWKZ2JetsZToLL_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for EWKZ2JetsZToLL_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/EWKZ2JetsZToLL_2026MGPY.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY3J50_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/DY3J50_2026MGPY.root
+Samples DY3J50_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY3J50_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY3J50_2026MGPY.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY0J50_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/DY0J50_2026MGPY.root
+Samples DY0J50_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY0J50_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY0J50_2026MGPY.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY50HT100_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/DY50HT100_2026MGPY.root
+Samples DY50HT100_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY50HT100_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY50HT100_2026MGPY.root']
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY2J50_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/DY2J50_2026MGPY.root
+False
+Samples DY2J50_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY2J50_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY2J50_2026MGPY.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY1J50_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/DY1J50_2026MGPY.root
+Samples DY1J50_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY1J50_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY1J50_2026MGPY.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY50HT400_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/DY50HT400_2026MGPY.root
+Samples DY50HT400_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY50HT400_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY50HT400_2026MGPY.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY50HT600_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/DY50HT600_2026MGPY.root
+Samples DY50HT600_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY50HT600_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY50HT600_2026MGPY.root']
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY100_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/DY100_2026MGPY.root
+False
+Samples DY100_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY100_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY100_2026MGPY.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/TTlep_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/TTlep_2026MGPY.root
+Samples TTlep_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for TTlep_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/TTlep_2026MGPY.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY50HT1200_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/DY50HT1200_2026MGPY.root
+Samples DY50HT1200_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY50HT1200_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY50HT1200_2026MGPY.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY0J50_2026MGPY_FNAL.root']
+/scratchssd/thakore/PROD_2_2/DY0J50_2026MGPY_FNAL.root
+Samples DY0J50_2026MGPY_FNAL ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY0J50_2026MGPY_FNAL
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY0J50_2026MGPY_FNAL.root']
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/vbfHmm_2026POWPY.root']
+/scratchssd/thakore/PROD_2_2/vbfHmm_2026POWPY.root
+False
+Samples vbfHmm_2026POWPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for vbfHmm_2026POWPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/vbfHmm_2026POWPY.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/TT_2026POWPY.root']
+/scratchssd/thakore/PROD_2_2/TT_2026POWPY.root
+Samples TT_2026POWPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for TT_2026POWPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/TT_2026POWPY.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY3J50_2026MGPY_FNAL.root']
+/scratchssd/thakore/PROD_2_2/DY3J50_2026MGPY_FNAL.root
+Samples DY3J50_2026MGPY_FNAL ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY3J50_2026MGPY_FNAL
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY3J50_2026MGPY_FNAL.root']
+Affinity [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+['/scratchssd/thakore/PROD_2_2/DY50HT70_2026MGPY.root']
+/scratchssd/thakore/PROD_2_2/DY50HT70_2026MGPY.root
+Samples DY50HT70_2026MGPY ['xsec', 'files']
+Normalization 2
+Above the cutflow for DY50HT70_2026MGPY
+TFile
+EnableImplicitMT
+Start Normalization
+1
+TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+FAIL ['/scratchssd/thakore/PROD_2_2/DY50HT70_2026MGPY.root']
+
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
+Traceback (most recent call last):
+  File "vbfAna.py", line 388, in f
+    hname = h.GetName()
+Exception: TH1D& ROOT::RDF::RResultPtr<TH1D>::operator*() =>
+    Cannot call operator && on vectors of different sizes. (C++ exception of type runtime_error)
