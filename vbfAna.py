@@ -153,13 +153,13 @@ from samples2026 import samples as samples2026
 
 if year == "2016":
     samples=samples2016
-    #trigger="HLT_IsoMu24 || HLT_IsoTkMu24"
+    trigger="HLT_IsoMu24 || HLT_IsoTkMu24"
 if year == "2017":
     samples=samples2017
-    #trigger="HLT_IsoMu27"
+    trigger="HLT_IsoMu27"
 if year == "2018":
     samples=samples2018
-    #trigger="HLT_IsoMu24"
+    trigger="HLT_IsoMu24"
 if year == "2026":
     samples=samples2026
     trigger="true" ## no trigger in 2026
