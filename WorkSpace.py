@@ -8,7 +8,7 @@ import re
 ##############################################################################################################
 #########################  region[x] : keys are plot names, values are region names  #########################
 ##############################################################################################################
-#regionName = {"SignalRegionPhase1" : "SR", "SideBand" : "SB", "ZRegion" : "ZR", "PreSel" : "PS", "SignalRegionPhase1T" : "SRT", "SideBandT" : "SBT", "SignalRegionPhase1DNNWeighted" : "SRD" , "SRplusSBDNNWeighted":"SRSBW"}
+regionName = {"SignalRegionPhase1" : "SR", "SideBand" : "SB", "ZRegion" : "ZR", "PreSel" : "PS", "SignalRegionPhase1T" : "SRT", "SideBandT" : "SBT", "SignalRegionPhase1DNNWeighted" : "SRD" , "SRplusSBDNNWeighted":"SRSBW"}
 
 
 
@@ -95,8 +95,8 @@ def writeLine (uncName, systematicDetailElement, allSamples, region) :
 
     if len(position)==0 : return ""
 
-    line += uncName + "\t"*(4 - len(uncName)/8)
-    line += uncType + "\t"*(3 - len(uncType)/8)
+    line += uncName + "\t"*int(4 - len(uncName)/8)
+    line += uncType + "\t"*int(3 - len(uncType)/8)
     line += writeUncertainities (orderedUncertainties, len(orderedUncertainties), position)
 
     return line + "\n";
