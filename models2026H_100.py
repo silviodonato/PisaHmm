@@ -5,27 +5,27 @@ samples.update(samples2016.samples)
 name="H_100"
 background= {
 
-## inclusive DY  M(LL)> 50 GeV
-"DY50": ["DY50_2026MGPY"],
+### inclusive DY  M(LL)> 50 GeV
+#"DY50": ["DY50_2026MGPY"],
 
 ## inclusive DY  M(LL)> 100 GeV
 "DY100": ["DY100_2026MGPY"],
 
-## DY  M(LL)> 50 GeV - HT binned
-"DYHT70": ["DY50HT70_2026MGPY"],
-"DYHT100": ["DY50HT100_2026MGPY"],
-"DYHT200": ["DY50HT200_2026MGPY"],
-"DYHT400": ["DY50HT400_2026MGPY"],
-"DYHT600": ["DY50HT600_2026MGPY"],
-"DYHT800": ["DY50HT800_2026MGPY"],
-"DYHT1200": ["DY50HT1200_2026MGPY"],
-"DYHT2500": ["DY50HT2500_2026MGPY"],
+### DY  M(LL)> 50 GeV - HT binned
+#"DYHT70": ["DY50HT70_2026MGPY"],
+#"DYHT100": ["DY50HT100_2026MGPY"],
+#"DYHT200": ["DY50HT200_2026MGPY"],
+#"DYHT400": ["DY50HT400_2026MGPY"],
+#"DYHT600": ["DY50HT600_2026MGPY"],
+#"DYHT800": ["DY50HT800_2026MGPY"],
+#"DYHT1200": ["DY50HT1200_2026MGPY"],
+#"DYHT2500": ["DY50HT2500_2026MGPY"],
 
-## DY  M(LL)> 50 GeV binned in number of jets 
-"DY0J": ["DY0J50_2026MGPY"],
-"DY1J": ["DY1J50_2026MGPY"],
-"DY2J": ["DY2J50_2026MGPY"],
-"DY3J": ["DY3J50_2026MGPY"],
+### DY  M(LL)> 50 GeV binned in number of jets 
+#"DY0J": ["DY0J50_2026MGPY"],
+#"DY1J": ["DY1J50_2026MGPY"],
+#"DY2J": ["DY2J50_2026MGPY"],
+#"DY3J": ["DY3J50_2026MGPY"],
 
 ## DY  M(LL)> 50 GeV binned in number of jets (using FNAL samples)
 #"DY0J": ["DY0J50_2026MGPY_FNAL"],
@@ -115,7 +115,7 @@ systematicsForDC = systematicsToPlot
 #systematicsToPlot=["JESUp","JESDown"]
 
 #systematicsForDC = ["JESUp","JESDown"]
-#jesList = []
+jesList = []
 
 linecolor=fillcolor
 markercolor=fillcolor
@@ -135,5 +135,5 @@ from histograms import genericHistos
 #for i in  genericHistos :
 #    rebin[i]=rebin["DNN18Atan"]
 
-#from systematicGrouping import *
-#systematicDetail = systematicGrouping(background, signal,jesList,"2018")
+from systematicGrouping import *
+systematicDetail = systematicGrouping(background, signal,jesList,"2018")
