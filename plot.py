@@ -815,6 +815,9 @@ def makeplot(hn,saveintegrals=True):
                 datasum[hn].SetBinError(i, (datasum[hn].GetBinContent(i))**0.5)
             datasum[hn].SetMarkerStyle(10)
             datasum[hn].UseCurrentStyle()
+            if makeWorkspace : 
+                all_histo_all_syst[hn]["data"+year]={}
+                all_histo_all_syst[hn]["data"+year]["nom"]=datasum[hn].Clone()
         datasum[hn].SetMinimum(max(0.01*datasum[hn].GetMinimum(),0.1)) ## zoom out y axis
         datasum[hn].Draw("E P")
         #datastack[hn].GetXaxis().SetTitle(hn)
